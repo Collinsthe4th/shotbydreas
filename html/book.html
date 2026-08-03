@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<header>
+    <div class="logo">
+        <img src="/bgs/dreas logo.PNG" width="120px" alt="logo">
+    </div>
+    <div class="nav-bar">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="nav">
+        <nav>
+        <ul>
+            <li><a href="/html/index.html">HOME</a></li>
+            <li><a href="/html/about.html">ABOUT</a></li>
+            <li><a href="/html/gallery.html">GALLERY</a></li>
+            <li><a href="/html/contact.html">CONTACT</a></li>
+        </ul>
+        </nav>
+        <div class="book">
+            <li><a href="/html/book.html"><i class="fa-solid fa-calendar"></i>BOOKINGS</a></li>
+        </div>
+    </div>
+</header>
+
+<body>
+
+    <section id="booking">
+        <div class="book-page">
+        <div class="booking">
+            <h2>SCHEDULE US FOR YOUR EVENTS</h2>
+            <form action="" method="get">
+                <div class="pay">
+                <label for="event">Event Type:</label> <br>
+                <select>
+                    <option value="One-time Event">One-time Event</option>
+                    <option value="Multiple Events">Multiple Events</option>
+                </select> 
+                <div class="button">
+                    <button class="payment">Make Payment</button>
+                    </div>
+                </div>
+               <br>
+                <label for="event">Book Dates:</label>
+                <div class="dates">
+                    <label for="">1st Date:</label>
+                <input type="datetime-local" placeholder="Start Date">
+                </div> <br>
+                <div class="dates">
+                    <label for="">2nd Date:</label>
+                <input type="datetime-local" placeholder="End Date">
+                </div>
+                <div class="dates">
+                <input type="submit" value="Check Availability">
+                </div> 
+            </form>
+          
+        </div>
+    </div>
+    </section>
+
+<div class="back-top" onclick="window.scrollTo({top:0, behavior: 'smooth'})">
+    <i class="fa-solid fa-circle-arrow-up"></i>
+</div>
+    
+</body>
+
+
+<footer>
+    <img src="/bgs/dreas logo.jpg" width="100px" alt="logo">
+    <div class="footer-items">
+        <div class="items">
+    <h2>Quick Links</h2>
+    <ul>
+        <li><a href="/html/about.html">About Us</a></li>
+        <li><a href="/html/gallery.html">Album</a></li>
+        <li><a href="/html/book.html">Book Us</a></li>
+        <li><a href="/html/contact.html">Contact</a></li>
+    </ul>
+        </div>
+
+        <div class="items">
+    <h2>Contact</h2>
+    <ul>
+        <li><span style="font-weight: bold;">Address:</span> Awka, Anambra, Nigeria</li>
+        <li><span style="font-weight: bold;">Phone: </span>+234-813 607 8551</li>
+        <li><span style="font-weight: bold;">Hours: </span>10:00 - 18:00 Mon - Sat</li>
+    </ul>
+        </div>
+
+        <div class="items">
+    <h2>Follow Us</h2>
+    <div class="icons">
+            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-pinterest"></i></a>
+        </div>
+        </div>
+    
+    </div>
+    <p>&copy; <span id="year"></span> SHOTBYDREAS</p>
+    <script src="/index.js"></script>
+</footer>
+</html>
