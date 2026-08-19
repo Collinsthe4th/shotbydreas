@@ -105,4 +105,4 @@ Without the Google variables, the booking page still works in "Dreas will confir
 
 ## Images
 
-The pages expect their images and videos in `bgs/` (e.g. `bgs/backdrop11.JPG`, `bgs/dreas logo.PNG`). Add that folder to the repo so the pages display correctly.
+`bgs/` holds the images and videos the pages use. For now these are labelled placeholders. Replace each file with Dreas's real media under the same name (names are case-sensitive on Vercel, e.g. `backdrop11.JPG`, `dreas logo.PNG`), or update the paths in the HTML and CSS.
