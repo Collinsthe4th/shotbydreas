@@ -1,168 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/videos.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Films · SHOTBYDREAS</title>
+  <meta name="description" content="Wedding, celebration and event films by SHOTBYDREAS. Each film comes with a breakdown of the coverage and what the client received.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Films · SHOTBYDREAS">
+  <meta property="og:description" content="Wedding, celebration and event films by SHOTBYDREAS. Each film comes with a breakdown of the coverage and what the client received.">
+  <meta property="og:image" content="/media/films/reel.jpg">
+  <link rel="icon" type="image/png" href="/media/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
+  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  <script>
+    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    (function (d) {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('js-motion');
+      setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
+    })(document.documentElement);
+  </script>
+  <script src="/vendor/gsap/gsap.min.js" defer></script>
+  <script src="/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="/js/data.js" defer></script>
+  <script src="/js/site.js" defer></script>
+  <script src="/js/work.js" defer></script>
 </head>
+<body data-page="videos">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header>
-    <div class="logo">
-        <img src="/bgs/dreas logo.PNG" width="120px" alt="logo">
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
+      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
+      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/html/videos.html" aria-current="page">Films</a></li>
+        <li><a href="/html/gallery.html">Stills</a></li>
+        <li><a href="/html/about.html">About</a></li>
+        <li><a href="/html/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-meta">
+      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
+      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
     </div>
-    <div class="nav-bar">
-        <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="nav">
-        <nav>
-        <ul>
-            <li><a href="/html/index.html">HOME</a></li>
-            <li><a href="/html/about.html">ABOUT</a></li>
-            <li><a href="/html/gallery.html">GALLERY</a></li>
-            <li><a href="/html/contact.html">CONTACT</a></li>
-        </ul>
-        </nav>
-        <div class="book">
-            <li><a href="/html/book.html"><i class="fa-solid fa-calendar"></i>BOOKINGS</a></li>
-        </div>
-    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+    </button>
+  </div>
 </header>
 
-<body>
-    <section id="gallery">
-        <h1>EVENTS & PHOTOSHOOT GALLERY</h1>
-        <div class="gallery-bttn">
-            <button class="photo-bttn" onclick="window.location.href='/html/gallery.html' ">PHOTOSHOOTS</button>
-            <button class="photo-bttn" onclick="window.location.href='/html/videos.html' ">EVENTS</button>
-        </div>
-    </section>
-
-    <section id="photoshoot">
-        <h2>EVENTS</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum modi tempore asperiores rerum, labore, <br> 
-        Sequi rem quia tenetur iste. Beatae, fugit? Voluptates nobis in recusandae quod labore hic soluta non.</p>
-        
-        <div class="photo-section">
-            
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo1">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="300px" alt="photo2">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo3">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="300px" alt="photo4">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo5">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="300px" alt="photo6">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo7">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="300px" alt="photo8">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo9">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="300px" alt="photo10">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="300px" alt="photo11">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="300px" alt="photo12">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="300px" alt="photo13">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="300px" alt="photo14">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="300px" alt="photo15">
-            </div>
-
-        </div>
-        <div class="nav-bttn">
-        <button class="see-more">
-            See More <i class="fa-solid fa-arrow-right"></i>
-        </button>
-
-        </div>
-    </section>
-
-   
-<section id="banner">
-    <h3>Capture Special Moments</h3>
-    <p>Turn your every moment into a lifetime movie</p>
-    <button class="book-bttn" onclick="window.location.href='/html/book.html' ">Book Us Today</button>
-</section>
-
-<div class="back-top" onclick="window.scrollTo({top:0, behavior: 'smooth'})">
-    <i class="fa-solid fa-circle-arrow-up"></i>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <ul class="menu-links">
+      <li><a href="/html/index.html"><span class="mono">01</span>Home</a></li>
+      <li><a href="/html/videos.html" aria-current="page"><span class="mono">02</span>Films</a></li>
+      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
+      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
+      <li><a href="/html/contact.html"><span class="mono">05</span>Contact</a></li>
+      <li><a href="/html/book.html"><span class="mono">06</span>Book a date</a></li>
+    </ul>
+  </nav>
+  <div class="menu-foot">
+    <p class="mono" data-clock aria-hidden="true"></p>
+    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  </div>
 </div>
-</body>
 
+<main id="main">
 
-<footer>
-    <img src="/bgs/dreas logo.jpg" width="100px" alt="logo">
-    <div class="footer-items">
-        <div class="items">
-    <h2>Quick Links</h2>
-    <ul>
-        <li><a href="/html/about.html">About Us</a></li>
-        <li><a href="/html/gallery.html">Gallery</a></li>
-        <li><a href="/html/videos.html">Events Album</a></li>
-        <li><a href="/html/book.html">Book Us</a></li>
-        <li><a href="/html/contact.html">Contact</a></li>
-    </ul>
-        </div>
-
-        <div class="items">
-    <h2>Contact</h2>
-    <ul>
-        <li><span style="font-weight: bold;">Address:</span> Awka, Anambra, Nigeria</li>
-        <li><span style="font-weight: bold;">Phone: </span>+234-813 607 8551</li>
-        <li><span style="font-weight: bold;">Hours: </span>10:00 - 18:00 Mon - Sat</li>
-    </ul>
-        </div>
-
-        <div class="items">
-    <h2>Follow Us</h2>
-    <div class="icons">
-            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
-            <a href=""><i class="fa-brands fa-instagram"></i></a>
-            <a href=""><i class="fa-brands fa-pinterest"></i></a>
-        </div>
-        </div>
-    
+  <section class="page-hero wrap" aria-labelledby="page-title">
+    <p class="mono" style="margin-bottom:1.5rem">Films · 2025–2026</p>
+    <div class="page-hero-grid">
+      <h1 class="display" id="page-title"><span class="line"><span class="line-inner">The <em>films.</em></span></span></h1>
+      <p class="lede">Weddings, traditional marriages, celebrations and openings. Select a film for the full breakdown: what we shot, how, and what the client received.</p>
     </div>
-    <p>&copy; 2025 SHOTBYDREAS</p>
-    <script src="/js/index.js"></script>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--section)" aria-label="Film list">
+    <div class="filter-bar">
+      <div class="chips" id="film-filters" role="group" aria-label="Filter films by type"></div>
+      <p class="mono film-count" id="film-count" aria-live="polite"></p>
+    </div>
+    <div class="film-grid" id="film-grid"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-cta">
+      <p class="display" data-reveal>Tell us the date.<br><em>We&rsquo;ll keep the light.</em></p>
+      <div class="actions">
+        <a class="btn btn-gold" href="/html/book.html">Check open dates</a>
+        <a class="btn btn-wa" href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
+        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+      </div>
+      <div>
+        <h2 class="label">Pages</h2>
+        <ul>
+          <li><a href="/html/videos.html">Films</a></li>
+          <li><a href="/html/gallery.html">Stills</a></li>
+          <li><a href="/html/about.html">About</a></li>
+          <li><a href="/html/contact.html">Contact</a></li>
+          <li><a href="/html/book.html">Book a date</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Contact</h2>
+        <ul>
+          <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
+          <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Follow</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
+      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+    </div>
+  </div>
 </footer>
+</body>
 </html>

@@ -1,393 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOTBY DREAS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHOTBYDREAS · Event films & photography, Awka</title>
+  <meta name="description" content="Wedding, celebration and event films and photography by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SHOTBYDREAS · Event films & photography, Awka">
+  <meta property="og:description" content="Wedding, celebration and event films and photography by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
+  <meta property="og:image" content="/media/films/reel.jpg">
+  <link rel="icon" type="image/png" href="/media/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
+  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  <script>
+    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    (function (d) {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('js-motion');
+      setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
+    })(document.documentElement);
+  </script>
+  <script src="/vendor/gsap/gsap.min.js" defer></script>
+  <script src="/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="/js/data.js" defer></script>
+  <script src="/js/site.js" defer></script>
+  <script src="/js/work.js" defer></script>
 </head>
+<body data-page="index">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header>
-    <div class="logo">
-        <img src="/bgs/dreas logo.PNG" width="120px" alt="logo">
-    </div>
-    <div class="nav-bar">
-        <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="nav">
-    <nav>
-    <ul>
-        <li><a href="/html/index.html">HOME</a></li>
-        <li><a href="/html/about.html">ABOUT</a></li>
-        <li><a href="/html/gallery.html">GALLERY</a></li>
-        <li><a href="/html/contact.html">CONTACT</a></li>
-    </ul>
-    </nav>
-    <div class="book">
-        <li><a href="/html/book.html"><i class="fa-solid fa-calendar"></i>BOOKINGS</a></li>
-    </div>
-</div>
-</header>
- 
-<body>
-
-   <section id="first-section">
-            <h1>SHOTBYDREAS</h1>
-    <div class="introduction">
-        <div class="intro-content">
-            <h4>MOBILE PHOTOGRAPHER</h4>
-            <p>See your world through our lens <br> Eius reprehenderit laboriosam minima <br> voluptate cupiditate </p>
-        </div>
-            
-        <div class="intro-image">
-            <img src="/bgs/camera1.PNG" width="700px" alt="intro-image">
-        </div>
-
-        <div class="intro-content">
-            <h4>EVENT CONTENT CREATOR</h4>
-            <p>A multifaceted videography team <br>quidem nulla totam eveniet, provident <br> incidunt natus error.</p>
-        </div>
-            
-    </div>
-            <button class="book-bttn" onclick="window.location.href='/html/book.html' ">Book Us Today</button>
-   </section>
-
-   <section id="services">
-    <h1>EVENTS WE COVER</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    <div class="service">
-        
-        <div class="service-video">
-            <img src="/bgs/03.jpg" width="500px" alt="video1">
-        </div>
-        <div class="service-content">
-            <h3>WEDDINGS & ANNIVERSARIES</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum corporis enim <br> 
-                fuga possimus dignissimos, laudantium vel numquam optio, quam, <br>voluptate nostrum! </p>
-        </div>
-
-        <div class="service-content">
-            <h3>FUNERALS & THANKSGIVINGS</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum corporis enim <br> 
-                fuga possimus dignissimos, laudantium vel numquam optio, quam,<br> voluptate nostrum! </p>
-        </div>
-        <div class="service-video">
-            <img src="/bgs/03.jpg" width="500px" alt="video2">
-        </div>
-
-        <div class="service-video">
-            <img src="/bgs/03.jpg" width="500px" alt="video3">
-        </div>
-        <div class="service-content">
-            <h3>GRAND OPENING CEREMONIES</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum corporis enim <br> 
-                fuga possimus dignissimos, laudantium vel numquam optio, quam, <br> voluptate nostrum! </p>
-        </div>
-
-        
-        <div class="service-content">
-            <h3>BIRTHDAY PARTIES</h3>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum corporis enim <br> 
-                fuga possimus dignissimos, laudantium vel numquam optio, quam,<br> voluptate nostrum! </p>
-        </div>
-        <div class="service-video">
-            <img src="/bgs/03.jpg" width="500px" alt="video2">
-        </div>
-
-
-    </div>
-
-        <h2>MOBILE PHOTOSHOOTS</h2>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <br>
-             Laudantium error repellendus iste, voluptates quam id ea cupiditate. </p>
-        <div class="photoshoot-container">
-            
-            <div class="photoshoot-content">
-                <h3>PRE-WEDDING CONTENT CREATION / <br>MOBILE PHOTOSHOOTS</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-                    Impedit aperiam iste nesciunt quo tenetur quia incidunt saepe.</p>
-            </div>
-            <div class="photoshoot-img">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo1">
-            </div>
-            
-            <div class="photoshoot-img">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo1">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo1">
-            </div>
-            <div class="photoshoot-content">
-                <h3>PROFESSIONAL MOBILE PHOTOSHOOTS</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-                    Impedit aperiam iste nesciunt quo tenetur quia incidunt saepe.</p>
-            </div>
-        </div>
-   </section>
-
-<section id="photo-section">
-    <h1>ALBUM</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-        Animi nobis, id quo ab architecto aut magnam adipisci itaque! </p>
-
-        <div class="photo-section">
-            
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo1">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="250px" alt="photo2">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo3">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="250px" alt="photo4">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo5">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo6">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo7">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo8">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo9">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo10">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="250px" alt="photo11">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop10.JPG" width="250px" alt="photo12">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo13">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop9.JPG" width="250px" alt="photo14">
-            </div>
-
-            <div class="photos">
-                <img src="/bgs/backdrop11.JPG" width="250px" alt="photo15">
-            </div>
-        </div>
-        <button class="see-more" onclick="window.location.href='/html/gallery.html' ">See More</button>
-</section>
-
-<section id="testimonial">
-    <h1>WHY CHOOSE US?</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
-        Quos cumque, in aliquam quod libero, obcaecati suscipit repudiandae dolorem qui, voluptate provident!</p>
-    <div class="testimonial-container">
-    <div class="testimonial">
-        <div class="test-image">
-            <i class="fa-solid fa-smile"></i>
-            <h5>Happy Customer Reviews</h5>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-       
-        <div class="test-image">
-            <i class="fa-solid fa-camera"></i>
-            <h5>Quality Photo & Video Capturing</h5>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-       
-        <div class="test-image">
-            <i class="fa-solid fa-piggy-bank"></i>
-            <h5>Affordable Packages</h5>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-       
-        <div class="test-image">
-           <i class="fa-solid fa-globe"></i>
-           <h5>National Coverage</h5>
-           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-       
-    </div>
-
-    <div class="testimonial-image">
-        <img src="/bgs/camera1.PNG" width="500px" alt="testimonial image">
-    </div>
-    </div>
-</section>
-
-    <section id="reviews">
-    <h2>WHAT OUR CLIENTS HAVE SAID</h2>
-    <div class="client-container">
-        <div class="clients">
-
-            <div class="client-content">
-                <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque cumque vero praesentium dolorem asperiores<br>
-                    dolores similique delectus obcaecati voluptatem commodi quidem illum officiis sit reprehenderit iste.</q> <br>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                <div class="client-name">
-                    <img src="/bgs/pfp 1 man.jpg" width="100px" alt="client1">
-                    <h3>CLIENT ONE</h3>
-                </div>
-            </div>
-
-            <div class="client-content">
-                <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque cumque vero praesentium dolorem asperiores<br>
-                    dolores similique delectus obcaecati voluptatem commodi quidem illum officiis sit reprehenderit iste.</q> <br>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                <div class="client-name">
-                    <img src="/bgs/pfp 1 man.jpg" width="100px" alt="client1">
-                    <h3>CLIENT TWO</h3>
-                </div>
-            </div>
-
-            <div class="client-content">
-                <q>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque cumque vero praesentium dolorem asperiores<br>
-                    dolores similique delectus obcaecati voluptatem commodi quidem illum officiis sit reprehenderit iste.</q> <br>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                <div class="client-name">
-                    <img src="/bgs/pfp 1 man.jpg" width="100px" alt="client1">
-                    <h3>CLIENT THREE</h3>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section id="faq">
-        <div class="faq">
-            <div class="faq-img">
-                <img src="/bgs/camera2.PNG" width="500px" alt="faq-img">
-            </div>
-            <div class="faq-content">
-                <h2>FAQs</h2>
-                
-                    <details>
-                    <summary>
-                        <h3>What are the pricing packages like?</h3>
-                    </summary>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi aperiam  <br>nihil rerum 
-                        maiores delectus magni ad suscipit cumque rem</p>
-                    </details>
-
-                    <details>
-                    <summary>
-                        <h3>Where in Nigeria do you cover?</h3>
-                    </summary>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi aperiam <br>nihil rerum 
-                        maiores delectus magni ad suscipit cumque rem</p>
-                    </details>
-
-                    <details>
-                    <summary>
-                        <h3>How can I book you for multiple events?</h3>
-                    </summary>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi aperiam <br> nihil rerum 
-                        maiores delectus magni ad suscipit cumque rem</p>
-                    </details>
-
-                    <details>
-                    <summary>
-                        <h3>What equipment do you use for shooting content?</h3>
-                    </summary>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi aperiam <br> nihil rerum 
-                        maiores delectus magni ad suscipit cumque rem</p>
-                    </details>
-
-                    <details>
-                    <summary>
-                        <h3>Can I book you through your social media handle?</h3>
-                    </summary>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi aperiam <br> nihil rerum 
-                        maiores delectus magni ad suscipit cumque rem</p>
-                    </details>
-                
-            </div>
-        </div>
-</section>
-
-<section id="banner">
-    <h3>Capture Special Moments</h3>
-    <p>Turn your every moment into a lifetime movie</p>
-    <button class="book-bttn2" onclick="window.location.href='/html/book.html' ">Book Us Today</button>
-</section>
-
-</body>
-
-
-<footer>
-    <img src="/bgs/dreas logo.jpg" width="100px" alt="logo">
-    <div class="footer-items">
-        <div class="items">
-    <h2>Quick Links</h2>
-    <ul>
-        <li><a href="/html/about.html">About Us</a></li>
-        <li><a href="/html/gallery.html">Album</a></li>
-        <li><a href="/html/book.html">Book Us</a></li>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
+      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
+      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/html/videos.html">Films</a></li>
+        <li><a href="/html/gallery.html">Stills</a></li>
+        <li><a href="/html/about.html">About</a></li>
         <li><a href="/html/contact.html">Contact</a></li>
-    </ul>
-        </div>
-
-        <div class="items">
-    <h2>Contact</h2>
-    <ul>
-        <li><span style="font-weight: bold;">Address:</span> Awka, Anambra, Nigeria</li>
-        <li><span style="font-weight: bold;">Phone: </span>+234-813 607 8551</li>
-        <li><span style="font-weight: bold;">Hours: </span>10:00 - 18:00 Mon - Sat</li>
-    </ul>
-        </div>
-
-        <div class="items">
-    <h2>Follow Us</h2>
-    <div class="icons">
-            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
-            <a href=""><i class="fa-brands fa-instagram"></i></a>
-            <a href=""><i class="fa-brands fa-pinterest"></i></a>
-        </div>
-        </div>
-    
+      </ul>
+    </nav>
+    <div class="header-meta">
+      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
+      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
     </div>
-        
-    <button class="back-top" onclick="window.scrollTo({top:0, behavior: 'smooth'})">
-        <i class="fa-solid fa-circle-arrow-up"></i>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
     </button>
-    <p>&copy; <span id="year"></span> SHOTBYDREAS</p>
+  </div>
+</header>
 
-    <script src="/js/index.js"></script>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <ul class="menu-links">
+      <li><a href="/html/index.html" aria-current="page"><span class="mono">01</span>Home</a></li>
+      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
+      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
+      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
+      <li><a href="/html/contact.html"><span class="mono">05</span>Contact</a></li>
+      <li><a href="/html/book.html"><span class="mono">06</span>Book a date</a></li>
+    </ul>
+  </nav>
+  <div class="menu-foot">
+    <p class="mono" data-clock aria-hidden="true"></p>
+    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  </div>
+</div>
+
+<main id="main">
+
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-meta">
+      <span class="mono">Awka, Anambra — NG</span>
+      <span class="mono">Weddings · Celebrations · Openings · Mobile shoots</span>
+      <span class="mono"><span class="dot" aria-hidden="true"></span>Booking 2026 open</span>
+    </div>
+    <h1 class="display hero-title" id="hero-title">
+      <span class="line"><span class="line-inner">Your day,</span></span>
+      <span class="line indent"><span class="line-inner">kept in
+        <span class="frame-inline" aria-hidden="true"><video data-ambient muted loop playsinline preload="metadata" poster="/media/films/film-gold.jpg"><source src="/media/films/film-gold.mp4" type="video/mp4"></video></span>
+        <em>motion.</em></span></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="lede">Films and photographs of weddings, celebrations and the people in them. Based in Awka, filming wherever in Nigeria you need us.</p>
+      <nav class="hero-links" aria-label="Explore">
+        <a href="#reel">Watch the reel <span class="mono" aria-hidden="true">↓</span></a>
+        <a href="/html/videos.html">Selected films <span class="mono">06</span></a>
+        <a href="/html/book.html">Check open dates <span class="mono" aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="reel wrap" id="reel" aria-label="Showreel">
+    <figure class="player" data-player data-autoplay data-label="showreel">
+      <div class="frame" data-aperture data-cursor="Play">
+        <video playsinline muted loop preload="metadata" poster="/media/films/reel.jpg"><source src="/media/films/reel.mp4" type="video/mp4"></video>
+      </div>
+    </figure>
+    <div class="frame-meta"><span class="mono">Showreel 2026</span><span class="mono">4K · 24fps · 2.39:1 · Graded in DaVinci Resolve</span></div>
+  </section>
+
+  <section class="section wrap" id="work" aria-labelledby="work-title">
+    <div class="work-head">
+      <div>
+        <p class="eyebrow"><span class="num">01</span><span class="label">Selected films</span></p>
+        <h2 class="display h2" id="work-title" data-reveal>Days we were<br>trusted to <em>keep.</em></h2>
+      </div>
+      <a class="link-arrow" href="/html/videos.html">All films</a>
+    </div>
+    <div class="work">
+      <ol class="work-list" id="work-list"></ol>
+      <aside class="work-preview" id="work-preview" aria-hidden="true">
+        <div class="frame"></div>
+        <p class="frame-meta"><span class="mono">Preview</span><span class="mono work-preview-caption"></span></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="cover-title" style="padding-top:0">
+    <p class="eyebrow"><span class="num">02</span><span class="label">What we cover</span></p>
+    <h2 class="display h2" id="cover-title" data-reveal style="margin-bottom:clamp(2rem,5vw,4rem)">Every kind of day<br>worth <em>remembering.</em></h2>
+
+    <article class="cover-row" style="--f: 1 / span 5; --t: 7 / span 5">
+      <div class="frame" data-ratio="port"><img src="/media/stills/f05.jpg" alt="" loading="lazy" data-parallax></div>
+      <div class="cover-text" data-reveal>
+        <span class="mono gold">01</span>
+        <h3 class="h3">Weddings &amp; traditional marriages</h3>
+        <p style="color:var(--ink-dim);max-width:44ch">White weddings, igba nkwu and introductions. We cover the preparations, the ceremony and the party, with a second camera when the day is big.</p>
+        <p class="mono deliver">Highlight film · Full ceremony edit · Teaser in 48 hours</p>
+      </div>
+    </article>
+
+    <article class="cover-row" style="--f: 6 / span 7; --t: 1 / span 4">
+      <div class="frame" data-ratio="edit"><img src="/media/stills/f04.jpg" alt="" loading="lazy" data-parallax></div>
+      <div class="cover-text" data-reveal>
+        <span class="mono gold">02</span>
+        <h3 class="h3">Birthdays &amp; celebrations</h3>
+        <p style="color:var(--ink-dim);max-width:44ch">Milestone birthdays, anniversaries and parties, filmed to the music and edited to be watched again.</p>
+        <p class="mono deliver">Party film · Speeches edit · Same-night recap</p>
+      </div>
+    </article>
+
+    <article class="cover-row" style="--f: 1 / span 8; --t: 9 / span 4">
+      <div class="frame" data-ratio="wide"><img src="/media/stills/f09.jpg" alt="" loading="lazy" data-parallax></div>
+      <div class="cover-text" data-reveal>
+        <span class="mono gold">03</span>
+        <h3 class="h3">Funerals &amp; thanksgivings</h3>
+        <p style="color:var(--ink-dim);max-width:44ch">Quiet, respectful coverage of the service and the thanksgiving after, so the family has the day to keep.</p>
+        <p class="mono deliver">Tribute film · Full service recording · Photos</p>
+      </div>
+    </article>
+
+    <article class="cover-row" style="--f: 7 / span 6; --t: 1 / span 5">
+      <div class="frame" data-ratio="land"><img src="/media/stills/f10.jpg" alt="" loading="lazy" data-parallax></div>
+      <div class="cover-text" data-reveal>
+        <span class="mono gold">04</span>
+        <h3 class="h3">Openings &amp; brand events</h3>
+        <p style="color:var(--ink-dim);max-width:44ch">Launches and grand openings, with interviews, a fast recap and vertical cuts ready for social media.</p>
+        <p class="mono deliver">Launch film · Vertical reels · Aerial clips</p>
+      </div>
+    </article>
+
+    <article class="cover-row" style="--f: 2 / span 4; --t: 7 / span 5">
+      <div class="frame" data-ratio="tall"><img src="/media/stills/f02.jpg" alt="" loading="lazy" data-parallax></div>
+      <div class="cover-text" data-reveal>
+        <span class="mono gold">05</span>
+        <h3 class="h3">Mobile &amp; pre-wedding shoots</h3>
+        <p style="color:var(--ink-dim);max-width:44ch">Short, light shoots for save-the-dates, birthdays and portraits, delivered ready for Instagram.</p>
+        <p class="mono deliver">Vertical film · Graded stills · 1–3 hours</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="section sheet" data-sheet aria-labelledby="sheet-title">
+    <div class="wrap sheet-head">
+      <div>
+        <p class="eyebrow"><span class="num">03</span><span class="label">Contact sheet</span></p>
+        <h2 class="display h2" id="sheet-title">Frames from<br>the <em>edit.</em></h2>
+      </div>
+      <a class="link-arrow" href="/html/gallery.html">All stills</a>
+    </div>
+    <div class="sheet-track">
+
+      <figure class="sheet-frame">
+        <div class="frame"><img src="/media/stills/f01.jpg" alt="Reception entrance" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/001</span><span class="mono">35mm · f/1.8 · tungsten</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame is-wide">
+        <div class="frame"><img src="/media/stills/f03.jpg" alt="River, blue hour" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/002</span><span class="mono">24mm · f/2.8 · 1/60</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame">
+        <div class="frame"><img src="/media/stills/f08.jpg" alt="Candles before the toast" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/003</span><span class="mono">50mm · f/1.2 · 1/125</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame is-wide">
+        <div class="frame"><img src="/media/stills/f12.jpg" alt="The vows" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/004</span><span class="mono">85mm · f/1.8 · 1/250</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame">
+        <div class="frame"><img src="/media/stills/f11.jpg" alt="Stage light portrait" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/005</span><span class="mono">85mm · f/1.4 · 1/320</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame is-wide">
+        <div class="frame"><img src="/media/stills/f06.jpg" alt="City lights" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/006</span><span class="mono">35mm · f/1.4 · 1/100</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame">
+        <div class="frame"><img src="/media/stills/f07.jpg" alt="Studio portrait" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/007</span><span class="mono">85mm · f/2 · 1/250</span></figcaption>
+      </figure>
+
+      <figure class="sheet-frame is-wide">
+        <div class="frame"><img src="/media/stills/f10.jpg" alt="Confetti exit" loading="lazy"></div>
+        <figcaption><span class="mono gold">F/008</span><span class="mono">24mm · f/4 · 1/1000</span></figcaption>
+      </figure>
+    </div>
+    <div class="sheet-progress" aria-hidden="true"><span></span></div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="approach-title">
+    <p class="eyebrow"><span class="num">04</span><span class="label">How we work</span></p>
+    <div class="approach">
+      <h2 class="display statement" id="approach-title" data-reveal>We film what happened, <em>not</em> a performance of it.</h2>
+      <div class="principles">
+        <div class="principle" data-reveal>
+          <h3 class="h3">Plan the day, then stay out of the way</h3>
+          <p>We agree the timeline and the must-have moments before the day, so on the day we can stay quiet and watch.</p>
+        </div>
+        <div class="principle" data-reveal>
+          <h3 class="h3">Light first</h3>
+          <p>Halls are often dark and lit with mixed colours. We bring our own light and fast lenses, so skin looks like skin, not orange.</p>
+        </div>
+        <div class="principle" data-reveal>
+          <h3 class="h3">Edit for the people in it</h3>
+          <p>The film is cut for you and your family to watch again in ten years, not for a trend. Social media cuts come separately.</p>
+        </div>
+      </div>
+      <dl class="kit" data-reveal>
+        <div><dt class="mono">Cameras</dt><dd>Sony FX3 · A7S III</dd></div>
+        <div><dt class="mono">Lenses</dt><dd>24–70mm f/2.8 · 35mm f/1.4 · 85mm f/1.4</dd></div>
+        <div><dt class="mono">Light</dt><dd>Aputure 300d · 2 × RGB tubes</dd></div>
+        <div><dt class="mono">Air</dt><dd>DJI Mini 4 Pro</dd></div>
+        <div><dt class="mono">Sound</dt><dd>Wireless lavaliers · Zoom recorder</dd></div>
+        <div><dt class="mono">Colour</dt><dd>DaVinci Resolve</dd></div>
+        <div><dt class="mono gold">Note</dt><dd style="color:var(--ink-dim)">Placeholder kit list, to be confirmed by Dreas</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="words-title" style="padding-top:0">
+    <p class="eyebrow"><span class="num">05</span><span class="label">Kind words</span></p>
+    <h2 class="sr-only" id="words-title">What clients say</h2>
+    <div class="words">
+      <figure class="quote" style="--q: 1 / span 7" data-reveal>
+        <blockquote><p>Sample quote. Replace this with a real client review, two or three sentences about the day and the film.</p></blockquote>
+        <figcaption><span class="label">Client name</span><span class="mono">Wedding · Awka · <span class="gold">Sample, replace with a real review</span></span></figcaption>
+      </figure>
+      <figure class="quote" style="--q: 6 / span 7" data-reveal>
+        <blockquote><p>Sample quote. A second real review here, ideally from a different kind of event.</p></blockquote>
+        <figcaption><span class="label">Client name</span><span class="mono">Birthday · Enugu · <span class="gold">Sample, replace with a real review</span></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="closer" aria-labelledby="closer-title">
+    <div class="frame"><img src="/media/stills/f12.jpg" alt="" loading="lazy" data-parallax></div>
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">06</span><span class="label">Booking 2026</span></p>
+      <h2 class="display" id="closer-title" data-reveal>Tell us the date. <em>We&rsquo;ll keep the light.</em></h2>
+      <div class="actions">
+        <a class="btn btn-gold" href="/html/book.html">Check open dates</a>
+        <a class="btn btn-wa" href="https://wa.me/2348136078551" target="_blank" rel="noopener">Message on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
+        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+      </div>
+      <div>
+        <h2 class="label">Pages</h2>
+        <ul>
+          <li><a href="/html/videos.html">Films</a></li>
+          <li><a href="/html/gallery.html">Stills</a></li>
+          <li><a href="/html/about.html">About</a></li>
+          <li><a href="/html/contact.html">Contact</a></li>
+          <li><a href="/html/book.html">Book a date</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Contact</h2>
+        <ul>
+          <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
+          <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Follow</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
+      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+    </div>
+  </div>
 </footer>
+</body>
 </html>
