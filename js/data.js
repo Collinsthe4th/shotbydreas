@@ -29,8 +29,7 @@ window.SBD = {
       video: '/media/films/film-gold.mp4',
       poster: '/media/films/film-gold.jpg',
       cover: '/media/stills/f01.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f01.jpg', '/media/stills/f10.jpg', '/media/stills/f12.jpg'],
+      stills: ['/media/stills/f01.jpg', '/media/stills/f10.jpg', '/media/stills/f12.jpg'],
     },
     {
       id: 'igba-nkwu',
@@ -50,8 +49,7 @@ window.SBD = {
       video: '/media/films/film-embers.mp4',
       poster: '/media/films/film-embers.jpg',
       cover: '/media/stills/f04.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f04.jpg', '/media/stills/f08.jpg', '/media/stills/f05.jpg'],
+      stills: ['/media/stills/f04.jpg', '/media/stills/f08.jpg', '/media/stills/f05.jpg'],
     },
     {
       id: 'blue-hour',
@@ -71,8 +69,7 @@ window.SBD = {
       video: '/media/films/film-bluehour.mp4',
       poster: '/media/films/film-bluehour.jpg',
       cover: '/media/stills/f06.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f06.jpg', '/media/stills/f03.jpg', '/media/stills/f11.jpg'],
+      stills: ['/media/stills/f06.jpg', '/media/stills/f03.jpg', '/media/stills/f11.jpg'],
     },
     {
       id: 'ember-night',
@@ -91,8 +88,7 @@ window.SBD = {
       video: '/media/films/film-embers.mp4',
       poster: '/media/films/film-embers.jpg',
       cover: '/media/stills/f08.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f08.jpg', '/media/stills/f04.jpg', '/media/stills/f02.jpg'],
+      stills: ['/media/stills/f08.jpg', '/media/stills/f04.jpg', '/media/stills/f02.jpg'],
     },
     {
       id: 'a-life-celebrated',
@@ -112,8 +108,7 @@ window.SBD = {
       video: '/media/films/film-gold.mp4',
       poster: '/media/films/film-gold.jpg',
       cover: '/media/stills/f09.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f09.jpg', '/media/stills/f07.jpg', '/media/stills/f05.jpg'],
+      stills: ['/media/stills/f09.jpg', '/media/stills/f07.jpg', '/media/stills/f05.jpg'],
     },
     {
       id: 'doors-open',
@@ -132,8 +127,7 @@ window.SBD = {
       video: '/media/films/film-mobile.mp4',
       poster: '/media/films/film-mobile.jpg',
       cover: '/media/stills/f02.jpg',
-      // span = columns out of 12 on desktop. Each row of the grid adds up to 12.
-  stills: ['/media/stills/f02.jpg', '/media/stills/f10.jpg', '/media/stills/f03.jpg'],
+      stills: ['/media/stills/f02.jpg', '/media/stills/f10.jpg', '/media/stills/f03.jpg'],
     },
   ],
 
