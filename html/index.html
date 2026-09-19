@@ -3,21 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SHOTBYDREAS · Event films & photography, Awka</title>
-  <meta name="description" content="Wedding, celebration and event films and photography by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
-  <meta name="theme-color" content="#0b0a09">
+  <title>SHOTBYDREAS · Videography & photography, Awka</title>
+  <meta name="description" content="Wedding, celebration and event films and photographs by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1eee8">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0e0d">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SHOTBYDREAS · Event films & photography, Awka">
-  <meta property="og:description" content="Wedding, celebration and event films and photography by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
+  <meta property="og:title" content="SHOTBYDREAS · Videography & photography, Awka">
+  <meta property="og:description" content="Wedding, celebration and event films and photographs by Dreas, based in Awka, Anambra. Check open dates and book on WhatsApp.">
   <meta property="og:image" content="/media/films/reel.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/archivo.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
-    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    /* Theme before first paint: saved choice, otherwise the device setting.
+       Also hide animated elements until GSAP has set their start state (3s fallback). */
     (function (d) {
+      var t;
+      try { t = localStorage.getItem('sbd-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.dataset.theme = t;
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       d.classList.add('js-motion');
       setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
@@ -26,8 +31,9 @@
   <script src="/vendor/gsap/gsap.min.js" defer></script>
   <script src="/vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script src="/js/data.js" defer></script>
+  <script src="/js/iris.js" defer></script>
   <script src="/js/site.js" defer></script>
-  <script src="/js/work.js" defer></script>
+  <script src="/js/home.js" defer></script>
 </head>
 <body data-page="index">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,8 +41,7 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
-      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
-      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+      <img src="/media/brand/sbd-logo-black.png" alt="" width="46" height="46">
     </a>
     <nav class="site-nav" aria-label="Main">
       <ul>
@@ -46,245 +51,149 @@
         <li><a href="/html/contact.html">Contact</a></li>
       </ul>
     </nav>
-    <div class="header-meta">
-      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
-      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
+    <div class="header-actions">
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+      <a class="btn btn-sm header-book" href="/html/book.html">Book a date</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+      </button>
     </div>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
-      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
-    </button>
   </div>
 </header>
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu">
     <ul class="menu-links">
-      <li><a href="/html/index.html" aria-current="page"><span class="mono">01</span>Home</a></li>
-      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
-      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
-      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
-      <li><a href="/html/contact.html"><span class="mono">05</span>Contact</a></li>
-      <li><a href="/html/book.html"><span class="mono">06</span>Book a date</a></li>
+      <li><a href="/html/index.html" aria-current="page">Home</a></li>
+      <li><a href="/html/videos.html">Films</a></li>
+      <li><a href="/html/gallery.html">Stills</a></li>
+      <li><a href="/html/about.html">About</a></li>
+      <li><a href="/html/contact.html">Contact</a></li>
+      <li><a href="/html/book.html">Book a date</a></li>
     </ul>
   </nav>
-  <div class="menu-foot">
-    <p class="mono" data-clock aria-hidden="true"></p>
-    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  <div class="menu-foot small dim">
+    <p>+234 813 607 8551</p>
+    <p>Awka, Anambra · Mon–Sat, 10:00–18:00</p>
   </div>
 </div>
 
 <main id="main">
 
-  <section class="hero wrap" aria-labelledby="hero-title">
-    <div class="hero-meta">
-      <span class="mono">Awka, Anambra — NG</span>
-      <span class="mono">Weddings · Celebrations · Openings · Mobile shoots</span>
-      <span class="mono"><span class="dot" aria-hidden="true"></span>Booking 2026 open</span>
-    </div>
-    <h1 class="display hero-title" id="hero-title">
-      <span class="line"><span class="line-inner">Your day,</span></span>
-      <span class="line indent"><span class="line-inner">kept in
-        <span class="frame-inline" aria-hidden="true"><video data-ambient muted loop playsinline preload="metadata" poster="/media/films/film-gold.jpg"><source src="/media/films/film-gold.mp4" type="video/mp4"></video></span>
-        <em>motion.</em></span></span>
-    </h1>
-    <div class="hero-foot">
-      <p class="lede">Films and photographs of weddings, celebrations and the people in them. Based in Awka, filming wherever in Nigeria you need us.</p>
-      <nav class="hero-links" aria-label="Explore">
-        <a href="#reel">Watch the reel <span class="mono" aria-hidden="true">↓</span></a>
-        <a href="/html/videos.html">Selected films <span class="mono">06</span></a>
-        <a href="/html/book.html">Check open dates <span class="mono" aria-hidden="true">→</span></a>
-      </nav>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-stage">
+      <div class="hero-media">
+        <video data-ambient muted loop playsinline preload="metadata" poster="/media/films/reel.jpg" aria-hidden="true"><source src="/media/films/reel.mp4" type="video/mp4"></video>
+      </div>
+      <div class="hero-iris" data-iris></div>
+      <h1 class="hero-title brand-type" id="hero-title">
+        <span class="sr-only">SHOTBYDREAS</span>
+        <span class="hero-word left" aria-hidden="true"><span>Shotby</span></span>
+        <span class="hero-word right" aria-hidden="true"><span>Dreas</span></span>
+      </h1>
+      <p class="hero-side tl">Videography<br>&amp; photography</p>
+      <p class="hero-side tr">Awka, Anambra<br>Nigeria</p>
+      <p class="hero-side bl">Weddings, celebrations,<br>events &amp; mobile shoots</p>
+      <p class="hero-side br"><span class="dot" aria-hidden="true"></span>Booking for 2026</p>
+      <button type="button" class="btn btn-line btn-sm hero-play" data-play-reel><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>Play reel</button>
     </div>
   </section>
 
-  <section class="reel wrap" id="reel" aria-label="Showreel">
-    <figure class="player" data-player data-autoplay data-label="showreel">
-      <div class="frame" data-aperture data-cursor="Play">
-        <video playsinline muted loop preload="metadata" poster="/media/films/reel.jpg"><source src="/media/films/reel.mp4" type="video/mp4"></video>
-      </div>
-    </figure>
-    <div class="frame-meta"><span class="mono">Showreel 2026</span><span class="mono">4K · 24fps · 2.39:1 · Graded in DaVinci Resolve</span></div>
+  <section class="section wrap" aria-label="About SHOTBYDREAS">
+    <p class="statement" data-words><span class="w">We</span> <span class="w">film</span> <span class="w">and</span> <span class="w">photograph</span> <span class="w">weddings,</span> <span class="w">celebrations</span> <span class="w">and</span> <span class="w">the</span> <span class="w">people</span> <span class="w">in</span> <span class="w">them.</span> <span class="w">Quietly,</span> <span class="w"><em class="it">honestly,</em></span> <span class="w">in</span> <span class="w">the</span> <span class="w">light</span> <span class="w">that</span> <span class="w">was</span> <span class="w">already</span> <span class="w">there.</span></p>
+    <div class="statement-foot">
+      <p class="lede dim" data-reveal>Based in Awka and working across Nigeria. Every booking starts with a date and a conversation on WhatsApp.</p>
+      <a class="link" href="/html/about.html">About Dreas</a>
+    </div>
   </section>
 
-  <section class="section wrap" id="work" aria-labelledby="work-title">
-    <div class="work-head">
-      <div>
-        <p class="eyebrow"><span class="num">01</span><span class="label">Selected films</span></p>
-        <h2 class="display h2" id="work-title" data-reveal>Days we were<br>trusted to <em>keep.</em></h2>
-      </div>
-      <a class="link-arrow" href="/html/videos.html">All films</a>
+  <section class="section wrap" aria-labelledby="films-title" style="padding-top:0">
+    <div class="index-head">
+      <h2 class="h2" id="films-title" data-reveal>Selected <em class="it">films</em></h2>
+      <a class="link" href="/html/videos.html">All films</a>
     </div>
-    <div class="work">
-      <ol class="work-list" id="work-list"></ol>
-      <aside class="work-preview" id="work-preview" aria-hidden="true">
-        <div class="frame"></div>
-        <p class="frame-meta"><span class="mono">Preview</span><span class="mono work-preview-caption"></span></p>
-      </aside>
-    </div>
+    <ol class="index-list" id="film-index"></ol>
+    <div class="float-preview" aria-hidden="true"><img alt=""></div>
   </section>
 
   <section class="section wrap" aria-labelledby="cover-title" style="padding-top:0">
-    <p class="eyebrow"><span class="num">02</span><span class="label">What we cover</span></p>
-    <h2 class="display h2" id="cover-title" data-reveal style="margin-bottom:clamp(2rem,5vw,4rem)">Every kind of day<br>worth <em>remembering.</em></h2>
-
-    <article class="cover-row" style="--f: 1 / span 5; --t: 7 / span 5">
-      <div class="frame" data-ratio="port"><img src="/media/stills/f05.jpg" alt="" loading="lazy" data-parallax></div>
-      <div class="cover-text" data-reveal>
-        <span class="mono gold">01</span>
-        <h3 class="h3">Weddings &amp; traditional marriages</h3>
-        <p style="color:var(--ink-dim);max-width:44ch">White weddings, igba nkwu and introductions. We cover the preparations, the ceremony and the party, with a second camera when the day is big.</p>
-        <p class="mono deliver">Highlight film · Full ceremony edit · Teaser in 48 hours</p>
+    <div class="cover">
+      <div class="cover-media" aria-hidden="true">
+        <img src="/media/stills/f05.jpg" alt="" loading="lazy">
+        <img src="/media/stills/f04.jpg" alt="" loading="lazy">
+        <img src="/media/stills/f09.jpg" alt="" loading="lazy">
+        <img src="/media/stills/f10.jpg" alt="" loading="lazy">
+        <img src="/media/stills/f02.jpg" alt="" loading="lazy">
       </div>
-    </article>
+      <div class="cover-list">
+        <h2 class="h2" id="cover-title" data-reveal>What we <em class="it">cover</em></h2>
 
-    <article class="cover-row" style="--f: 6 / span 7; --t: 1 / span 4">
-      <div class="frame" data-ratio="edit"><img src="/media/stills/f04.jpg" alt="" loading="lazy" data-parallax></div>
-      <div class="cover-text" data-reveal>
-        <span class="mono gold">02</span>
-        <h3 class="h3">Birthdays &amp; celebrations</h3>
-        <p style="color:var(--ink-dim);max-width:44ch">Milestone birthdays, anniversaries and parties, filmed to the music and edited to be watched again.</p>
-        <p class="mono deliver">Party film · Speeches edit · Same-night recap</p>
-      </div>
-    </article>
+        <article class="cover-item">
+          <img src="/media/stills/f05.jpg" alt="" loading="lazy">
+          <h3 class="h3">Weddings &amp; traditional marriages</h3>
+          <p>White weddings, igba nkwu and introductions. The preparations, the ceremony and the party, with a second camera when the day is big.</p>
+          <p class="incl">Highlight film, full ceremony edit, teaser within 48 hours</p>
+        </article>
 
-    <article class="cover-row" style="--f: 1 / span 8; --t: 9 / span 4">
-      <div class="frame" data-ratio="wide"><img src="/media/stills/f09.jpg" alt="" loading="lazy" data-parallax></div>
-      <div class="cover-text" data-reveal>
-        <span class="mono gold">03</span>
-        <h3 class="h3">Funerals &amp; thanksgivings</h3>
-        <p style="color:var(--ink-dim);max-width:44ch">Quiet, respectful coverage of the service and the thanksgiving after, so the family has the day to keep.</p>
-        <p class="mono deliver">Tribute film · Full service recording · Photos</p>
-      </div>
-    </article>
+        <article class="cover-item">
+          <img src="/media/stills/f04.jpg" alt="" loading="lazy">
+          <h3 class="h3">Birthdays &amp; celebrations</h3>
+          <p>Milestone birthdays, anniversaries and parties, filmed to the music and edited to be watched again.</p>
+          <p class="incl">Party film, speeches edit, same-night recap</p>
+        </article>
 
-    <article class="cover-row" style="--f: 7 / span 6; --t: 1 / span 5">
-      <div class="frame" data-ratio="land"><img src="/media/stills/f10.jpg" alt="" loading="lazy" data-parallax></div>
-      <div class="cover-text" data-reveal>
-        <span class="mono gold">04</span>
-        <h3 class="h3">Openings &amp; brand events</h3>
-        <p style="color:var(--ink-dim);max-width:44ch">Launches and grand openings, with interviews, a fast recap and vertical cuts ready for social media.</p>
-        <p class="mono deliver">Launch film · Vertical reels · Aerial clips</p>
-      </div>
-    </article>
+        <article class="cover-item">
+          <img src="/media/stills/f09.jpg" alt="" loading="lazy">
+          <h3 class="h3">Funerals &amp; thanksgivings</h3>
+          <p>Quiet, respectful coverage of the service and the thanksgiving after, so the family has the day to keep.</p>
+          <p class="incl">Tribute film, full service recording, photos</p>
+        </article>
 
-    <article class="cover-row" style="--f: 2 / span 4; --t: 7 / span 5">
-      <div class="frame" data-ratio="tall"><img src="/media/stills/f02.jpg" alt="" loading="lazy" data-parallax></div>
-      <div class="cover-text" data-reveal>
-        <span class="mono gold">05</span>
-        <h3 class="h3">Mobile &amp; pre-wedding shoots</h3>
-        <p style="color:var(--ink-dim);max-width:44ch">Short, light shoots for save-the-dates, birthdays and portraits, delivered ready for Instagram.</p>
-        <p class="mono deliver">Vertical film · Graded stills · 1–3 hours</p>
+        <article class="cover-item">
+          <img src="/media/stills/f10.jpg" alt="" loading="lazy">
+          <h3 class="h3">Openings &amp; brand events</h3>
+          <p>Launches and grand openings, with interviews, a fast recap and vertical cuts for social media.</p>
+          <p class="incl">Launch film, vertical reels, photos</p>
+        </article>
+
+        <article class="cover-item">
+          <img src="/media/stills/f02.jpg" alt="" loading="lazy">
+          <h3 class="h3">Mobile &amp; pre-wedding shoots</h3>
+          <p>Short, light shoots for save-the-dates, birthdays and portraits, delivered ready for Instagram.</p>
+          <p class="incl">Vertical film and edited photos, 1 to 3 hours</p>
+        </article>
       </div>
-    </article>
+    </div>
   </section>
 
-  <section class="section sheet" data-sheet aria-labelledby="sheet-title">
-    <div class="wrap sheet-head">
-      <div>
-        <p class="eyebrow"><span class="num">03</span><span class="label">Contact sheet</span></p>
-        <h2 class="display h2" id="sheet-title">Frames from<br>the <em>edit.</em></h2>
-      </div>
-      <a class="link-arrow" href="/html/gallery.html">All stills</a>
+  <section class="section" aria-labelledby="strip-title" style="padding-top:0">
+    <div class="wrap strip-head">
+      <h2 class="h2" id="strip-title" data-reveal>Still <em class="it">frames</em></h2>
+      <a class="link" href="/html/gallery.html">All stills</a>
     </div>
-    <div class="sheet-track">
-
-      <figure class="sheet-frame">
-        <div class="frame"><img src="/media/stills/f01.jpg" alt="Reception entrance" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/001</span><span class="mono">35mm · f/1.8 · tungsten</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame is-wide">
-        <div class="frame"><img src="/media/stills/f03.jpg" alt="River, blue hour" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/002</span><span class="mono">24mm · f/2.8 · 1/60</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame">
-        <div class="frame"><img src="/media/stills/f08.jpg" alt="Candles before the toast" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/003</span><span class="mono">50mm · f/1.2 · 1/125</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame is-wide">
-        <div class="frame"><img src="/media/stills/f12.jpg" alt="The vows" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/004</span><span class="mono">85mm · f/1.8 · 1/250</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame">
-        <div class="frame"><img src="/media/stills/f11.jpg" alt="Stage light portrait" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/005</span><span class="mono">85mm · f/1.4 · 1/320</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame is-wide">
-        <div class="frame"><img src="/media/stills/f06.jpg" alt="City lights" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/006</span><span class="mono">35mm · f/1.4 · 1/100</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame">
-        <div class="frame"><img src="/media/stills/f07.jpg" alt="Studio portrait" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/007</span><span class="mono">85mm · f/2 · 1/250</span></figcaption>
-      </figure>
-
-      <figure class="sheet-frame is-wide">
-        <div class="frame"><img src="/media/stills/f10.jpg" alt="Confetti exit" loading="lazy"></div>
-        <figcaption><span class="mono gold">F/008</span><span class="mono">24mm · f/4 · 1/1000</span></figcaption>
-      </figure>
-    </div>
-    <div class="sheet-progress" aria-hidden="true"><span></span></div>
-  </section>
-
-  <section class="section wrap" aria-labelledby="approach-title">
-    <p class="eyebrow"><span class="num">04</span><span class="label">How we work</span></p>
-    <div class="approach">
-      <h2 class="display statement" id="approach-title" data-reveal>We film what happened, <em>not</em> a performance of it.</h2>
-      <div class="principles">
-        <div class="principle" data-reveal>
-          <h3 class="h3">Plan the day, then stay out of the way</h3>
-          <p>We agree the timeline and the must-have moments before the day, so on the day we can stay quiet and watch.</p>
-        </div>
-        <div class="principle" data-reveal>
-          <h3 class="h3">Light first</h3>
-          <p>Halls are often dark and lit with mixed colours. We bring our own light and fast lenses, so skin looks like skin, not orange.</p>
-        </div>
-        <div class="principle" data-reveal>
-          <h3 class="h3">Edit for the people in it</h3>
-          <p>The film is cut for you and your family to watch again in ten years, not for a trend. Social media cuts come separately.</p>
-        </div>
-      </div>
-      <dl class="kit" data-reveal>
-        <div><dt class="mono">Cameras</dt><dd>Sony FX3 · A7S III</dd></div>
-        <div><dt class="mono">Lenses</dt><dd>24–70mm f/2.8 · 35mm f/1.4 · 85mm f/1.4</dd></div>
-        <div><dt class="mono">Light</dt><dd>Aputure 300d · 2 × RGB tubes</dd></div>
-        <div><dt class="mono">Air</dt><dd>DJI Mini 4 Pro</dd></div>
-        <div><dt class="mono">Sound</dt><dd>Wireless lavaliers · Zoom recorder</dd></div>
-        <div><dt class="mono">Colour</dt><dd>DaVinci Resolve</dd></div>
-        <div><dt class="mono gold">Note</dt><dd style="color:var(--ink-dim)">Placeholder kit list, to be confirmed by Dreas</dd></div>
-      </dl>
-    </div>
+    <div class="marquee" data-marquee></div>
+    <div class="marquee reverse" data-marquee></div>
   </section>
 
   <section class="section wrap" aria-labelledby="words-title" style="padding-top:0">
-    <p class="eyebrow"><span class="num">05</span><span class="label">Kind words</span></p>
-    <h2 class="sr-only" id="words-title">What clients say</h2>
-    <div class="words">
-      <figure class="quote" style="--q: 1 / span 7" data-reveal>
+    <h2 class="h2" id="words-title" data-reveal style="margin-bottom:clamp(2.5rem,6vw,5rem)">Kind <em class="it">words</em></h2>
+    <div class="quotes">
+      <figure class="quote" data-reveal>
         <blockquote><p>Sample quote. Replace this with a real client review, two or three sentences about the day and the film.</p></blockquote>
-        <figcaption><span class="label">Client name</span><span class="mono">Wedding · Awka · <span class="gold">Sample, replace with a real review</span></span></figcaption>
+        <figcaption>Client name, wedding in Awka · <span class="sample">Sample, replace with a real review</span></figcaption>
       </figure>
-      <figure class="quote" style="--q: 6 / span 7" data-reveal>
+      <figure class="quote" data-reveal>
         <blockquote><p>Sample quote. A second real review here, ideally from a different kind of event.</p></blockquote>
-        <figcaption><span class="label">Client name</span><span class="mono">Birthday · Enugu · <span class="gold">Sample, replace with a real review</span></span></figcaption>
+        <figcaption>Client name, birthday in Enugu · <span class="sample">Sample, replace with a real review</span></figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="closer" aria-labelledby="closer-title">
-    <div class="frame"><img src="/media/stills/f12.jpg" alt="" loading="lazy" data-parallax></div>
-    <div class="wrap">
-      <p class="eyebrow"><span class="num">06</span><span class="label">Booking 2026</span></p>
-      <h2 class="display" id="closer-title" data-reveal>Tell us the date. <em>We&rsquo;ll keep the light.</em></h2>
-      <div class="actions">
-        <a class="btn btn-gold" href="/html/book.html">Check open dates</a>
-        <a class="btn btn-wa" href="https://wa.me/2348136078551" target="_blank" rel="noopener">Message on WhatsApp</a>
-      </div>
+  <section class="section wrap cta" aria-label="Book a date">
+    <a class="cta-link brand-type" href="/html/book.html" data-reveal>Book your <em class="it">date</em></a>
+    <div class="cta-foot">
+      <p class="lede dim">Check open dates on the calendar and send your details straight to Dreas on WhatsApp.</p>
+      <a class="btn btn-line" href="https://wa.me/2348136078551" target="_blank" rel="noopener">Message on WhatsApp</a>
     </div>
   </section>
 
@@ -294,8 +203,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
-        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+        <img class="logo" src="/media/brand/sbd-logo-black.png" alt="SHOTBYDREAS" width="72" height="71" loading="lazy">
+        <p>Films and photographs of weddings, celebrations and events. Based in Awka, Anambra.</p>
       </div>
       <div>
         <h2 class="label">Pages</h2>
@@ -312,7 +221,7 @@
         <ul>
           <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
           <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+          <li class="dim">Mon–Sat, 10:00–18:00</li>
         </ul>
       </div>
       <div>
@@ -323,8 +232,8 @@
       </div>
     </div>
     <div class="footer-base">
-      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
-      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+      <p>&copy; <span data-year>2026</span> SHOTBYDREAS</p>
+      <p class="sample">Films, photos and some text are placeholders until Dreas&rsquo;s work is added</p>
     </div>
   </div>
 </footer>
