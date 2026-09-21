@@ -16,17 +16,19 @@ If the calendar cannot be reached, the form still works. Clients can pick any da
 
 ```text
 html/                 Pages: index (home), videos (films), gallery (stills), about, contact, book
-css/site.css          The whole design system (tokens, type, layout, components, every page)
+css/site.css          The whole design system: light and dark themes, type, layout, every page
 js/data.js            Films and stills shown on the site. Edit this to add real work.
-js/site.js            Shared: header, menu, clock, video player, film drawer, cursor, GSAP motion
-js/work.js            Home film index + Films page filter grid
-js/gallery.js         Stills grid + lightbox
+js/site.js            Shared: theme toggle, header, menu, video player, film drawer, showreel, motion
+js/iris.js            The camera iris drawn in the home page hero
+js/home.js            Home: aperture hero, statement, film index, services, moving stills
+js/films.js           Films page filters and grid
+js/gallery.js         Stills page filters, masonry and photo viewer
 js/contact.js         Quick question form (opens WhatsApp)
 js/book.js            Booking calendar and form
-media/brand/          Logo (white and black, transparent background), favicon
+media/brand/          Logo (black and white versions, transparent background), favicon
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
-media/fonts/          Bodoni Moda, Montserrat, JetBrains Mono (self-hosted, SIL Open Font License)
+media/fonts/          Archivo and Instrument Serif (self-hosted, SIL Open Font License)
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (free calendar feed)
 api/                  Vercel serverless functions
@@ -43,18 +45,22 @@ The API uses only Node.js built-ins, so there is nothing to install. The header,
 
 ## Design notes
 
-"Darkroom Editorial": near-black background, warm off-white text and the brand gold used only for small accents (timecodes, active states, the booking button). Headlines use Bodoni Moda, a high-contrast serif that echoes the SD monogram. Labels use Montserrat, which matches the wordmark, and camera details use JetBrains Mono.
+"Quiet Aperture": a minimal photography site built around the logo's aperture.
 
-Motion (GSAP, in `js/site.js`): headline lines rise out of masks on load, the showreel opens like an aperture as it scrolls in, sections fade up once, photos drift slightly slower than their frames, and the home contact sheet pins and scrolls sideways on desktop. Everything is switched off for visitors who set "reduce motion", and the site still works fully if GSAP fails to load.
+- **Hero:** the brand name sits either side of a camera iris in the centre of the screen. The iris opens on load to show the showreel, and on scroll the aperture widens until the reel fills the screen. "Play reel" opens it full screen with sound.
+- **Colour:** warm paper and ink with one gold accent, in a light and a dark theme. Visitors get their device setting first, and the toggle in the header remembers their choice.
+- **Type:** Archivo, with its widest cut for the brand name (to echo the spaced-out logo wordmark), and Instrument Serif italic for a single accent word in each heading.
+- **Motion (GSAP):** the iris opening, the aperture widening, the statement's words coming into focus while you read, photos opening like a shutter, a film index whose preview image follows the pointer, and slowly moving strips of stills. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
+- Arrows only appear on the calendar and the photo viewer, with a thick stroke. There are no camera or equipment details anywhere on the site.
 
 ## Replacing the placeholder content
 
 Everything marked as a placeholder on the site needs Dreas's real material:
 
-1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, deliverables and so on).
-2. **Showreel:** replace `media/films/reel.mp4` and `reel.jpg`. The headline clip on the home page uses `film-gold.mp4`.
-3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. `span` is the width out of 12 columns, so make each row add up to 12.
-4. **Copy:** the About bio, the kit list on the home page, the two sample quotes, and the FAQ answers in `html/about.html`.
+1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
+2. **Showreel:** replace `media/films/reel.mp4` and `reel.jpg`. It plays inside the hero aperture and in the full-screen player.
+3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
+4. **Copy:** the About bio and the two sample quotes on the home page.
 5. Remove the "placeholders" note in the footer of each page once real work is in.
 
 ## API
