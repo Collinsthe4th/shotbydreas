@@ -15,20 +15,19 @@ If the calendar cannot be reached, the form still works. Clients can pick any da
 ## Project structure
 
 ```text
-html/                 Pages: index (home), videos (films), gallery (stills), about, contact, book
-css/site.css          The whole design system: light and dark themes, type, layout, every page
+html/                 Pages: index (home), about, gallery, videos (gallery on the Events tab), contact, book
+css/site.css          The whole design system: colours, type, layout, every page
 js/data.js            Films and stills shown on the site. Edit this to add real work.
-js/site.js            Shared: theme toggle, header, menu, video player, film drawer, showreel, motion
+js/site.js            Shared: intro, header, menu, video player, film drawer, photo viewer, motion
 js/iris.js            The camera iris drawn in the home page hero
-js/home.js            Home: aperture hero, statement, film index, services, moving stills
-js/films.js           Films page filters and grid
-js/gallery.js         Stills page filters, masonry and photo viewer
-js/contact.js         Quick question form (opens WhatsApp)
+js/home.js            Home: hero entrance (letters and iris) and the showreel player
+js/gallery.js         Gallery: Photoshoots / Events tabs, photo grid and film grid
+js/contact.js         Leave a message form (opens WhatsApp)
 js/book.js            Booking calendar and form
 media/brand/          Logo (black and white versions, transparent background), favicon
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
-media/fonts/          Archivo and Instrument Serif (self-hosted, SIL Open Font License)
+media/fonts/          Bodoni Moda and Montserrat (self-hosted, SIL Open Font License)
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (free calendar feed)
 api/                  Vercel serverless functions
@@ -45,12 +44,12 @@ The API uses only Node.js built-ins, so there is nothing to install. The header,
 
 ## Design notes
 
-"Quiet Aperture": a minimal photography site built around the logo's aperture.
+The original layout (same pages, sections and headings), rebuilt as a luxury black site.
 
-- **Hero:** the brand name sits either side of a camera iris in the centre of the screen. The iris opens on load to show the showreel, and on scroll the aperture widens until the reel fills the screen. "Play reel" opens it full screen with sound.
-- **Colour:** warm paper and ink with one gold accent, in a light and a dark theme. Visitors get their device setting first, and the toggle in the header remembers their choice.
-- **Type:** Archivo, with its widest cut for the brand name (to echo the spaced-out logo wordmark), and Instrument Serif italic for a single accent word in each heading.
-- **Motion (GSAP):** the iris opening, the aperture widening, the statement's words coming into focus while you read, photos opening like a shutter, a film index whose preview image follows the pointer, and slowly moving strips of stills. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
+- **Colour:** deep black with ivory text and a champagne gold accent, taken from the original brand gold. Dark only.
+- **Type:** Bodoni Moda for headings (high-contrast, editorial) and Montserrat for text and labels, close to the logo's wordmark.
+- **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto the showreel. Click it to watch the reel with sound.
+- **Motion (GSAP):** a short logo intro on the first page of a visit, the brand letters rising and the iris opening, the iris narrowing as you scroll away, sections sliding in from the sides, gold rules drawing in, cards arriving in turn, slow parallax on photos, magnetic buttons, looping photos inside the ovals, the "Check out our latest covered event!" marquee and a light sweep across the banner. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
 - Arrows only appear on the calendar and the photo viewer, with a thick stroke. There are no camera or equipment details anywhere on the site.
 
 ## Replacing the placeholder content
@@ -60,7 +59,7 @@ Everything marked as a placeholder on the site needs Dreas's real material:
 1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
 2. **Showreel:** replace `media/films/reel.mp4` and `reel.jpg`. It plays inside the hero aperture and in the full-screen player.
 3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
-4. **Copy:** the About bio and the two sample quotes on the home page.
+4. **Copy:** the About bio and the three sample reviews on the home page.
 5. Remove the "placeholders" note in the footer of each page once real work is in.
 
 ## API

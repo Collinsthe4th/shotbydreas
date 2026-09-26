@@ -1,102 +1,78 @@
-// Stills page: filter tabs, a masonry of photos and a keyboard-friendly lightbox.
+// Gallery page (and videos.html): PHOTOSHOOTS / EVENTS tabs. Photoshoots is a masonry
+// of stills that open in the lightbox. Events is a grid of films that open in the drawer.
 
 (() => {
-  const grid = document.getElementById('stills');
-  const tabs = document.getElementById('still-tabs');
-  if (!grid || !tabs) return;
-  const { stills } = window.SBD;
   const ui = window.SBDUI;
-  const labels = { all: 'All', weddings: 'Weddings', celebrations: 'Celebrations', mobile: 'Mobile & pre-wedding', portraits: 'Portraits' };
+  const data = window.SBD;
+  const page = document.querySelector('[data-gallery]');
+  if (!ui || !data || !page) return;
 
-  grid.innerHTML = stills
+  // Photoshoots
+  const stills = page.querySelector('#panel-photos .stills');
+  stills.innerHTML = data.stills
     .map(
-      (s, i) => `
-      <figure class="still" data-category="${s.category}">
-        <button type="button" class="still-open" data-index="${i}" aria-haspopup="dialog" aria-label="Open photo: ${s.caption}">
-          <span class="frame" data-shutter>
-            <img src="${s.src}" alt="${s.caption}" width="${s.w}" height="${s.h}" loading="${i < 3 ? 'eager' : 'lazy'}">
-          </span>
-          <span class="still-cap">${s.caption}</span>
-        </button>
-      </figure>`,
+      (s, i) => `<button type="button" class="still" data-index="${i}" aria-label="Open photograph: ${s.caption}">
+        <img src="${s.src}" alt="${s.caption}" width="${s.w}" height="${s.h}" loading="lazy">
+      </button>`,
     )
     .join('');
+  stills.addEventListener('click', (e) => {
+    const b = e.target.closest('.still');
+    if (b) ui.openLightbox(data.stills, Number(b.dataset.index));
+  });
 
-  tabs.innerHTML = Object.entries(labels)
-    .map(([k, label]) => {
-      const n = k === 'all' ? stills.length : stills.filter((s) => s.category === k).length;
-      return n ? `<button type="button" class="tab" data-filter="${k}" aria-pressed="${k === 'all'}">${label}<sup class="num">${n}</sup></button>` : '';
-    })
+  // Events (films)
+  const events = page.querySelector('#panel-events .events-grid');
+  events.innerHTML = data.films
+    .map(
+      (f) => `<button type="button" class="event-card" data-id="${f.id}" aria-label="Watch ${f.title}">
+        <div class="frame">
+          <img src="${f.cover}" alt="" loading="lazy">
+          <span class="play" aria-hidden="true"><span>${ui.ICONS.play}</span></span>
+        </div>
+        <h3>${f.title}</h3>
+        <p>${f.type} · ${f.location} · ${f.runtime}</p>
+      </button>`,
+    )
     .join('');
+  events.addEventListener('click', (e) => {
+    const b = e.target.closest('.event-card');
+    if (b) ui.openFilm(b.dataset.id);
+  });
 
-  let visible = stills.map((_, i) => i);
-  tabs.addEventListener('click', (e) => {
-    const tab = e.target.closest('[data-filter]');
-    if (!tab) return;
-    const key = tab.dataset.filter;
-    tabs.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-pressed', String(t === tab)));
-    visible = [];
-    grid.querySelectorAll('.still').forEach((el, i) => {
-      const show = key === 'all' || el.dataset.category === key;
-      el.hidden = !show;
-      if (show) visible.push(i);
+  // Tabs: arrow keys move between them, as in the ARIA tabs pattern.
+  const tabs = [...page.querySelectorAll('[role="tab"]')];
+  const select = (tab, focus) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
     });
+    if (focus) tab.focus();
+    const panel = document.getElementById(tab.getAttribute('aria-controls'));
     if (ui.motionOk()) {
-      const shown = grid.querySelectorAll('.still:not([hidden])');
-      gsap.fromTo(shown, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.04 });
-      shown.forEach((el) => gsap.set(el.querySelector('[data-shutter]'), { clipPath: 'inset(0% 0% 0% 0%)' }));
+      gsap.fromTo(
+        panel.querySelectorAll('.still, .event-card'),
+        { y: 40, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.05, ease: 'power3.out', overwrite: true },
+      );
       ScrollTrigger.refresh();
     }
-  });
-
-  // ---------- lightbox ----------
-  const box = document.createElement('dialog');
-  box.className = 'lightbox';
-  box.setAttribute('aria-label', 'Photo viewer');
-  box.innerHTML = `
-    <div class="lightbox-inner">
-      <div class="lightbox-top">
-        <span class="small dim num" data-lb-count></span>
-        <button type="button" class="btn btn-line btn-sm" data-lb-close>Close</button>
-      </div>
-      <div class="lightbox-stage"><img alt="" data-lb-img></div>
-      <div class="lightbox-bottom">
-        <p class="small" data-lb-caption></p>
-        <div class="lightbox-nav">
-          <button type="button" class="icon-btn" data-lb-step="-1" aria-label="Previous photo">${ui.ICONS.prev}</button>
-          <button type="button" class="icon-btn" data-lb-step="1" aria-label="Next photo">${ui.ICONS.next}</button>
-        </div>
-      </div>
-    </div>`;
-  document.body.append(box);
-  const img = box.querySelector('[data-lb-img]');
-  let pos = 0;
-
-  const show = (p) => {
-    pos = (p + visible.length) % visible.length;
-    const s = stills[visible[pos]];
-    img.src = s.src;
-    img.alt = s.caption;
-    box.querySelector('[data-lb-count]').textContent = `${pos + 1} of ${visible.length}`;
-    box.querySelector('[data-lb-caption]').textContent = s.caption;
-    if (ui.motionOk()) gsap.fromTo(img, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45 });
   };
-
-  grid.addEventListener('click', (e) => {
-    const btn = e.target.closest('.still-open');
-    if (!btn) return;
-    show(visible.indexOf(Number(btn.dataset.index)));
-    box.showModal();
-    document.documentElement.style.overflow = 'hidden';
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', (e) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (step) select(tabs[(i + step + tabs.length) % tabs.length], true);
+    });
   });
-  box.addEventListener('click', (e) => {
-    const step = e.target.closest('[data-lb-step]');
-    if (step) show(pos + Number(step.dataset.lbStep));
-    if (e.target.closest('[data-lb-close]')) box.close();
+  const start = tabs.find((t) => t.dataset.tab === page.dataset.gallery) || tabs[0];
+  // Set the starting tab without the entrance; the page's own scroll motion covers it.
+  tabs.forEach((t) => {
+    const on = t === start;
+    t.setAttribute('aria-selected', String(on));
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
   });
-  box.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') show(pos + 1);
-    if (e.key === 'ArrowLeft') show(pos - 1);
-  });
-  box.addEventListener('close', () => (document.documentElement.style.overflow = ''));
 })();
