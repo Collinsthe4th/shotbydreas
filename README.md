@@ -27,7 +27,7 @@ js/book.js            Booking calendar and form
 media/brand/          Logo (black and white versions, transparent background), favicon
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
-media/fonts/          Gloock and Hanken Grotesk (self-hosted, SIL Open Font License)
+media/fonts/          Bricolage Grotesque and Hanken Grotesk (self-hosted, SIL Open Font License)
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (calendar feed and contact emails)
 api/                  Vercel serverless functions
@@ -47,8 +47,10 @@ The API uses only Node.js built-ins, so there is nothing to install. The header,
 
 The original layout (same pages, sections and headings), rebuilt as a luxury black site.
 
-- **Colour:** deep black and graphite with ivory text and a pearl / platinum accent, so it sits with the black and white logo. Dark only.
-- **Type:** Gloock for headings (a sharp, high-contrast display serif) and Hanken Grotesk for text and labels.
+- **Colour:** deep black with ivory text and a stone grey second tone, so it sits with the black and white logo. Flat colour only: no gradients, glows or frosted glass. Dark only.
+- **Type:** Bricolage Grotesque in a heavy, slightly condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
+- **Buttons:** flat rectangles. Solid ivory for the main action and an outline for the rest. On hover the fill slides across.
+- **Phones:** the hero splits the name over two lines around the aperture with Book and Play reel side by side, the reviews become a swipeable carousel that fades at the edges, the album fades out under a See More button that opens Instagram, and the gallery uses a staggered photo layout and full-width film cards.
 - **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto the showreel. Click it to watch the reel with sound.
 - **Motion (GSAP):** a short logo intro on the first page of a visit, the brand letters rising and the iris opening, the iris narrowing as you scroll away, sections sliding in from the sides (a shorter rise on phones, where films and photos also open like a shutter and buttons press in under your finger), gold rules drawing in, cards arriving in turn, slow parallax on photos, magnetic buttons, looping photos inside the ovals, the "Check out our latest covered event!" marquee and a light sweep across the banner. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
 - Arrows only appear on the calendar and the photo viewer, with a thick stroke. There are no camera or equipment details anywhere on the site.
