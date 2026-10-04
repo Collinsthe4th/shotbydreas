@@ -1,79 +1,73 @@
-// Home page: the hero entrance (brand letters rise, the aperture opens on the reel)
-// and the reel dialog behind the aperture button.
+// Home page: the hero entrance and the reviews carousel.
+//
+// Hero entrance, like pulling focus on a lens: each letter of SHOTBYDREAS rises out of
+// its line blurred and stretched, then snaps sharp, spreading out from the middle of the
+// word while the spacing tightens. DREAS arrives in ivory and then "develops" to its
+// grey letter by letter. Meanwhile the iris opens on the hero photograph.
 
 (() => {
   const ui = window.SBDUI;
   const hero = document.querySelector('.hero');
   if (!ui || !hero) return;
 
-  // Split the brand name into letters for the entrance. Screen readers keep the
-  // h1's aria-label, so they still hear one word.
+  // Split the brand name into letters. Screen readers keep the h1's aria-label.
   const title = hero.querySelector('.hero-title');
   title.querySelectorAll('[data-split]').forEach((part) => {
     part.innerHTML = [...part.textContent].map((c) => `<span class="ch" aria-hidden="true">${c}</span>`).join('');
   });
   const letters = title.querySelectorAll('.ch');
+  const develop = title.querySelectorAll('.t2 .ch');
 
-  // The aperture: an SVG iris over the looping reel.
   const aperture = hero.querySelector('.hero-aperture');
   const iris = window.SBDIris?.createIris();
   if (iris) aperture.append(iris.svg);
 
-  // The reel opens in a dialog with sound and controls, from the aperture or the
-  // Play reel button (shown on phones).
-  let reel;
-  const openReel = () => {
-    if (!reel) {
-      reel = document.createElement('dialog');
-      reel.className = 'lightbox';
-      reel.setAttribute('aria-label', 'Showreel');
-      reel.innerHTML = `<div class="lightbox-inner">
-          <div class="lightbox-top"><span class="eyebrow">Showreel</span>
-            <button type="button" class="btn btn-sm" data-close>Close</button></div>
-          <div class="reel-stage">${ui.playerHTML({ src: '/media/films/reel.mp4', poster: '/media/films/reel.jpg', label: 'showreel' })}</div>
-          <span></span>
-        </div>`;
-      document.body.append(reel);
-      reel.addEventListener('click', (e) => e.target.closest('[data-close]') && ui.closeDialog(reel));
-      reel.addEventListener('cancel', (e) => {
-        e.preventDefault();
-        ui.closeDialog(reel);
-      });
-      reel.player = ui.mountPlayer(reel.querySelector('.player'));
-    }
-    ui.openDialog(reel);
-    reel.player.setMuted(false);
-    reel.player.video.currentTime = 0;
-    reel.player.play();
-    reel.querySelector('[data-close]').focus();
-  };
-  aperture.addEventListener('click', openReel);
-  hero.querySelectorAll('[data-reel]').forEach((b) => b.addEventListener('click', openReel));
-
   setUpCarousel();
 
-  if (!ui.motionOk()) return; // the iris rests fully open and everything is visible
+  if (!ui.motionOk()) return; // the iris rests open and everything is visible
 
   const small = window.matchMedia('(max-width: 760px)').matches;
   const side = hero.querySelectorAll('.hero-text');
   const cta = hero.querySelector('.hero-cta');
+  const photo = aperture.querySelector('img');
+  const css = getComputedStyle(document.documentElement);
+  const ivory = css.getPropertyValue('--ink').trim();
+  const stone = css.getPropertyValue('--stone').trim();
   const state = { t: 0 };
   const setIris = () => iris?.set(state.t);
-  gsap.set(letters, { yPercent: 70, autoAlpha: 0, rotateX: -60 });
+
+  title.classList.add('is-entering'); // clips each line while the letters rise
+  gsap.set(letters, { yPercent: 105, scaleY: 1.6, filter: 'blur(14px)', autoAlpha: 0, transformOrigin: '50% 100%' });
+  gsap.set(develop, { color: ivory });
+  gsap.set(title, { letterSpacing: small ? '0.06em' : '0.12em' });
   gsap.set(side, { autoAlpha: 0 });
   gsap.set(cta, { autoAlpha: 0, y: 24 });
-  gsap.set(aperture, { autoAlpha: 0 });
+  gsap.set(aperture, { autoAlpha: 0, scale: 0.88 });
+  gsap.set(photo, { scale: 1.25 });
   setIris();
 
   ui.introDone.then(() => {
     gsap
       .timeline({ defaults: { ease: 'expo.out' } })
-      .to(letters, { yPercent: 0, autoAlpha: 1, rotateX: 0, duration: 1.3, stagger: 0.045 })
-      .fromTo(aperture, { scale: 0.86, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.4 }, 0.2)
-      .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.45)
-      .fromTo(side, small ? { y: 30 } : { x: (i) => (i ? 50 : -50) }, { x: 0, y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 0.9)
-      .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.2)
+      .to(letters, {
+        yPercent: 0,
+        scaleY: 1,
+        filter: 'blur(0px)',
+        autoAlpha: 1,
+        duration: 1.4,
+        stagger: { each: 0.055, from: 'center' },
+      })
+      .to(title, { letterSpacing: '-0.02em', duration: 1.8, ease: 'power3.out' }, 0)
+      .to(develop, { color: stone, duration: 0.9, stagger: 0.08, ease: 'power1.inOut' }, 1.1)
+      .add(() => title.classList.remove('is-entering'), 1.6)
+      .add(() => gsap.set(develop, { clearProps: 'color' }), 2.4)
+      .to(aperture, { autoAlpha: 1, scale: 1, duration: 1.4 }, 0.35)
+      .to(photo, { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
+      .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
+      .fromTo(side, small ? { y: 30 } : { x: (i) => (i ? 50 : -50) }, { x: 0, y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
+      .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.25)
       .add(() => {
+        gsap.set(letters, { clearProps: 'filter,transform' });
         // Once open, the iris narrows as the hero scrolls away, like stopping down.
         gsap.to(state, {
           t: 0.42,
@@ -92,6 +86,14 @@
     const dotsBox = document.querySelector('.carousel-dots');
     if (!track || !dotsBox) return;
     const cards = [...track.children];
+    let current = 0;
+    let timer;
+    const stop = () => clearInterval(timer);
+    const isCarousel = () => getComputedStyle(track).display === 'flex';
+    const go = (i) => {
+      const card = cards[i];
+      track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: ui.reduceMotion.matches ? 'auto' : 'smooth' });
+    };
     const dots = cards.map((_, i) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -103,17 +105,12 @@
       dotsBox.append(b);
       return b;
     });
-    let current = 0;
-    const isCarousel = () => getComputedStyle(track).display === 'flex';
-    const go = (i) => {
-      const card = cards[i];
-      track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: ui.reduceMotion.matches ? 'auto' : 'smooth' });
-    };
+    const centre = (c) => c.offsetLeft + c.clientWidth / 2;
     const mark = () => {
       const mid = track.scrollLeft + track.clientWidth / 2;
       let best = 0;
       cards.forEach((c, i) => {
-        if (Math.abs(c.offsetLeft + c.clientWidth / 2 - mid) < Math.abs(cards[best].offsetLeft + cards[best].clientWidth / 2 - mid)) best = i;
+        if (Math.abs(centre(c) - mid) < Math.abs(centre(cards[best]) - mid)) best = i;
       });
       current = best;
       dots.forEach((d, i) => d.setAttribute('aria-current', String(i === best)));
@@ -122,8 +119,6 @@
     track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
     mark();
 
-    let timer;
-    const stop = () => clearInterval(timer);
     if (!ui.reduceMotion.matches) {
       // Only advance while the reviews are on screen.
       new IntersectionObserver(([e]) => {
@@ -134,10 +129,14 @@
       }).observe(track);
     }
     ['pointerdown', 'wheel', 'keydown', 'focusin'].forEach((ev) =>
-      track.addEventListener(ev, () => {
-        track.dataset.touched = 'true';
-        stop();
-      }, { passive: true }),
+      track.addEventListener(
+        ev,
+        () => {
+          track.dataset.touched = 'true';
+          stop();
+        },
+        { passive: true },
+      ),
     );
   }
 })();
