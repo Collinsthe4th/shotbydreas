@@ -53,20 +53,46 @@
     update();
   }
 
-  // ---------- mobile menu ----------
+  // ---------- phone menu: full screen, opens as a circle growing from the button ----------
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('menu');
   if (toggle && menu) {
+    const label = toggle.querySelector('.menu-label');
+    const links = menu.querySelectorAll('.menu-links a');
+    let tl;
+    const origin = () => {
+      const r = toggle.getBoundingClientRect();
+      return `${r.left + r.width / 2}px ${r.top + r.height / 2}px`;
+    };
     const setOpen = (open) => {
+      if (open === (toggle.getAttribute('aria-expanded') === 'true')) return;
       toggle.setAttribute('aria-expanded', String(open));
-      toggle.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
-      menu.hidden = !open;
-      document.body.classList.toggle('menu-open', open);
+      label.textContent = open ? 'Close menu' : 'Open menu';
+      tl?.kill();
       if (open) {
-        menu.querySelector('a')?.focus();
+        menu.hidden = false;
+        document.body.classList.add('menu-open');
+        requestAnimationFrame(() => menu.classList.add('is-open'));
         if (motionOk()) {
-          gsap.from(menu.querySelectorAll('.menu-links li'), { y: 40, autoAlpha: 0, duration: 0.7, stagger: 0.05, ease: 'expo.out' });
+          tl = gsap
+            .timeline()
+            .fromTo(menu, { clipPath: `circle(0% at ${origin()})` }, { clipPath: `circle(150% at ${origin()})`, duration: 0.9, ease: 'expo.inOut' })
+            .fromTo(links, { yPercent: 110 }, { yPercent: 0, duration: 0.9, stagger: 0.07, ease: 'expo.out' }, 0.3);
         }
+        links[0]?.focus({ preventScroll: true });
+      } else {
+        menu.classList.remove('is-open');
+        const done = () => {
+          menu.hidden = true;
+          document.body.classList.remove('menu-open');
+          window.gsap?.set([menu, links], { clearProps: 'all' });
+        };
+        if (motionOk()) {
+          tl = gsap
+            .timeline({ onComplete: done })
+            .to(links, { yPercent: -110, duration: 0.45, stagger: 0.04, ease: 'power3.in' })
+            .to(menu, { clipPath: `circle(0% at ${origin()})`, duration: 0.7, ease: 'expo.inOut' }, 0.15);
+        } else done();
       }
     };
     toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
@@ -77,6 +103,18 @@
       }
     });
     window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => e.matches && setOpen(false));
+  }
+
+  // ---------- back to top ----------
+  const toTop = document.querySelector('.to-top');
+  if (toTop) {
+    const show = () => toTop.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.8);
+    window.addEventListener('scroll', show, { passive: true });
+    show();
+    toTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      document.querySelector('.brand')?.focus({ preventScroll: true });
+    });
   }
 
   document.querySelectorAll('[data-year]').forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -204,14 +242,10 @@
       <div class="screening-body">
         ${playerHTML({ src: f.video, poster: f.poster, label: f.title })}
         <div>
-          <p class="small dim">${f.type} · ${f.location} · ${f.year}</p>
+          <p class="small dim">${f.type} · ${f.location} · ${f.year} · ${f.runtime}</p>
           <h2 class="screening-title" id="screening-title">${f.title}</h2>
         </div>
         <p class="lede">${f.logline}</p>
-        <dl class="facts">
-          <div><dt class="eyebrow">Our role</dt><dd>${f.role}</dd></div>
-          <div><dt class="eyebrow">Running time</dt><dd>${f.runtime}</dd></div>
-        </dl>
         <div>
           <h3 class="eyebrow" style="margin-bottom:.75rem">What the client received</h3>
           <ul class="delivered">${f.deliverables.map((d) => `<li>${d}</li>`).join('')}</ul>
@@ -219,8 +253,10 @@
         <div class="mini-strip">${f.stills.map((s) => `<div class="frame"><img src="${s}" alt="" loading="lazy"></div>`).join('')}</div>
         <div class="actions">
           <a class="btn btn-accent" href="/html/book.html">Book Us Today</a>
-          <button type="button" class="text-btn" data-step="-1">Previous film</button>
-          <button type="button" class="text-btn" data-step="1">Next film</button>
+          <div class="film-nav">
+            <button type="button" class="square-btn" data-step="-1" aria-label="Previous film">${ICONS.prev}</button>
+            <button type="button" class="square-btn" data-step="1" aria-label="Next film">${ICONS.next}</button>
+          </div>
         </div>
       </div>`;
     drawer.scrollTop = 0;
@@ -341,6 +377,36 @@
     gsap.registerPlugin(ScrollTrigger);
     const once = (el, start = 'top 88%') => ({ trigger: el, start, once: true });
 
+    // Headings rise word by word out of their own line. The split happens once;
+    // each word is a clipping box with the moving word inside.
+    const HEADINGS = '.sec-head h1, .sec-head h2, .service-text h3, .shoot h3, .feature h3, .feature-event h2, .banner h2, .contact-grid h1, .book-panel > h1';
+    const splitWords = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.ELEMENT_NODE) return splitWords(child);
+        if (child.nodeType !== Node.TEXT_NODE || !child.textContent.trim()) return;
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) return frag.append(part);
+          const w = document.createElement('span');
+          w.className = 'w';
+          const wi = document.createElement('span');
+          wi.className = 'wi';
+          wi.textContent = part;
+          w.append(wi);
+          frag.append(w);
+        });
+        child.replaceWith(frag);
+      });
+    };
+    if (!reduceMotion.matches) {
+      document.querySelectorAll(HEADINGS).forEach((h) => {
+        h.removeAttribute('data-reveal');
+        h.dataset.words = '';
+        splitWords(h);
+      });
+    }
+
     const mm = gsap.matchMedia();
     mm.add(
       {
@@ -351,6 +417,17 @@
       (ctx) => {
         const { motion, small, touch } = ctx.conditions;
         if (!motion) return;
+
+        gsap.utils.toArray('[data-words]').forEach((h) => {
+          gsap.from(h.querySelectorAll('.wi'), {
+            yPercent: 110,
+            rotate: small ? 4 : 2,
+            duration: small ? 1 : 1.2,
+            stagger: 0.07,
+            ease: 'expo.out',
+            scrollTrigger: once(h, small ? 'top 94%' : 'top 90%'),
+          });
+        });
 
         gsap.utils.toArray('[data-reveal]').forEach((el) => {
           gsap.from(el, { y: small ? 32 : 50, autoAlpha: 0, duration: small ? 1 : 1.2, ease: 'power3.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 88%') });
@@ -369,6 +446,25 @@
         });
 
         gsap.utils.toArray('[data-stagger]').forEach((el) => {
+          // Phones: grids of photos and films open like a shutter, one after another.
+          if (small && el.matches('.album, .stills, .events-grid')) {
+            [...el.children].forEach((item, i) => {
+              gsap.fromTo(
+                item,
+                { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 40 },
+                {
+                  clipPath: 'inset(0% 0% 0% 0% round 14px)',
+                  y: 0,
+                  duration: 1.1,
+                  delay: (i % 2) * 0.12,
+                  ease: 'expo.out',
+                  scrollTrigger: once(item, 'top 96%'),
+                },
+              );
+            });
+            gsap.set(el.children, { autoAlpha: 1 });
+            return;
+          }
           gsap.from(el.children, {
             y: small ? 30 : 50,
             autoAlpha: 0,

@@ -57,7 +57,7 @@
     <div class="header-end">
       <a class="bookings-link" href="/html/book.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Bookings</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
-        <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+        <span class="menu-label">Open menu</span><span class="bars" aria-hidden="true"></span>
       </button>
     </div>
   </div>
@@ -66,17 +66,13 @@
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu">
     <ul class="menu-links">
-      <li><a href="/html/index.html">Home</a></li>
-      <li><a href="/html/about.html">About</a></li>
-      <li><a href="/html/gallery.html">Gallery</a></li>
-      <li><a href="/html/contact.html" aria-current="page">Contact</a></li>
-      <li><a href="/html/book.html">Bookings</a></li>
+      <li style="--i:0"><a href="/html/index.html">Home</a></li>
+      <li style="--i:1"><a href="/html/about.html">About</a></li>
+      <li style="--i:2"><a href="/html/gallery.html">Gallery</a></li>
+      <li style="--i:3"><a href="/html/contact.html" aria-current="page">Contact</a></li>
+      <li style="--i:4"><a href="/html/book.html">Bookings</a></li>
     </ul>
   </nav>
-  <div class="menu-foot">
-    <a href="tel:+2348136078551">+234 813 607 8551</a>
-    <a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a>
-  </div>
 </div>
 
 <main id="main">
@@ -86,19 +82,13 @@
     <div data-slide="left">
       <p class="eyebrow">Get in touch</p>
       <h1 id="contact-title">Message us for more enquiries or <span class="accent-text" data-shine>contact us</span> to book us today!</h1>
-      <h2 class="eyebrow" style="margin-top:2.5rem">Contact info</h2>
-      <ul class="info-list">
-        <li><span>Location</span><span>Awka, Anambra, Nigeria</span></li>
-        <li><span>Phone</span><a href="tel:+2348136078551">+234 813 607 8551</a></li>
-        <li><span>WhatsApp</span><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">Chat with us</a></li>
-        <li><span>Hours</span><span>10:00 to 18:00, Mon to Sat</span></li>
-      </ul>
-      <div class="person">
-        <span class="avatar" aria-hidden="true">CA</span>
-        <div>
-          <strong>Charles Andrew</strong>
-          <p class="small dim">Manager · <a href="tel:+2348136078551">+234 813 607 8551</a></p>
-        </div>
+      <div class="contact-lines">
+        <a class="contact-line" href="tel:+2348136078551"><span class="k">Call</span><span class="v">+234 813 607 8551</span></a>
+        <a class="contact-line" href="https://wa.me/2348136078551" target="_blank" rel="noopener"><span class="k">WhatsApp</span><span class="v">Chat with Dreas</span></a>
+        <a class="contact-line" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener"><span class="k">Instagram</span><span class="v">@shotbydreas_</span></a>
+        <div class="contact-line"><span class="k">Based in</span><span class="v">Awka, Anambra, Nigeria</span></div>
+        <div class="contact-line"><span class="k">Open</span><span class="v">Mon to Sat, 10:00 to 18:00</span></div>
+        <div class="contact-line"><span class="k">Bookings manager</span><span class="v">Charles Andrew</span></div>
       </div>
     </div>
     <div class="glass" data-slide="right">
@@ -157,6 +147,7 @@
   </div>
 </section>
 
+<button type="button" class="to-top" aria-label="Back to top"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid" data-stagger>
