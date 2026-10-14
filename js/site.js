@@ -425,120 +425,208 @@
           return;
         }
 
-        gsap.utils.toArray('[data-words]').forEach((h) => {
-          gsap.from(h.querySelectorAll('.wi'), {
-            yPercent: 110,
-            rotate: small ? 4 : 2,
-            duration: small ? 1 : 1.2,
-            stagger: 0.07,
-            ease: 'expo.out',
-            scrollTrigger: once(h, small ? 'top 94%' : 'top 90%'),
-          });
-        });
+        if (small) phoneMotion();
+        else desktopMotion();
 
-        gsap.utils.toArray('[data-reveal]').forEach((el) => {
-          gsap.from(el, { y: small ? 32 : 50, autoAlpha: 0, duration: small ? 1 : 1.2, ease: 'power3.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 88%') });
-        });
-
-        // On phones the side slides become a shorter rise with a slight drift, so nothing
-        // travels further than the screen is wide.
-        gsap.utils.toArray('[data-slide]').forEach((el) => {
-          const dir = el.dataset.slide === 'right' ? 1 : -1;
-          const from = small ? { x: 24 * dir, y: 36 } : { x: 80 * dir };
-          gsap.from(el, { ...from, autoAlpha: 0, duration: small ? 1.1 : 1.3, ease: 'expo.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 85%') });
-        });
-
-        gsap.utils.toArray('[data-line]').forEach((el) => {
-          gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: once(el, 'top 95%') });
-        });
-
-        gsap.utils.toArray('[data-stagger]').forEach((el) => {
-          // Phones: grids of photos and films open like a shutter, one after another.
-          if (small && el.matches('.album, .stills, .events-grid')) {
-            [...el.children].forEach((item, i) => {
-              gsap.fromTo(
-                item,
-                { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 40 },
-                {
-                  clipPath: 'inset(0% 0% 0% 0% round 14px)',
-                  y: 0,
-                  duration: 1.1,
-                  delay: (i % 2) * 0.12,
-                  ease: 'expo.out',
-                  scrollTrigger: once(item, 'top 96%'),
-                },
-              );
+        function desktopMotion() {
+          gsap.utils.toArray('[data-words]').forEach((h) => {
+            gsap.from(h.querySelectorAll('.wi'), {
+              yPercent: 110,
+              rotate: small ? 4 : 2,
+              duration: small ? 1 : 1.2,
+              stagger: 0.07,
+              ease: 'expo.out',
+              scrollTrigger: once(h, small ? 'top 94%' : 'top 90%'),
             });
-            gsap.set(el.children, { autoAlpha: 1 });
-            return;
-          }
-          gsap.from(el.children, {
-            y: small ? 30 : 50,
-            autoAlpha: 0,
-            duration: small ? 0.8 : 1,
-            stagger: small ? 0.07 : 0.1,
-            ease: 'power3.out',
-            scrollTrigger: once(el, small ? 'top 92%' : 'top 88%'),
           });
-        });
 
-        gsap.utils.toArray('[data-parallax]').forEach((el) => {
-          const amount = (Number(el.dataset.parallax) || 10) * (small ? 0.6 : 1);
-          gsap.fromTo(
-            el,
-            { yPercent: -amount },
-            {
-              yPercent: amount,
-              ease: 'none',
-              scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-            },
-          );
-        });
+          gsap.utils.toArray('[data-reveal]').forEach((el) => {
+            gsap.from(el, { y: small ? 32 : 50, autoAlpha: 0, duration: small ? 1 : 1.2, ease: 'power3.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 88%') });
+          });
 
-        // Accent headline text catches the light once as it arrives.
-        gsap.utils.toArray('[data-shine]').forEach((el) => {
-          gsap.fromTo(
-            el,
-            { backgroundPosition: '100% 0' },
-            { backgroundPosition: '0% 0', duration: 2.2, ease: 'power2.out', scrollTrigger: once(el) },
-          );
-        });
+          // On phones the side slides become a shorter rise with a slight drift, so nothing
+          // travels further than the screen is wide.
+          gsap.utils.toArray('[data-slide]').forEach((el) => {
+            const dir = el.dataset.slide === 'right' ? 1 : -1;
+            const from = small ? { x: 24 * dir, y: 36 } : { x: 80 * dir };
+            gsap.from(el, { ...from, autoAlpha: 0, duration: small ? 1.1 : 1.3, ease: 'expo.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 85%') });
+          });
 
-        // Phones: films and photos open from the bottom like a shutter as they scroll in,
-        // and the oval frames drift with the scroll.
-        if (small) {
-          gsap.utils.toArray('.service-media .frame, .phone .frame, .portrait-card, .skew-strip .frame').forEach((el) => {
+          gsap.utils.toArray('[data-line]').forEach((el) => {
+            gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: once(el, 'top 95%') });
+          });
+
+          gsap.utils.toArray('[data-stagger]').forEach((el) => {
+            // Phones: grids of photos and films open like a shutter, one after another.
+            if (small && el.matches('.album, .stills, .events-grid')) {
+              [...el.children].forEach((item, i) => {
+                gsap.fromTo(
+                  item,
+                  { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 40 },
+                  {
+                    clipPath: 'inset(0% 0% 0% 0% round 14px)',
+                    y: 0,
+                    duration: 1.1,
+                    delay: (i % 2) * 0.12,
+                    ease: 'expo.out',
+                    scrollTrigger: once(item, 'top 96%'),
+                  },
+                );
+              });
+              gsap.set(el.children, { autoAlpha: 1 });
+              return;
+            }
+            gsap.from(el.children, {
+              y: small ? 30 : 50,
+              autoAlpha: 0,
+              duration: small ? 0.8 : 1,
+              stagger: small ? 0.07 : 0.1,
+              ease: 'power3.out',
+              scrollTrigger: once(el, small ? 'top 92%' : 'top 88%'),
+            });
+          });
+
+          gsap.utils.toArray('[data-parallax]').forEach((el) => {
+            const amount = (Number(el.dataset.parallax) || 10) * (small ? 0.6 : 1);
             gsap.fromTo(
               el,
-              { clipPath: 'inset(100% 0% 0% 0%)' },
-              { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', scrollTrigger: once(el, 'top 92%') },
+              { yPercent: -amount },
+              {
+                yPercent: amount,
+                ease: 'none',
+                scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+              },
             );
           });
-          // Photos and films settle from a slight zoom while they scroll through the screen,
-          // the touch-screen stand-in for the hover zoom on desktop.
-          gsap.utils.toArray('.service-media video, .album-item img, .still img, .portrait-card img').forEach((media) => {
-            gsap.fromTo(media, { scale: 1.16 }, {
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: { trigger: media.parentElement, start: 'top bottom', end: 'bottom 40%', scrub: true },
+
+          // Accent headline text catches the light once as it arrives.
+          gsap.utils.toArray('[data-shine]').forEach((el) => {
+            gsap.fromTo(
+              el,
+              { backgroundPosition: '100% 0' },
+              { backgroundPosition: '0% 0', duration: 2.2, ease: 'power2.out', scrollTrigger: once(el) },
+            );
+          });
+        }
+
+        // Phones: bigger, more theatrical entrances, plus effects tied to the scroll
+        // position itself (the touch stand-in for hover effects on desktop).
+        function phoneMotion() {
+          const enter = (el, start = 'top 95%') => ({ trigger: el, start, once: true });
+          const scrub = (trigger, start = 'top bottom', end = 'bottom top') => ({ trigger, start, end, scrub: 0.5 });
+
+          // Headings: each word swings up out of its line.
+          gsap.utils.toArray('[data-words]').forEach((h) => {
+            gsap.from(h.querySelectorAll('.wi'), {
+              yPercent: 135,
+              rotate: 12,
+              scaleY: 1.35,
+              duration: 1.25,
+              stagger: 0.09,
+              ease: 'expo.out',
+              scrollTrigger: enter(h),
             });
           });
-          // Gallery film cards: the picture settles from a slight zoom as it scrolls through.
-          gsap.utils.toArray('.event-card .frame img').forEach((img) => {
-            gsap.fromTo(img, { scale: 1.18 }, {
-              scale: 1,
-              ease: 'none',
-              scrollTrigger: { trigger: img.closest('.event-card'), start: 'top bottom', end: 'center center', scrub: true },
+          // Section headings grow into place as they travel up the screen.
+          gsap.utils.toArray('.sec-head').forEach((el) => {
+            gsap.fromTo(el, { scale: 0.82 }, { scale: 1, ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 45%') });
+          });
+
+          // Paragraphs and single blocks: rise, sharpen and grow.
+          gsap.utils.toArray('[data-reveal]').forEach((el) => {
+            gsap.from(el, { y: 70, scale: 0.92, filter: 'blur(10px)', autoAlpha: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: enter(el) });
+          });
+
+          // Side blocks swing in from their side.
+          gsap.utils.toArray('[data-slide]').forEach((el) => {
+            const dir = el.dataset.slide === 'right' ? 1 : -1;
+            gsap.from(el, { x: 110 * dir, y: 40, rotation: 7 * dir, autoAlpha: 0, duration: 1.35, ease: 'expo.out', scrollTrigger: enter(el, 'top 92%') });
+          });
+
+          gsap.utils.toArray('[data-line]').forEach((el) => {
+            gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: enter(el, 'top 98%') });
+          });
+
+          gsap.utils.toArray('[data-stagger]').forEach((el) => {
+            const items = [...el.children];
+            // Photo and film grids: each one tilts up out of the bottom of its frame.
+            if (el.matches('.album, .stills, .events-grid')) {
+              gsap.set(items, { autoAlpha: 1 });
+              items.forEach((item, i) => {
+                gsap.fromTo(
+                  item,
+                  { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 140, rotation: i % 2 ? 6 : -6, scale: 0.82 },
+                  {
+                    clipPath: 'inset(0% 0% 0% 0% round 14px)',
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    duration: 1.3,
+                    delay: (i % 2) * 0.12,
+                    ease: 'expo.out',
+                    scrollTrigger: enter(item, 'top 102%'),
+                  },
+                );
+              });
+              return;
+            }
+            // Cards and lists: in from alternate sides, one after another.
+            gsap.from(items, {
+              x: (i) => (i % 2 ? 80 : -80),
+              y: 60,
+              rotation: (i) => (i % 2 ? 4 : -4),
+              autoAlpha: 0,
+              duration: 1.15,
+              stagger: 0.12,
+              ease: 'expo.out',
+              scrollTrigger: enter(el, 'top 92%'),
             });
+          });
+
+          // Films and single photos: open like a shutter while settling from a tilt.
+          gsap.utils.toArray('.service-media .frame, .phone, .portrait-card, .skew-strip .frame').forEach((el, i) => {
+            gsap.fromTo(
+              el,
+              { clipPath: 'inset(100% 0% 0% 0% round 14px)', scale: 1.12, rotation: i % 2 ? 4 : -4 },
+              { clipPath: 'inset(0% 0% 0% 0% round 14px)', scale: 1, rotation: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: enter(el, 'top 92%') },
+            );
+          });
+
+          // Scroll-linked: pictures zoom out as they pass through the screen.
+          gsap.utils.toArray('.service-media video, .album-item img, .still img, .portrait-card img, .event-card .frame img').forEach((media) => {
+            gsap.fromTo(media, { scale: 1.3 }, { scale: 1, ease: 'none', scrollTrigger: scrub(media.parentElement, 'top bottom', 'bottom 35%') });
+          });
+          // Service films drift against the text beside them.
+          gsap.utils.toArray('.service-media').forEach((el) => {
+            gsap.fromTo(el, { yPercent: 12 }, { yPercent: -12, ease: 'none', scrollTrigger: scrub(el) });
           });
           gsap.utils.toArray('.oval').forEach((el) => {
-            gsap.fromTo(el, { y: 30, rotation: -3 }, {
-              y: -30,
-              rotation: 3,
-              ease: 'none',
-              scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-            });
+            gsap.fromTo(el, { y: 60, rotation: -8 }, { y: -60, rotation: 8, ease: 'none', scrollTrigger: scrub(el) });
           });
+          // The banner starts as an inset card and opens out to the full width.
+          gsap.utils.toArray('.banner').forEach((el) => {
+            gsap.fromTo(
+              el,
+              { clipPath: 'inset(0% 7% 0% 7% round 22px)' },
+              { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 30%') },
+            );
+          });
+          // The marquee leans with the speed of the scroll.
+          const track = document.querySelector('.marquee-track');
+          if (track) {
+            const skew = gsap.quickTo(track, 'skewX', { duration: 0.4, ease: 'power3.out' });
+            ScrollTrigger.create({
+              trigger: track,
+              start: 'top bottom',
+              end: 'bottom top',
+              onUpdate: (self) => skew(gsap.utils.clamp(-14, 14, self.getVelocity() / -120)),
+            });
+          }
+          // Hero: the name lifts and fades as you scroll away from it.
+          const heroTitle = document.querySelector('.hero-title');
+          if (heroTitle) {
+            gsap.to(heroTitle, { yPercent: -35, autoAlpha: 0.25, ease: 'none', scrollTrigger: scrub('.hero', 'top top', 'bottom top') });
+          }
         }
 
         // Touch: buttons and photos press in slightly under the finger.
