@@ -34,12 +34,19 @@
   --ink: #f3efe7;
   --ink-dim: #aaa297; /* 8:1 on black */
   --ink-faint: #857d72; /* 4.6:1 on black */
-  --line: rgba(243, 239, 231, 0.1);
-  --line-accent: rgba(243, 239, 231, 0.22);
+  --ink-rgb: 243, 239, 231;
+  --bg-rgb: 5, 5, 5;
+  --bar-rgb: 28, 28, 28; /* nav bar tint */
+  --line: rgba(var(--ink-rgb), 0.1);
+  --line-accent: rgba(var(--ink-rgb), 0.22);
   --accent: #f3efe7; /* ivory: buttons, selected states */
   --accent-soft: #d9d3c8;
   --stone: #8f8a82; /* second tone for one word in a heading, 5.7:1 on black */
   --on-accent: #070707;
+  --bezel: #1b1b1c;
+  --error: var(--error);
+  --blade-hi: #1f1f21;
+  --blade-lo: #070707;
 
   --f-display: 'Hubot Sans Condensed', 'Arial Narrow', Impact, sans-serif;
   --f-sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
@@ -47,10 +54,46 @@
   --gutter: clamp(1.15rem, 4.5vw, 4rem);
   --section: clamp(4.5rem, 9vw, 8rem);
   --max: 1440px;
-  --header-h: 5.25rem;
+  --header-h: 5.75rem; /* floating bar plus the gap above it */
   --radius: 14px; /* photos, video frames and cards */
   --radius-sm: 8px; /* buttons, inputs, chips */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light theme (toggle in the nav, remembered on this device) */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --black: #f1eee8;
+  --black-2: #e9e5dd;
+  --panel: #e8e4db;
+  --ink: #121212;
+  --ink-dim: #55514a; /* 7:1 on the light background */
+  --ink-faint: #6e6961;
+  --ink-rgb: 18, 18, 18;
+  --bg-rgb: 241, 238, 232;
+  --bar-rgb: 255, 255, 255;
+  --accent: #121212;
+  --accent-soft: #2c2c2c;
+  --stone: #77726a; /* 4.6:1 */
+  --on-accent: #f1eee8;
+  --bezel: #d7d2c8;
+  --error: #b3261e;
+  --blade-hi: #ebe7df;
+  --blade-lo: #cdc8be;
+}
+/* The logo files are white; in the light theme they are shown black */
+:root[data-theme='light'] .brand img,
+:root[data-theme='light'] .footer-logo,
+:root[data-theme='light'] .loader img {
+  filter: invert(1);
+}
+
+/* Brief colour cross-fade while switching theme */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, fill 0.4s ease, stroke 0.4s ease !important;
 }
 
 /* 3. Base */
@@ -148,7 +191,7 @@ button:focus-visible,
 .square-btn:focus-visible,
 .to-top:focus-visible,
 .menu-toggle:focus-visible {
-  background: rgba(243, 239, 231, 0.16);
+  background: rgba(var(--ink-rgb), 0.16);
 }
 .icon-btn:focus-visible,
 .toggle button:focus-visible,
@@ -257,7 +300,8 @@ button:focus-visible,
 .square-btn,
 .icon-btn,
 .to-top,
-.menu-toggle {
+.menu-toggle,
+.theme-toggle {
   border: 1px solid var(--ink);
   background: transparent;
   color: var(--ink);
@@ -267,14 +311,16 @@ button:focus-visible,
 .square-btn:hover,
 .icon-btn:hover:not(:disabled),
 .to-top:hover,
-.menu-toggle:hover {
-  background: rgba(243, 239, 231, 0.1);
+.menu-toggle:hover,
+.theme-toggle:hover {
+  background: rgba(var(--ink-rgb), 0.1);
 }
 .btn:active,
 .square-btn:active,
 .icon-btn:active:not(:disabled),
 .to-top:active,
 .menu-toggle:active,
+.theme-toggle:active,
 .menu-toggle[aria-expanded='true'],
 .btn[aria-pressed='true'],
 .btn.is-active {
@@ -386,10 +432,37 @@ button:focus-visible,
    Phones: a full-width blurred bar, and a full-screen menu that opens as a circle
    growing out of the menu button (site.js). */
 .site-header {
-  position: sticky;
-  top: 0;
+  /* A floating glass bar on every screen size. It is position: fixed (not sticky)
+     and carries the blur itself: Firefox does not blur sticky elements or their
+     children reliably, but blurs fixed ones. */
+  position: fixed;
+  top: 0.75rem;
+  left: 0;
+  right: 0;
   z-index: 50;
-  height: var(--header-h);
+  width: calc(100% - 2 * var(--gutter));
+  max-width: calc(var(--max) - 2 * var(--gutter));
+  height: calc(var(--header-h) - 1.25rem);
+  margin-inline: auto;
+  border: 1px solid rgba(var(--ink-rgb), 0.16);
+  border-radius: var(--radius);
+  background: rgba(var(--bar-rgb), 0.45);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  backdrop-filter: blur(24px) saturate(1.6);
+  transition: background-color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.site-header.is-scrolled {
+  background: rgba(var(--bar-rgb), 0.38);
+  border-color: rgba(var(--ink-rgb), 0.24);
+}
+/* Where backdrop blur is not available, keep the bar readable */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header {
+    background: rgba(var(--bar-rgb), 0.94);
+  }
+}
+body {
+  padding-top: var(--header-h);
 }
 .site-header .wrap {
   height: 100%;
@@ -397,36 +470,7 @@ button:focus-visible,
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 1.5rem;
-}
-@media (min-width: 901px) {
-  /* The bar itself is the sticky element and carries the blur. Firefox does not
-     blur a child of a sticky element, so the filter must not sit on .wrap. */
-  .site-header {
-    top: 0.75rem;
-    width: calc(100% - 2 * var(--gutter));
-    max-width: calc(var(--max) - 2 * var(--gutter));
-    height: calc(var(--header-h) - 0.75rem);
-    margin: 0.75rem auto 0;
-    border: 1px solid rgba(243, 239, 231, 0.16);
-    border-radius: var(--radius);
-    background: rgba(28, 28, 28, 0.45);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    transition: background-color 0.5s var(--ease), border-color 0.5s var(--ease);
-  }
-  .site-header.is-scrolled {
-    background: rgba(28, 28, 28, 0.38);
-    border-color: rgba(243, 239, 231, 0.24);
-  }
-  .site-header .wrap {
-    padding-inline: 0.9rem 1.4rem;
-  }
-  /* Where backdrop blur is not available at all, keep the bar readable */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .site-header {
-      background: rgba(22, 22, 22, 0.94);
-    }
-  }
+  padding-inline: 0.9rem;
 }
 .brand img {
   width: 3rem;
@@ -453,7 +497,7 @@ button:focus-visible,
 }
 .site-nav a,
 .bookings-link {
-  color: rgba(243, 239, 231, 0.55);
+  color: rgba(var(--ink-rgb), 0.55);
 }
 .site-nav a:hover,
 .bookings-link:hover {
@@ -470,6 +514,23 @@ button:focus-visible,
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
+}
+/* Light / dark switch: a small square with a half-filled circle */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 10px;
+}
+.theme-toggle svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 0.6s var(--ease);
+}
+:root[data-theme='light'] .theme-toggle svg {
+  transform: rotate(180deg);
 }
 /* Menu button: an ivory rounded square with two uneven lines that turn into an X */
 .menu-toggle {
@@ -583,21 +644,11 @@ body.menu-open {
   overflow: hidden;
 }
 @media (max-width: 900px) {
+  :root {
+    --header-h: 5rem;
+  }
   .site-header {
-    background: rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(22px) saturate(1.5);
-    -webkit-backdrop-filter: blur(22px) saturate(1.5);
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.5s var(--ease), background-color 0.4s var(--ease);
-  }
-  .site-header.is-scrolled {
-    border-color: var(--line);
-  }
-  body.menu-open .site-header {
-    background: transparent;
-    border-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    top: 0.6rem;
   }
   .site-header .wrap {
     grid-template-columns: auto 1fr;
@@ -607,6 +658,9 @@ body.menu-open {
   }
   .menu-toggle {
     display: inline-block;
+  }
+  .header-end {
+    gap: 0.6rem;
   }
 }
 @media (max-width: 420px) {
@@ -627,7 +681,7 @@ body.menu-open {
   height: 3rem;
   padding: 0;
   border-radius: 12px;
-  background: rgba(10, 10, 10, 0.35);
+  background: rgba(var(--bg-rgb), 0.35);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   opacity: 0;
@@ -756,16 +810,12 @@ body.menu-open .to-top {
   overflow: visible;
 }
 .iris-seams {
-  stroke: rgba(243, 239, 231, 0.22);
+  stroke: rgba(var(--ink-rgb), 0.22);
   stroke-width: 0.9;
 }
 .iris-rim {
-  stroke: rgba(243, 239, 231, 0.55);
+  stroke: rgba(var(--ink-rgb), 0.55);
   stroke-width: 1;
-}
-:root {
-  --blade-hi: #1f1f21;
-  --blade-lo: #070707;
 }
 .hero-text {
   padding-top: 1rem;
@@ -938,7 +988,7 @@ body.menu-open .to-top {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  box-shadow: inset 0 0 50px 20px rgba(5, 5, 5, 0.85);
+  box-shadow: inset 0 0 50px 20px rgba(var(--bg-rgb), 0.85);
   pointer-events: none;
 }
 .oval-track {
@@ -1334,7 +1384,7 @@ body.menu-open .to-top {
   padding-block: clamp(4rem, 9vw, 7.5rem);
   text-align: center;
   border-block: 1px solid var(--line-accent);
-  background: #0c0c0d;
+  background: var(--panel);
 }
 .banner > .frame {
   position: absolute;
@@ -1558,7 +1608,7 @@ body.menu-open .to-top {
   aspect-ratio: 9 / 18.5;
   padding: 0.65rem;
   border-radius: 2.6rem;
-  background: #1b1b1c;
+  background: var(--bezel);
 }
 .phone .frame {
   height: 100%;
@@ -1572,7 +1622,7 @@ body.menu-open .to-top {
   width: 32%;
   height: 1.3rem;
   border-radius: 999px;
-  background: #050505;
+  background: var(--black);
   transform: translateX(-50%);
 }
 .feature-event .eyebrow {
@@ -1676,7 +1726,7 @@ body.menu-open .to-top {
   border: 1px solid rgba(236, 232, 225, 0.7);
   border-radius: var(--radius-sm);
   background: rgba(5, 5, 5, 0.6);
-  color: var(--accent-soft);
+  color: #f3efe7;
   transition: transform 0.6s var(--ease), background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 .event-card:hover .frame {
@@ -1723,7 +1773,7 @@ body.menu-open .to-top {
     z-index: 5;
   }
   [data-gallery] .toggle {
-    background: rgba(5, 5, 5, 0.92);
+    background: rgba(var(--bg-rgb), 0.92);
   }
   .stills {
     columns: auto;
@@ -1768,6 +1818,10 @@ body.menu-open .to-top {
   .event-card {
     position: relative;
     width: 90%;
+    /* title and details sit on the dark foot of the picture in both themes */
+    --ink: #f3efe7;
+    --ink-dim: rgba(243, 239, 231, 0.75);
+    color: var(--ink);
   }
   .event-card:nth-child(even) {
     justify-self: end;
@@ -1841,7 +1895,7 @@ body.menu-open .to-top {
   transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
 }
 .contact-line + .contact-line {
-  border-top: 1px solid rgba(243, 239, 231, 0.3);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.3);
 }
 .contact-line .k {
   font-size: 0.7rem;
@@ -1864,7 +1918,8 @@ a.contact-line:focus-visible {
 }
 a.contact-line:hover .k,
 a.contact-line:focus-visible .k {
-  color: rgba(7, 7, 7, 0.65);
+  color: var(--on-accent);
+  opacity: 0.7;
 }
 .glass {
   padding: clamp(1.5rem, 4vw, 3rem);
@@ -1901,7 +1956,7 @@ a.contact-line:focus-visible .k {
   padding: 0.75rem 1rem;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(5, 5, 5, 0.55);
+  background: rgba(var(--bg-rgb), 0.55);
   color: var(--ink);
   font-size: 1rem;
   transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
@@ -1922,18 +1977,18 @@ textarea.input {
   filter: invert(1);
 }
 [aria-invalid='true'] {
-  border-color: #ff8f7f !important;
+  border-color: var(--error) !important;
 }
 .field-error {
-  color: #ff9a8a;
+  color: var(--error);
   font-size: 0.85rem;
 }
 .form-error {
   margin-bottom: 1.5rem;
   padding: 0.9rem 1.1rem;
-  border: 1px solid #ff8f7f;
+  border: 1px solid var(--error);
   border-radius: 12px;
-  color: #ff9a8a;
+  color: var(--error);
   font-size: 0.92rem;
 }
 .hp-field {
@@ -1975,7 +2030,7 @@ textarea.input {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.4), var(--black) 85%);
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.4), var(--black) 85%);
 }
 .book-panel {
   max-width: 62rem;
@@ -2053,7 +2108,7 @@ textarea.input {
   outline-offset: 3px;
 }
 .chips[aria-invalid='true'] .chip {
-  border-color: #ff8f7f;
+  border-color: var(--error);
 }
 .day-mode {
   margin-bottom: 1rem;
@@ -2071,7 +2126,7 @@ textarea.input {
   padding: clamp(1rem, 2.5vw, 1.5rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(5, 5, 5, 0.6);
+  background: var(--panel);
 }
 .calendar[aria-busy='true'] .cal-grid {
   min-height: 16rem;
@@ -2226,7 +2281,7 @@ textarea.input {
   padding: 1.25rem;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: rgba(5, 5, 5, 0.6);
+  background: var(--panel);
   font-family: var(--f-sans);
   font-size: 0.9rem;
   line-height: 1.7;
@@ -2257,6 +2312,11 @@ textarea.input {
   cursor: pointer;
 }
 .player-ui {
+  /* the controls sit on the dark foot of the video in both themes */
+  --ink: #f3efe7;
+  --ink-rgb: 243, 239, 231;
+  --on-accent: #070707;
+  color: var(--ink);
   position: absolute;
   inset: auto 0 0;
   display: flex;
@@ -2302,11 +2362,11 @@ textarea.input {
 }
 .player-scrub::-webkit-slider-runnable-track {
   height: 2px;
-  background: linear-gradient(to right, var(--accent) var(--p), rgba(243, 239, 231, 0.3) var(--p));
+  background: linear-gradient(to right, var(--accent) var(--p), rgba(var(--ink-rgb), 0.3) var(--p));
 }
 .player-scrub::-moz-range-track {
   height: 2px;
-  background: linear-gradient(to right, var(--accent) var(--p), rgba(243, 239, 231, 0.3) var(--p));
+  background: linear-gradient(to right, var(--accent) var(--p), rgba(var(--ink-rgb), 0.3) var(--p));
 }
 .player-scrub::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -2443,11 +2503,11 @@ textarea.input {
   margin: 0;
   padding: 0;
   border: 0;
-  background: rgba(5, 5, 5, 0.97);
+  background: rgba(var(--bg-rgb), 0.97);
   color: var(--ink);
 }
 .lightbox::backdrop {
-  background: rgba(5, 5, 5, 0.97);
+  background: rgba(var(--bg-rgb), 0.97);
 }
 .lightbox-inner {
   height: 100%;

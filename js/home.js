@@ -64,7 +64,7 @@
       .to(aperture, { autoAlpha: 1, scale: 1, duration: 1.4 }, 0.35)
       .to(photo, { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
       .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
-      .fromTo(side, small ? { y: 30 } : { x: (i) => (i ? 50 : -50) }, { x: 0, y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
+      .fromTo(side, { y: 30 }, { y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
       .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.25)
       .add(() => {
         gsap.set(letters, { clearProps: 'filter,transform' });
