@@ -54,7 +54,7 @@
   --gutter: clamp(1.15rem, 4.5vw, 4rem);
   --section: clamp(4.5rem, 9vw, 8rem);
   --max: 1440px;
-  --header-h: 5.75rem; /* floating bar plus the gap above it */
+  --header-h: 5.25rem; /* floating bar plus the gap above it */
   --radius: 14px; /* photos, video frames and cards */
   --radius-sm: 8px; /* buttons, inputs, chips */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -473,8 +473,8 @@ body {
   padding-inline: 0.9rem;
 }
 .brand img {
-  width: 3rem;
-  height: 3rem;
+  width: 2.6rem;
+  height: 2.6rem;
 }
 .site-nav ul {
   display: flex;
@@ -552,35 +552,26 @@ body {
 .menu-toggle .bars {
   position: absolute;
   inset: 0;
+  transition: transform 0.5s var(--ease);
 }
+/* A plus sign that turns a quarter and becomes a cross when the menu opens */
 .menu-toggle .bars::before,
 .menu-toggle .bars::after {
   content: '';
   position: absolute;
-  right: 0.72rem;
+  top: 50%;
+  left: 50%;
+  width: 0.95rem;
   height: 2px;
+  margin: -1px 0 0 -0.475rem;
   border-radius: 2px;
   background: currentColor;
-  transition: transform 0.5s var(--ease), top 0.5s var(--ease), width 0.5s var(--ease);
-}
-.menu-toggle .bars::before {
-  top: calc(50% - 4px);
-  width: 1.3rem;
 }
 .menu-toggle .bars::after {
-  top: calc(50% + 3px);
-  width: 0.75rem;
+  transform: rotate(90deg);
 }
-.menu-toggle[aria-expanded='true'] .bars::before,
-.menu-toggle[aria-expanded='true'] .bars::after {
-  top: calc(50% - 1px);
-  width: 1.3rem;
-}
-.menu-toggle[aria-expanded='true'] .bars::before {
-  transform: rotate(45deg);
-}
-.menu-toggle[aria-expanded='true'] .bars::after {
-  transform: rotate(-45deg);
+.menu-toggle[aria-expanded='true'] .bars {
+  transform: rotate(135deg);
 }
 .menu {
   position: fixed;
@@ -644,11 +635,36 @@ body.menu-open {
   overflow: hidden;
 }
 @media (max-width: 900px) {
+  /* Phones and tablets: a slim full-width blurred bar along the top */
   :root {
-    --header-h: 5rem;
+    --header-h: 4rem;
   }
   .site-header {
-    top: 0.6rem;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    height: var(--header-h);
+    border-width: 0 0 1px;
+    border-color: transparent;
+    border-radius: 0;
+    background: rgba(var(--bg-rgb), 0.55);
+  }
+  .site-header.is-scrolled {
+    background: rgba(var(--bg-rgb), 0.55);
+    border-color: var(--line);
+  }
+  .site-header .wrap {
+    padding-inline: var(--gutter);
+  }
+  .brand img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  .theme-toggle,
+  .menu-toggle {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 9px;
   }
   .site-header .wrap {
     grid-template-columns: auto 1fr;
@@ -681,7 +697,7 @@ body.menu-open {
   height: 3rem;
   padding: 0;
   border-radius: 12px;
-  background: rgba(var(--bg-rgb), 0.35);
+  background: rgba(var(--bg-rgb), 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   opacity: 0;
@@ -702,6 +718,13 @@ body.menu-open {
   width: 1.25rem;
   height: 1.25rem;
   transition: transform 0.4s var(--ease);
+}
+@media (max-width: 760px) {
+  .to-top {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 10px;
+  }
 }
 body.menu-open .to-top {
   opacity: 0;
@@ -1034,36 +1057,41 @@ body.menu-open .to-top {
   position: relative;
 }
 .fade-end {
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 30rem), transparent calc(100% - 2rem));
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 30rem), transparent calc(100% - 2rem));
+  position: relative;
 }
-.fade-more {
+/* An overlay in the page colour, not a mask: Safari ignores masks whose stops use calc() */
+.fade-wrap::after {
+  content: '';
   position: absolute;
-  left: 50%;
-  bottom: 4rem;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  height: min(32rem, 70%);
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0) 0%, rgba(var(--bg-rgb), 0.85) 45%, var(--black) 72%);
+  pointer-events: none;
+}
+/* See More sits in the normal flow, pulled up into the solid end of the fade, so it can
+   never land on top of anything else whatever the grid's height */
+.fade-more {
+  position: relative;
+  z-index: 4;
   display: grid;
   justify-items: center;
-  gap: 0.9rem;
-  transform: translateX(-50%);
+  /* pulled up into the fade, with enough room below that the grid ends inside it */
+  margin-top: -8rem;
+  padding-bottom: 5rem;
   text-align: center;
 }
 @media (max-width: 760px) {
-  .fade-end {
-    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28rem), transparent calc(100% - 7rem));
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 28rem), transparent calc(100% - 7rem));
+  .fade-wrap::after {
+    height: min(26rem, 75%);
   }
-  .fade-more:not(.album-more) {
-    bottom: 3rem;
+  .fade-more {
+    margin-top: -7rem;
+    padding-bottom: 4rem;
   }
 }
-.fade-more p {
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  color: var(--ink-dim);
-  white-space: nowrap;
-}
-
 /* Album: the last rows fade into the background, with See more over the fade */
 .album-wrap {
   position: relative;
@@ -1087,6 +1115,7 @@ body.menu-open .to-top {
 .album-item img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 3 / 4; /* also on the picture, for Safari */
   object-fit: cover;
   filter: grayscale(0.3) brightness(0.85);
   transition: transform 1.2s var(--ease), filter 0.6s var(--ease);
@@ -1096,7 +1125,12 @@ body.menu-open .to-top {
   filter: none;
 }
 .album-more {
+  position: absolute;
+  left: 50%;
   bottom: 7%;
+  margin: 0;
+  padding: 0;
+  transform: translateX(-50%);
 }
 .center-row {
   display: flex;
@@ -1767,14 +1801,6 @@ body.menu-open .to-top {
    landscape. Events become full-width film cards with the title over the image,
    stepping in from alternate sides. The tab switch sticks under the header. */
 @media (max-width: 760px) {
-  [data-gallery] .center-row {
-    position: sticky;
-    top: calc(var(--header-h) + 0.5rem);
-    z-index: 5;
-  }
-  [data-gallery] .toggle {
-    background: rgba(var(--bg-rgb), 0.92);
-  }
   .stills {
     columns: auto;
     display: grid;
@@ -1811,6 +1837,21 @@ body.menu-open .to-top {
   }
   .still:nth-child(8n) {
     justify-self: start;
+  }
+  /* The shape is also set on the picture itself: Safari can ignore aspect-ratio on a
+     button, which would collapse the grid */
+  .still img {
+    height: auto;
+  }
+  .still:nth-child(4n + 1) img {
+    aspect-ratio: 4 / 5;
+  }
+  .still:nth-child(4n + 2) img,
+  .still:nth-child(4n + 3) img {
+    aspect-ratio: 3 / 4;
+  }
+  .still:nth-child(4n) img {
+    aspect-ratio: 16 / 10;
   }
   .events-grid {
     gap: 2.75rem;
