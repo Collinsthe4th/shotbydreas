@@ -36,7 +36,7 @@
   --ink-faint: #857d72; /* 4.6:1 on black */
   --ink-rgb: 243, 239, 231;
   --bg-rgb: 5, 5, 5;
-  --bar-rgb: 28, 28, 28; /* nav bar tint */
+  --bar-rgb: 20, 20, 20; /* nav bar tint */
   --line: rgba(var(--ink-rgb), 0.1);
   --line-accent: rgba(var(--ink-rgb), 0.22);
   --accent: #f3efe7; /* ivory: buttons, selected states */
@@ -71,7 +71,7 @@
   --ink-faint: #6e6961;
   --ink-rgb: 18, 18, 18;
   --bg-rgb: 241, 238, 232;
-  --bar-rgb: 255, 255, 255;
+  --bar-rgb: 247, 245, 241;
   --accent: #121212;
   --accent-soft: #2c2c2c;
   --stone: #77726a; /* 4.6:1 */
@@ -446,13 +446,15 @@ button:focus-visible,
   margin-inline: auto;
   border: 1px solid rgba(var(--ink-rgb), 0.16);
   border-radius: var(--radius);
-  background: rgba(var(--bar-rgb), 0.45);
+  /* Mostly solid, so the bar stays clean even on computers whose browser does not draw
+     the blur (hardware acceleration off). Where the blur works it still shows through. */
+  background: rgba(var(--bar-rgb), 0.88);
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
   backdrop-filter: blur(24px) saturate(1.6);
   transition: background-color 0.5s var(--ease), border-color 0.5s var(--ease);
 }
 .site-header.is-scrolled {
-  background: rgba(var(--bar-rgb), 0.38);
+  background: rgba(var(--bar-rgb), 0.86);
   border-color: rgba(var(--ink-rgb), 0.24);
 }
 /* Where backdrop blur is not available, keep the bar readable */
@@ -647,10 +649,10 @@ body.menu-open {
     border-width: 0 0 1px;
     border-color: transparent;
     border-radius: 0;
-    background: rgba(var(--bg-rgb), 0.55);
+    background: rgba(var(--bg-rgb), 0.88);
   }
   .site-header.is-scrolled {
-    background: rgba(var(--bg-rgb), 0.55);
+    background: rgba(var(--bg-rgb), 0.88);
     border-color: var(--line);
   }
   .site-header .wrap {
