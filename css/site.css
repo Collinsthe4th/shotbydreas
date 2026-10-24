@@ -37,6 +37,7 @@
   --ink-rgb: 243, 239, 231;
   --bg-rgb: 5, 5, 5;
   --bar-rgb: 20, 20, 20; /* nav bar tint */
+  --nav-bg: #000;
   --line: rgba(var(--ink-rgb), 0.1);
   --line-accent: rgba(var(--ink-rgb), 0.22);
   --accent: #f3efe7; /* ivory: buttons, selected states */
@@ -72,6 +73,7 @@
   --ink-rgb: 18, 18, 18;
   --bg-rgb: 241, 238, 232;
   --bar-rgb: 247, 245, 241;
+  --nav-bg: #fff;
   --accent: #121212;
   --accent-soft: #2c2c2c;
   --stone: #77726a; /* 4.6:1 */
@@ -456,6 +458,15 @@ button:focus-visible,
 .site-header.is-scrolled {
   background: rgba(var(--bar-rgb), 0.86);
   border-color: rgba(var(--ink-rgb), 0.24);
+}
+/* Larger screens: a plain solid bar, black in the dark theme and white in the light one */
+@media (min-width: 901px) {
+  .site-header,
+  .site-header.is-scrolled {
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 /* Where backdrop blur is not available, keep the bar readable */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -931,12 +942,46 @@ body.menu-open .to-top {
   position: relative;
   border-radius: var(--radius);
 }
+.service-media {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
 .service-media .frame {
+  display: block;
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
 }
 .service-media .frame video {
   transition: transform 1.4s var(--ease);
+}
+.service-play {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid rgba(243, 239, 231, 0.85);
+  border-radius: 12px;
+  background: rgba(5, 5, 5, 0.45);
+  color: #f3efe7;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.service-media:hover .service-play,
+.service-media:focus-visible .service-play {
+  background: #f3efe7;
+  color: #070707;
+  transform: scale(1.06);
+}
+.service-media:active .service-play {
+  transform: scale(0.95);
 }
 .service-media:hover .frame video {
   transform: scale(1.05);
