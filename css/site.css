@@ -461,11 +461,53 @@ button:focus-visible,
 }
 /* Larger screens: a plain solid bar, black in the dark theme and white in the light one */
 @media (min-width: 901px) {
+  /* Wide screens: the header is a row of two pieces, the solid bar and, just outside it
+     on the right, the light / dark switch in a matching square */
   .site-header,
   .site-header.is-scrolled {
-    background: var(--nav-bg);
+    display: flex;
+    gap: 0.6rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+  .site-header .wrap {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(var(--ink-rgb), 0.16);
+    border-radius: var(--radius);
+    background: var(--nav-bg);
+    transition: border-color 0.5s var(--ease);
+  }
+  .site-header.is-scrolled .wrap {
+    border-color: rgba(var(--ink-rgb), 0.24);
+  }
+  .site-header .theme-toggle--in {
+    display: none;
+  }
+  .site-header .theme-toggle--out {
+    display: inline-grid;
+    flex: none;
+    width: calc(var(--header-h) - 1.25rem);
+    height: 100%;
+    border: 1px solid rgba(var(--ink-rgb), 0.16);
+    border-radius: var(--radius);
+    background: var(--nav-bg);
+  }
+  .site-header .theme-toggle--out:hover {
+    border-color: var(--ink);
+    background: var(--nav-bg);
+  }
+  .site-header .theme-toggle--out:active {
+    background: var(--ink);
+    color: var(--on-accent);
+  }
+}
+@media (max-width: 900px) {
+  .site-header .theme-toggle--out {
+    display: none;
   }
 }
 /* Where backdrop blur is not available, keep the bar readable */
@@ -1972,7 +2014,28 @@ body.menu-open .to-top {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: start;
+  align-items: stretch;
+}
+/* The form panel runs the full height of the contact details beside it; the message box
+   grows to fill the extra room so both columns end on the same line */
+.contact-grid .glass {
+  display: flex;
+  flex-direction: column;
+}
+#contact-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+#contact-form[hidden] {
+  display: none;
+}
+#contact-form .field:has(textarea) {
+  flex: 1;
+  grid-template-rows: auto 1fr auto;
+}
+#contact-form textarea {
+  height: 100%;
 }
 .contact-grid h1 {
   margin: 1rem 0 2rem;
@@ -2045,7 +2108,7 @@ a.contact-line:focus-visible .k {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-dim);
+  color: var(--ink);
 }
 .optional {
   font-weight: 400;
@@ -2388,8 +2451,11 @@ textarea.input {
   padding-top: 0.5rem;
   text-align: center;
 }
+.submit-row {
+  align-items: stretch;
+}
 .submit-row .btn {
-  min-width: min(100%, 17rem);
+  width: 100%;
 }
 .contact-success:focus {
   outline: none;
