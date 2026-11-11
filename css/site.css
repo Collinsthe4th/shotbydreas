@@ -511,9 +511,13 @@ button:focus-visible,
   }
 }
 /* Where backdrop blur is not available, keep the bar readable */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header {
-    background: rgba(var(--bar-rgb), 0.94);
+/* (phones only: on wide screens the header itself is see-through and the bar inside it
+   is solid, so this must not tint the space between the bar and the theme switch) */
+@media (max-width: 900px) {
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .site-header {
+      background: rgba(var(--bg-rgb), 0.96);
+    }
   }
 }
 body {
