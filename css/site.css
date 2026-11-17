@@ -17,6 +17,14 @@
   font-weight: 700 900;
   font-display: swap;
 }
+/* The brand name in the hero only: Hubot Sans at its heaviest, slightly widened,
+   like the spaced-out wordmark in the logo */
+@font-face {
+  font-family: 'Hubot Sans Hero';
+  src: url('/media/fonts/hubot-sans-hero.woff') format('woff');
+  font-weight: 900;
+  font-display: swap;
+}
 @font-face {
   font-family: 'Hanken Grotesk';
   src: url('/media/fonts/hanken-grotesk.woff') format('woff');
@@ -841,7 +849,7 @@ body.menu-open .to-top {
 /* Hero: big brand name, aperture in the middle, a line of text either side.
    On phones the name breaks into two lines that overlap the aperture (see below). */
 .hero {
-  --ts: calc((min(100vw, var(--max)) - 2 * var(--gutter)) / 5.65); /* title size */
+  --ts: calc((min(100vw, var(--max)) - 2 * var(--gutter)) / 9.4); /* title size */
   position: relative;
   padding-top: clamp(2.5rem, 6vw, 5rem);
   padding-bottom: clamp(4rem, 8vw, 7rem);
@@ -850,9 +858,9 @@ body.menu-open .to-top {
 .hero-title {
   position: relative;
   z-index: 1;
-  font-family: var(--f-display);
+  font-family: 'Hubot Sans Hero', var(--f-display);
   font-size: var(--ts);
-  font-weight: 800;
+  font-weight: 900;
   line-height: 0.86;
   letter-spacing: -0.02em;
   text-align: center;
@@ -890,6 +898,12 @@ body.menu-open .to-top {
   background: var(--panel);
   /* a black ring that cuts cleanly into the letters it covers */
   box-shadow: 0 0 0 clamp(0.4rem, 0.8vw, 0.75rem) var(--black);
+}
+.hero-aperture img {
+  opacity: 0;
+}
+.hero-aperture img.is-current {
+  opacity: 1;
 }
 .hero-aperture img {
   position: absolute;
@@ -943,7 +957,7 @@ body.menu-open .to-top {
 
 @media (max-width: 760px) {
   .hero {
-    --hs: calc((100vw - 2 * var(--gutter)) / 3.12); /* one line of "SHOTBY" fills the width */
+    --hs: calc((100vw - 2 * var(--gutter)) / 5.2); /* one line of "SHOTBY" fills the width */
     padding-top: 1.25rem;
     padding-bottom: 3.5rem;
   }
@@ -2020,6 +2034,9 @@ body.menu-open .to-top {
   gap: clamp(2.5rem, 6vw, 6rem);
   align-items: stretch;
 }
+.contact-grid .glass {
+  background: transparent;
+}
 /* The form panel runs the full height of the contact details beside it; the message box
    grows to fill the extra room so both columns end on the same line */
 .contact-grid .glass {
@@ -2362,12 +2379,18 @@ textarea.input {
   color: var(--ink-dim);
 }
 .cal-day {
-  aspect-ratio: 1;
-  min-height: 2.5rem;
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  /* fixed width and height rather than aspect-ratio, which Safari can ignore on buttons */
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0; /* iPhone gives buttons side padding, which pushed the numbers off-centre */
   border: 1px solid transparent;
   border-radius: 50%;
   background: none;
   font-size: 0.9rem;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
   transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
 }

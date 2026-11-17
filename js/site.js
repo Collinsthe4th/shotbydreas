@@ -595,14 +595,6 @@
           gsap.utils.toArray('.oval').forEach((el) => {
             gsap.fromTo(el, { y: 40 }, { y: -40, ease: 'none', scrollTrigger: scrub(el) });
           });
-          // The banner opens from an inset card to the full width.
-          gsap.utils.toArray('.banner').forEach((el) => {
-            gsap.fromTo(
-              el,
-              { clipPath: 'inset(0% 5% 0% 5% round 20px)' },
-              { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 35%') },
-            );
-          });
           // The hero name lifts and fades as you scroll away from it.
           const heroTitle = document.querySelector('.hero-title');
           if (heroTitle) {
