@@ -532,3 +532,455 @@ footer p{
     margin-bottom: 20px;
 }
 }
+
+/* ---------- Booking form (calendar + WhatsApp handoff) ---------- */
+
+.booking{
+    --gold: rgb(247, 185, 51);
+    --line: rgba(255, 255, 255, 0.35);
+    --muted: rgba(255, 255, 255, 0.7);
+    --danger: #ff8a80;
+    font-family: system-ui, sans-serif;
+}
+
+.booking-intro{
+    color: var(--muted);
+    margin: -30px 0 40px;
+    max-width: 60ch;
+    line-height: 1.5;
+}
+
+.booking .field-group{
+    border: 0;
+    border-top: 1px solid var(--line);
+    padding: 28px 0 8px;
+    margin: 0;
+}
+
+.booking legend{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding-right: 12px;
+    color: var(--gold);
+}
+
+.booking .field-row{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0 24px;
+}
+
+.booking .field{
+    margin-bottom: 20px;
+}
+
+.booking .field label{
+    display: block;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.booking .optional{
+    font-weight: normal;
+    color: var(--muted);
+}
+
+.booking .field input,
+.booking .field select,
+.booking .field textarea{
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    color: white;
+    font: inherit;
+    font-weight: normal;
+    box-shadow: none;
+    transition: border-color 0.2s ease;
+}
+
+.booking .field textarea{
+    resize: vertical;
+}
+
+.booking .field input::placeholder,
+.booking .field textarea::placeholder{
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.booking .field input:focus-visible,
+.booking .field select:focus-visible,
+.booking .field textarea:focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+    border-color: var(--gold);
+}
+
+.booking [aria-invalid="true"]{
+    border-color: var(--danger) !important;
+}
+
+.booking input[type=time]::-webkit-calendar-picker-indicator{
+    filter: invert(1);
+}
+
+.field-error{
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.form-error{
+    background: rgba(255, 82, 82, 0.15);
+    border: 1px solid var(--danger);
+    border-radius: 7px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+}
+
+/* Day mode radios */
+.day-mode{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.booking .day-mode label{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.day-mode label:has(input:checked){
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.day-mode input{
+    accent-color: var(--gold);
+}
+
+.availability-note{
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+}
+
+.availability-note.is-warning{
+    color: var(--gold);
+}
+
+/* Calendar */
+.calendar{
+    max-width: 420px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.calendar[aria-busy="true"] .cal-grid{
+    min-height: 240px;
+    opacity: 0.4;
+}
+
+.calendar-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.cal-month{
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.cal-nav{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.cal-nav:hover:not(:disabled){
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.cal-nav:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.cal-weekdays,
+.cal-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+
+.cal-weekdays{
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.cal-day{
+    aspect-ratio: 1;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cal-day.is-free:hover{
+    border-color: var(--gold);
+}
+
+.cal-day:focus-visible,
+.cal-nav:focus-visible,
+.chip-remove:focus-visible,
+.submit-btn:focus-visible,
+.link-btn:focus-visible,
+.day-mode label:has(input:focus-visible){
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.cal-day.is-today{
+    border-color: var(--line);
+}
+
+.cal-day.is-booked{
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: line-through;
+    background-color: rgba(255, 255, 255, 0.06);
+    cursor: not-allowed;
+}
+
+.cal-day.is-out{
+    color: rgba(255, 255, 255, 0.2);
+    cursor: default;
+}
+
+.cal-day.is-selected{
+    background-color: var(--gold);
+    color: black;
+    font-weight: bold;
+}
+
+.cal-legend{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+}
+
+.cal-legend span{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dot{
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.dot-free{ border: 1px solid white; }
+.dot-booked{ background-color: rgba(255, 255, 255, 0.25); }
+.dot-selected{ background-color: var(--gold); }
+
+/* Selected date chips */
+.selected-dates{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 14px 0 20px;
+}
+
+.selected-dates li{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 6px 6px 12px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.chip-remove{
+    width: 24px;
+    height: 24px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.chip-remove:hover{
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Spam trap */
+.hp-field{
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Submit + success */
+.submit-row{
+    padding-top: 12px;
+}
+
+.submit-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 7px;
+    color: white;
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled){
+    background-color: white;
+    color: black;
+}
+
+.submit-btn:disabled{
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.submit-btn.is-loading .fa-whatsapp{
+    animation: booking-pulse 1s ease-in-out infinite;
+}
+
+@keyframes booking-pulse{
+    50%{ opacity: 0.3; }
+}
+
+.whatsapp-link{
+    border-color: #25d366;
+    background-color: #25d366;
+    color: black;
+}
+
+.whatsapp-link:hover{
+    background-color: #1ebe5b !important;
+    color: black !important;
+}
+
+.booking-success h3{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+}
+
+.booking-success h3 i{
+    color: #25d366;
+}
+
+.booking-success p{
+    line-height: 1.5;
+    max-width: 60ch;
+}
+
+.booking-success:focus{
+    outline: none;
+}
+
+.message-preview{
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 20px 0;
+    max-width: 520px;
+}
+
+.link-btn{
+    display: block;
+    margin-top: 16px;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    text-decoration: underline;
+    font: inherit;
+    cursor: pointer;
+}
+
+@media (max-width: 768px){
+    .book-page{
+        padding: 32px 20px;
+        margin: 24px 12px;
+    }
+
+    .booking h2{
+        font-size: 2rem;
+        padding-bottom: 40px;
+        margin-left: 0;
+    }
+
+    /* Undo the older mobile offsets that were sized for the previous form. */
+    .booking label,
+    .booking select{
+        margin-left: 0;
+        scale: none;
+    }
+
+    .booking .field select{
+        width: 100%;
+    }
+
+    .calendar{
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .booking *{
+        transition: none !important;
+        animation: none !important;
+    }
+}
