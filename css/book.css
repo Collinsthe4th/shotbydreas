@@ -1,0 +1,534 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    position: sticky;
+    background-color: black;
+    box-shadow: 0 3px 10px rgba(141, 141, 141, 0.7);
+    padding: 50px;
+    top: 0;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+}
+
+.logo img{
+    height: auto;
+    margin-bottom: -90px;
+    margin-left: 40px;
+    left: 0;
+    filter: invert(100%);
+}
+
+nav{
+    text-align: center;
+}
+
+nav li, .book li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+}
+
+nav li a, .book li a{
+    text-decoration: none;
+    font-family: system-ui;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.book{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -40px;
+    margin-right: 50px;
+}
+
+
+nav ul li::after, .book li::after{
+    content: '';
+    background-color: rgb(247, 185, 51);
+    width: 0%;
+    height: 2px;
+    display: block;
+    margin: auto;
+    transition: 0.5s ease-in-out;
+}
+
+nav li:hover::after, .book li:hover::after{
+    width: 100%;
+}
+
+nav li a:hover, .book li a:hover{
+    color: rgb(247, 185, 51);
+    transition: 0.5s ease-in-out;
+}
+
+nav li a:not(:active), .book li a:not(:active){
+    transition: 0.5s ease-out;
+}
+
+.nav-bar{
+    color: white;
+    visibility: hidden;
+    scale: 1.5;
+    float: right;
+    margin-right: -30px;
+    margin-top: -80px;
+}
+
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.5)), url(/bgs/backdrop11.JPG);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: top;
+}
+
+.book-page{
+    background-color: transparent;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid;
+    padding: 100px;
+    margin: 100px;
+    backdrop-filter: blur(10px);
+    height: fit-content;
+}
+
+.booking h2{
+    font-family: 'Trebuchet MS';
+    font-size: 3rem;
+    left: 0;
+    text-shadow: 2px 2px 5px black;
+    padding-bottom: 50px;
+}
+
+.pay .button{
+    float: right;
+}
+
+.booking label{
+    font-family: system-ui;
+    font-size: 20px;
+    font-weight: bold;
+    left: 0;
+}
+
+.booking select{
+    margin: 10px 0 50px;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 7px;
+    color: white;
+    font-family: verdana;
+    font-weight: bold;
+    outline: none;
+    width: 25%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.booking select option{
+    color: black;
+    font-family: verdana;
+    font-weight: bold;
+}
+
+.dates{
+    display: flex;
+    justify-content: space-around;
+}
+
+input[type=datetime-local]{
+    padding: 10px;
+    background-color: transparent;
+    color: white;
+    font-family: verdana;
+    font-weight: bold;
+    outline: none;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid white;  
+}
+
+input[type=submit]{
+    margin-top: 50px;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    outline: none;
+    color: white;
+    font-family: verdana;
+    font-weight: bold;
+}
+
+input[type=submit]:hover{
+    color: black;
+    cursor: pointer;
+    background-color: white;
+    transition: .5s ease-in;
+}
+
+
+input[type=submit]:not(:active){
+    transition: .5s ease-out;
+}
+
+.button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.payment{
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 7px;
+    outline: none;
+    color: white;
+    font-family: verdana;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.payment:hover{
+    color: white;
+    cursor: pointer;
+    border: 1px solid rgb(29, 177, 0);
+    background-color: rgb(29, 177, 0);
+    transition: .5s ease-in;
+}
+
+.payment:not(:active){
+    transition: .5s ease-out;
+}
+
+.back-top .fa-solid{
+    scale: 3;
+    position: fixed;
+    right: 0;
+    margin-right: 40px;
+    bottom: 0;
+    margin-bottom: 50px;
+    color: white;
+    z-index: 1;
+}
+
+footer{
+    bottom: 0;
+}
+
+.footer-items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 100px;
+    background-color: black;
+    margin-left: -150px;
+}
+
+footer img{
+    margin: 100px 50px 0;
+    right: 0;
+    position: absolute;
+    scale: 2;
+}
+
+.items h2{
+    color: whitesmoke;
+    font-family: arial;
+    letter-spacing: 1px;
+    padding-bottom: 20px;
+}
+
+.items ul li{
+    list-style: none;
+}
+
+.items ul{
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+    color: white;
+    font-family: system-ui;
+    line-height: 1.5rem;
+}
+
+.items a{
+    text-decoration: none;
+    color: white;
+}
+
+.items a:hover{
+    font-weight: bold;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.items a:not(:active){
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.fa-facebook-f, .fa-x-twitter, 
+.fa-instagram, .fa-pinterest{
+    margin-right: 20px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    scale: 2;
+}
+
+.fa-facebook-f:hover{
+    background-color: rgb(91, 91, 212);
+    color: white;
+    transform: translateY(-4px);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    transition: 0.5s ease-in-out;
+}
+
+.fa-x-twitter:hover{
+    background-color: white;
+    color: black;
+    transform: translateY(-4px);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    transition: 0.5s ease-in-out;
+}
+
+.fa-instagram:hover{
+    background-color: rgb(233, 20, 120);
+    color: white;
+    transform: translateY(-4px);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    transition: 0.5s ease-in-out;
+}
+
+.fa-pinterest:hover{
+    color: red;
+    background-color: white;
+    transform: translateY(-4px);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    transition: 0.5s ease-in-out;
+}
+
+.fa-facebook-f:not(:active), .fa-x-twitter:not(:active), .fa-instagram:not(:active),
+.fa-pinterest:not(:active){
+    transition: 1s ease-out;
+}
+
+footer p{
+    text-align: center;
+    color: white;
+    font-family: arial;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    background-color: black;
+    bottom: 0;
+}
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 768px) {
+    header{
+        position: sticky;
+        height: 18vh;
+        width: 100%;
+        padding: 55px 30px;
+        box-shadow: 0 5px 10px rgba(141, 141, 141, 0.7);
+        backdrop-filter: blur(50px);
+    }
+
+    .logo img{
+        margin-top: 0px;
+        margin-bottom: 0;
+        margin-left: -30px;
+        padding-top: 0;
+    }    
+
+   nav li{
+    display: block;
+    border-bottom: 1px solid white;
+   }
+
+   nav :first-child{
+    padding-top: 5px;
+    margin-top: -5px;
+   }
+
+   nav :last-child{
+    margin-bottom: -5px;
+   }
+
+   .book{
+    position: relative;
+    margin-top: 5px;
+    display: block;
+    margin-right: 0;
+    text-align: center;
+   }
+
+  ul{
+    padding-top: 55px;
+    position: sticky;
+  }
+
+  .nav{
+    margin-top: -30px;
+    margin-bottom: -150px;
+    background-color: rgba(68, 67, 67, 0.918);
+    background-blend-mode: luminosity;
+    box-shadow: 0 5px 10px rgba(141, 141, 141, 0.7);
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: .5s ease-in-out;
+    margin-left: -50px;
+    width: 129%;
+  }
+  
+    nav ul li::after, .book li::after{
+        display: none;
+    }
+
+    nav li:hover::after, .book li:hover::after{
+        width: 0%;
+    }
+
+    .nav nav li:hover, .book:hover{
+        background-color: rgb(247, 185, 51);
+        transition: 0.5s ease-in-out;
+    }
+
+    .nav :not(:active){
+        transition: 0.5s ease-out;
+    }
+
+    .nav-bar{
+        visibility: visible;
+        left: 0;
+        margin-right: 5px;
+    }
+
+    .show{
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        transition: .5s ease-in-out;
+    }
+
+    .book-page{
+        padding: 50px;
+        margin: 20px;
+        backdrop-filter: blur(50px);
+    }
+    
+    .booking h2{
+        font-size: clamp(5px,5vw,64px);
+        margin-left: -20px;
+    }
+    
+    .booking label{
+        font-size: clamp(5px,4vw,32px);
+        margin-left: -20px;
+    }
+    
+    .booking select{
+        scale: .8;
+        width: 70%;
+        margin-left: -40px;
+    }
+    
+    .dates{
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    input[type=datetime-local]{
+        width: 75%;
+    }
+    
+    .payment{
+        margin-top: -20px;
+        scale: .8;
+        margin-right: -50px;
+    }
+
+.back-top{
+    scale: 3.5;
+    position: fixed;
+    right: 0;
+    margin-right: -100px;
+    bottom: 0;
+    margin-top: 0;
+    margin-bottom: -160px;
+    color: white;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.back-top .fa-solid{
+    scale: .8;
+}
+
+.fa-bars{
+    color: white; 
+    background-color: none;
+}
+    
+footer{
+    background-color: black;
+    height: fit-content;
+    padding: 150px 120px 10px;
+}
+
+.footer-items{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 0 50px;
+    padding: 0 0 0 50px;
+    scale: .8;
+    margin-left: -100%;
+}
+
+footer img{
+    margin-top: 60px;
+    margin-right: 10px;
+    right: 0;
+    position: absolute;
+    scale: 1;
+}
+
+.icons{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px 0;
+    scale: 1;
+}
+
+.items h2{
+    margin-top: -120px;
+}
+
+.items ul{
+    margin-top: -60px;
+    font-size: clamp(5px,5vw,15px);
+}
+
+footer p{
+    margin-top: 100px;
+    font-size: clamp(10px,3vw,40px);
+    margin-bottom: 20px;
+}
+}
