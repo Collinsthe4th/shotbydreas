@@ -17,6 +17,12 @@ export function getConfig(env = process.env) {
     maxDates: Math.max(1, toInt(env.BOOKING_MAX_DATES, 5)),
     // International format, digits only (e.g. 2348136078551). Used for the wa.me link.
     whatsappNumber: (env.WHATSAPP_NUMBER || '').replace(/\D/g, ''),
+    // Free option (no Google Cloud Console): Apps Script web app in Dreas's account.
+    script: {
+      url: env.CALENDAR_SCRIPT_URL || '',
+      key: env.CALENDAR_SCRIPT_KEY || '',
+    },
+    // Alternative: Google Cloud service account.
     google: {
       clientEmail: env.GOOGLE_SERVICE_ACCOUNT_EMAIL || '',
       // Vercel stores multi-line values fine, but pasted keys often arrive with literal "\n".
@@ -29,7 +35,11 @@ export function getConfig(env = process.env) {
   };
 }
 
+export function usesAppsScript(config) {
+  return Boolean(config.script.url && config.script.key);
+}
+
 export function isCalendarConfigured(config) {
   const { clientEmail, privateKey, calendarId } = config.google;
-  return Boolean(clientEmail && privateKey && calendarId);
+  return usesAppsScript(config) || Boolean(clientEmail && privateKey && calendarId);
 }
