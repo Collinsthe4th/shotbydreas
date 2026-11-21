@@ -18,7 +18,7 @@ If the calendar cannot be reached, the form still works. Clients can pick any da
 html/            Site pages (index, about, gallery, videos, contact, book)
 css/             Page styles
 js/book.js       Booking page logic (calendar, form, WhatsApp handoff)
-index.js         Shared nav and gallery script
+js/index.js      Shared nav and gallery script
 bgs/             Images and videos (add these, see below)
 api/             Vercel serverless functions
   availability.js      GET  /api/availability
