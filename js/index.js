@@ -1,11 +1,14 @@
 const nav = document.querySelector(".nav-bar .fa-bars");
 const navContent = document.querySelector(".nav");
 
-nav.addEventListener("click", () => {
-   navContent.classList.toggle('show');
-});
+if (nav && navContent) {
+   nav.addEventListener("click", () => {
+      navContent.classList.toggle('show');
+   });
+}
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
 
 
 // Gallery tabs (only on the gallery page)
