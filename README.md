@@ -15,23 +15,47 @@ If the calendar cannot be reached, the form still works. Clients can pick any da
 ## Project structure
 
 ```text
-html/            Site pages (index, about, gallery, videos, contact, book)
-css/             Page styles
-js/book.js       Booking page logic (calendar, form, WhatsApp handoff)
-js/index.js      Shared nav and gallery script
-bgs/             Images and videos (add these, see below)
-api/             Vercel serverless functions
-  availability.js      GET  /api/availability
-  booking-options.js   GET  /api/booking-options
-  bookings.js          POST /api/bookings
-  _lib/                Shared server code (not exposed as endpoints)
-    options.js         Event types and services shown on the form. Edit here.
-google-apps-script/Code.gs   Script Dreas deploys in his Google account (free calendar feed)
-tests/           Backend tests (npm test)
-scripts/         Local dev server (npm run dev)
+html/                 Pages: index (home), videos (films), gallery (stills), about, contact, book
+css/site.css          The whole design system (tokens, type, layout, components, every page)
+js/data.js            Films and stills shown on the site. Edit this to add real work.
+js/site.js            Shared: header, menu, clock, video player, film drawer, cursor, GSAP motion
+js/work.js            Home film index + Films page filter grid
+js/gallery.js         Stills grid + lightbox
+js/contact.js         Quick question form (opens WhatsApp)
+js/book.js            Booking calendar and form
+media/brand/          Logo (white and black, transparent background), favicon
+media/films/          Video files (.mp4) and their poster frames (.jpg)
+media/stills/         Photos
+media/fonts/          Bodoni Moda, Montserrat, JetBrains Mono (self-hosted, SIL Open Font License)
+vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
+google-apps-script/   Code.gs that Dreas deploys in his Google account (free calendar feed)
+api/                  Vercel serverless functions
+  availability.js       GET  /api/availability
+  booking-options.js    GET  /api/booking-options
+  bookings.js           POST /api/bookings
+  _lib/                 Shared server code (not exposed as endpoints)
+    options.js          Event types and services shown on the booking form. Edit here.
+tests/                Backend tests (npm test)
+scripts/              Local dev server (npm run dev)
 ```
 
-The API uses only Node.js built-ins, so there is nothing to install.
+The API uses only Node.js built-ins, so there is nothing to install. The header, menu and footer are repeated in each HTML page, so change them in all six files.
+
+## Design notes
+
+"Darkroom Editorial": near-black background, warm off-white text and the brand gold used only for small accents (timecodes, active states, the booking button). Headlines use Bodoni Moda, a high-contrast serif that echoes the SD monogram. Labels use Montserrat, which matches the wordmark, and camera details use JetBrains Mono.
+
+Motion (GSAP, in `js/site.js`): headline lines rise out of masks on load, the showreel opens like an aperture as it scrolls in, sections fade up once, photos drift slightly slower than their frames, and the home contact sheet pins and scrolls sideways on desktop. Everything is switched off for visitors who set "reduce motion", and the site still works fully if GSAP fails to load.
+
+## Replacing the placeholder content
+
+Everything marked as a placeholder on the site needs Dreas's real material:
+
+1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, deliverables and so on).
+2. **Showreel:** replace `media/films/reel.mp4` and `reel.jpg`. The headline clip on the home page uses `film-gold.mp4`.
+3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. `span` is the width out of 12 columns, so make each row add up to 12.
+4. **Copy:** the About bio, the kit list on the home page, the two sample quotes, and the FAQ answers in `html/about.html`.
+5. Remove the "placeholders" note in the footer of each page once real work is in.
 
 ## API
 
@@ -103,6 +127,3 @@ npm test                # backend tests
 
 Without the Google variables, the booking page still works in "Dreas will confirm" mode.
 
-## Images
-
-`bgs/` holds the images and videos the pages use. For now these are labelled placeholders. Replace each file with Dreas's real media under the same name (names are case-sensitive on Vercel, e.g. `backdrop11.JPG`, `dreas logo.PNG`), or update the paths in the HTML and CSS.
