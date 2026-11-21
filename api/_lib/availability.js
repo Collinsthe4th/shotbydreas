@@ -1,6 +1,8 @@
 // Turns Google free/busy data into a list of booked calendar days.
 
 import { addDays, busyDates, startOfLocalDay, todayIn } from './dates.js';
+import { queryBusyViaScript } from './apps-script.js';
+import { usesAppsScript } from './config.js';
 import { queryBusy } from './google.js';
 
 // freeBusy queries are kept to 60-day chunks to stay well inside Google's range limits.
@@ -20,7 +22,11 @@ export function getBookingWindow(config, now = new Date()) {
 // Booked days between fromDate and toDate (inclusive), sorted.
 // Any busy event on a day books the whole day. Events set to "Show as: Free" are ignored by Google.
 export async function getUnavailableDates(config, fromDate, toDate, deps = {}) {
-  const { timeZone, google } = config;
+  const { timeZone } = config;
+  // The Apps Script feed is used when configured, otherwise the service account.
+  const query = usesAppsScript(config)
+    ? (min, max) => queryBusyViaScript(config.script, min, max, deps)
+    : (min, max) => queryBusy(config.google, min, max, deps);
   const chunks = [];
   for (let start = fromDate; start <= toDate; start = addDays(start, CHUNK_DAYS)) {
     const lastDay = addDays(start, CHUNK_DAYS - 1);
@@ -30,12 +36,7 @@ export async function getUnavailableDates(config, fromDate, toDate, deps = {}) {
 
   const results = await Promise.all(
     chunks.map(([start, end]) =>
-      queryBusy(
-        google,
-        startOfLocalDay(start, timeZone).toISOString(),
-        startOfLocalDay(addDays(end, 1), timeZone).toISOString(),
-        deps,
-      ),
+      query(startOfLocalDay(start, timeZone).toISOString(), startOfLocalDay(addDays(end, 1), timeZone).toISOString()),
     ),
   );
 

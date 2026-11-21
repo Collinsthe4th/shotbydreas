@@ -186,3 +186,51 @@ describe('whatsapp', () => {
     assert.equal(decodeURIComponent(url.split('text=')[1]), msg);
   });
 });
+
+describe('apps script feed (free option)', () => {
+  const scriptConfig = getConfig({
+    WHATSAPP_NUMBER: '2348136078551',
+    CALENDAR_SCRIPT_URL: 'https://script.google.com/macros/s/abc/exec',
+    CALENDAR_SCRIPT_KEY: 'secret-key',
+  });
+
+  function fakeScript(reply) {
+    const calls = [];
+    const fetchImpl = async (url) => {
+      calls.push(url);
+      return typeof reply === 'function' ? reply(url) : reply;
+    };
+    return { calls, fetchImpl };
+  }
+
+  it('counts as a configured calendar on its own', async () => {
+    const { isCalendarConfigured } = await import('../api/_lib/config.js');
+    assert.ok(isCalendarConfigured(scriptConfig));
+  });
+
+  it('sends the key and range and maps busy periods to days', async () => {
+    const g = fakeScript((url) =>
+      Response.json({
+        busy: [{ start: '2026-12-04T23:00:00Z', end: '2026-12-05T23:00:00Z' }].filter(
+          (b) => b.end > url.searchParams.get('timeMin') && b.start < url.searchParams.get('timeMax'),
+        ),
+      }),
+    );
+    const days = await getUnavailableDates(scriptConfig, '2026-11-23', '2027-02-20', g);
+    assert.deepEqual(days, ['2026-12-05']);
+    assert.equal(g.calls.length, 2);
+    assert.equal(g.calls[0].searchParams.get('key'), 'secret-key');
+    assert.equal(g.calls[0].searchParams.get('timeMin'), '2026-11-22T23:00:00.000Z');
+  });
+
+  it('raises the script error and non-JSON pages', async () => {
+    await assert.rejects(
+      getUnavailableDates(scriptConfig, '2026-12-01', '2026-12-02', fakeScript(Response.json({ error: 'unauthorized' }))),
+      /unauthorized/,
+    );
+    await assert.rejects(
+      getUnavailableDates(scriptConfig, '2026-12-01', '2026-12-02', fakeScript(new Response('<html>Sign in</html>'))),
+      /without JSON/,
+    );
+  });
+});
