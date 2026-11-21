@@ -1,204 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Us</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/book.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a date · SHOTBYDREAS</title>
+  <meta name="description" content="Check open dates and book SHOTBYDREAS for your wedding, celebration or event. Your details go straight to Dreas on WhatsApp.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Book a date · SHOTBYDREAS">
+  <meta property="og:description" content="Check open dates and book SHOTBYDREAS for your wedding, celebration or event. Your details go straight to Dreas on WhatsApp.">
+  <meta property="og:image" content="/media/films/reel.jpg">
+  <link rel="icon" type="image/png" href="/media/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
+  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  <script>
+    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    (function (d) {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('js-motion');
+      setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
+    })(document.documentElement);
+  </script>
+  <script src="/vendor/gsap/gsap.min.js" defer></script>
+  <script src="/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="/js/site.js" defer></script>
+  <script src="/js/book.js" defer></script>
 </head>
+<body data-page="book">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header>
-    <div class="logo">
-        <img src="/bgs/dreas logo.PNG" width="120px" alt="logo">
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
+      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
+      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/html/videos.html">Films</a></li>
+        <li><a href="/html/gallery.html">Stills</a></li>
+        <li><a href="/html/about.html">About</a></li>
+        <li><a href="/html/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-meta">
+      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
+      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
     </div>
-    <div class="nav-bar">
-        <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="nav">
-        <nav>
-        <ul>
-            <li><a href="/html/index.html">HOME</a></li>
-            <li><a href="/html/about.html">ABOUT</a></li>
-            <li><a href="/html/gallery.html">GALLERY</a></li>
-            <li><a href="/html/contact.html">CONTACT</a></li>
-        </ul>
-        </nav>
-        <div class="book">
-            <li><a href="/html/book.html"><i class="fa-solid fa-calendar"></i>BOOKINGS</a></li>
-        </div>
-    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+    </button>
+  </div>
 </header>
 
-<body>
-
-    <section id="booking">
-        <div class="book-page">
-        <div class="booking">
-            <h2>SCHEDULE US FOR YOUR EVENTS</h2>
-            <p class="booking-intro">Pick the date(s) you need us, tell us about your event, and send the details straight to Dreas on WhatsApp.</p>
-
-            <form id="booking-form" novalidate>
-                <p class="form-error" id="form-error" role="alert" hidden></p>
-
-                <fieldset class="field-group">
-                    <legend>1. Choose your date(s)</legend>
-                    <div class="day-mode" role="radiogroup" aria-label="How many days">
-                        <label><input type="radio" name="dayMode" value="single" checked> One-time event</label>
-                        <label><input type="radio" name="dayMode" value="multiple"> Multiple days</label>
-                    </div>
-                    <p class="availability-note" id="availability-note" aria-live="polite">Loading available dates...</p>
-
-                    <div class="calendar" id="calendar" aria-busy="true">
-                        <div class="calendar-head">
-                            <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
-                            <p class="cal-month" id="cal-month" aria-live="polite"></p>
-                            <button type="button" class="cal-nav" id="cal-next" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
-                        </div>
-                        <div class="cal-weekdays" aria-hidden="true">
-                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                        </div>
-                        <div class="cal-grid" id="cal-grid"></div>
-                        <div class="cal-legend" aria-hidden="true">
-                            <span><i class="dot dot-free"></i>Available</span>
-                            <span><i class="dot dot-booked"></i>Booked</span>
-                            <span><i class="dot dot-selected"></i>Your pick</span>
-                        </div>
-                    </div>
-                    <ul class="selected-dates" id="selected-dates" aria-label="Selected dates"></ul>
-                    <p class="field-error" data-error-for="dates" hidden></p>
-                </fieldset>
-
-                <fieldset class="field-group">
-                    <legend>2. About your event</legend>
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="eventType">Event type</label>
-                            <select id="eventType" name="eventType" required>
-                                <option value="">Select an event</option>
-                            </select>
-                            <p class="field-error" data-error-for="eventType" hidden></p>
-                        </div>
-                        <div class="field">
-                            <label for="service">Service</label>
-                            <select id="service" name="service" required>
-                                <option value="">Select a service</option>
-                            </select>
-                            <p class="field-error" data-error-for="service" hidden></p>
-                        </div>
-                    </div>
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" name="location" placeholder="e.g. Awka, Anambra" maxlength="120" required>
-                            <p class="field-error" data-error-for="location" hidden></p>
-                        </div>
-                        <div class="field">
-                            <label for="startTime">Start time <span class="optional">(optional)</span></label>
-                            <input type="time" id="startTime" name="startTime">
-                            <p class="field-error" data-error-for="startTime" hidden></p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="budget">Budget <span class="optional">(optional)</span></label>
-                        <input type="text" id="budget" name="budget" placeholder="e.g. &#8358;300,000" maxlength="60">
-                        <p class="field-error" data-error-for="budget" hidden></p>
-                    </div>
-                    <div class="field">
-                        <label for="details">Anything else? <span class="optional">(optional)</span></label>
-                        <textarea id="details" name="details" rows="4" maxlength="1000" placeholder="Number of guests, coverage hours, style you like..."></textarea>
-                        <p class="field-error" data-error-for="details" hidden></p>
-                    </div>
-                </fieldset>
-
-                <fieldset class="field-group">
-                    <legend>3. Your details</legend>
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="name">Full name</label>
-                            <input type="text" id="name" name="name" autocomplete="name" maxlength="80" required>
-                            <p class="field-error" data-error-for="name" hidden></p>
-                        </div>
-                        <div class="field">
-                            <label for="phone">Phone / WhatsApp</label>
-                            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+234 801 234 5678" required>
-                            <p class="field-error" data-error-for="phone" hidden></p>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="email">Email <span class="optional">(optional)</span></label>
-                        <input type="email" id="email" name="email" autocomplete="email">
-                        <p class="field-error" data-error-for="email" hidden></p>
-                    </div>
-                    <!-- Spam trap: hidden from people, bots fill it in. -->
-                    <div class="hp-field" aria-hidden="true">
-                        <label for="website">Website</label>
-                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                    </div>
-                </fieldset>
-
-                <div class="submit-row">
-                    <button type="submit" class="submit-btn" id="submit-btn">
-                        <i class="fa-brands fa-whatsapp"></i> <span>Continue to WhatsApp</span>
-                    </button>
-                </div>
-            </form>
-
-            <div class="booking-success" id="booking-success" tabindex="-1" hidden>
-                <h3><i class="fa-solid fa-circle-check"></i> Almost done</h3>
-                <p>Your booking request is ready. Tap the button below to open WhatsApp and send it to Dreas. He will confirm your date and price there.</p>
-                <pre class="message-preview" id="message-preview"></pre>
-                <a class="submit-btn whatsapp-link" id="whatsapp-link" href="#" target="_blank" rel="noopener">
-                    <i class="fa-brands fa-whatsapp"></i> Send on WhatsApp
-                </a>
-                <button type="button" class="link-btn" id="edit-booking">Edit my details</button>
-            </div>
-        </div>
-    </div>
-    </section>
-
-<div class="back-top" onclick="window.scrollTo({top:0, behavior: 'smooth'})">
-    <i class="fa-solid fa-circle-arrow-up"></i>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <ul class="menu-links">
+      <li><a href="/html/index.html"><span class="mono">01</span>Home</a></li>
+      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
+      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
+      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
+      <li><a href="/html/contact.html"><span class="mono">05</span>Contact</a></li>
+      <li><a href="/html/book.html" aria-current="page"><span class="mono">06</span>Book a date</a></li>
+    </ul>
+  </nav>
+  <div class="menu-foot">
+    <p class="mono" data-clock aria-hidden="true"></p>
+    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  </div>
 </div>
-    
-</body>
 
+<main id="main">
 
-<footer>
-    <img src="/bgs/dreas logo.jpg" width="100px" alt="logo">
-    <div class="footer-items">
-        <div class="items">
-    <h2>Quick Links</h2>
-    <ul>
-        <li><a href="/html/about.html">About Us</a></li>
-        <li><a href="/html/gallery.html">Album</a></li>
-        <li><a href="/html/book.html">Book Us</a></li>
-        <li><a href="/html/contact.html">Contact</a></li>
-    </ul>
-        </div>
+  <section class="page-hero wrap" style="padding-bottom:var(--section)">
+    <div class="book-layout">
+      <aside class="book-aside">
+        <p class="mono" style="margin-bottom:1.5rem"><span class="dot" aria-hidden="true"></span>Booking 2026 · Open</p>
+        <h1 class="display"><span class="line"><span class="line-inner">Book a</span></span><span class="line"><span class="line-inner"><em>date.</em></span></span></h1>
+        <p class="lede">Pick your date, tell us about the event, and send it straight to Dreas on WhatsApp.</p>
+        <ol class="book-steps">
+          <li><span class="mono">01</span>Choose one day or several. Booked days are crossed out.</li>
+          <li><span class="mono">02</span>Tell us the event, the service and where it is.</li>
+          <li><span class="mono">03</span>Send it on WhatsApp. Dreas confirms the date and price there.</li>
+        </ol>
+        <p class="book-note">Nothing is paid on this page.</p>
+      </aside>
 
-        <div class="items">
-    <h2>Contact</h2>
-    <ul>
-        <li><span style="font-weight: bold;">Address:</span> Awka, Anambra, Nigeria</li>
-        <li><span style="font-weight: bold;">Phone: </span>+234-813 607 8551</li>
-        <li><span style="font-weight: bold;">Hours: </span>10:00 - 18:00 Mon - Sat</li>
-    </ul>
-        </div>
+      <div class="book-main">
+        <form id="booking-form" novalidate>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
 
-        <div class="items">
-    <h2>Follow Us</h2>
-    <div class="icons">
-            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
-            <a href=""><i class="fa-brands fa-instagram"></i></a>
-            <a href=""><i class="fa-brands fa-pinterest"></i></a>
+          <fieldset class="form-step">
+            <legend><span class="mono">01</span>Choose your date(s)</legend>
+            <div class="chips day-mode" role="radiogroup" aria-label="How many days">
+              <label class="chip"><input type="radio" name="dayMode" value="single" checked> One day</label>
+              <label class="chip"><input type="radio" name="dayMode" value="multiple"> Multiple days</label>
+            </div>
+            <p class="availability-note" id="availability-note" aria-live="polite">Loading open dates...</p>
+            <div class="calendar" id="calendar" aria-busy="true">
+              <div class="calendar-head">
+                <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">←</button>
+                <p class="cal-month" id="cal-month" aria-live="polite"></p>
+                <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">→</button>
+              </div>
+              <div class="cal-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+              <div class="cal-grid" id="cal-grid"></div>
+              <div class="cal-legend" aria-hidden="true">
+                <span><i class="swatch swatch-free"></i>Open</span>
+                <span><i class="swatch swatch-booked"></i>Booked</span>
+                <span><i class="swatch swatch-selected"></i>Your pick</span>
+              </div>
+            </div>
+            <ul class="selected-dates" id="selected-dates" aria-label="Selected dates"></ul>
+            <p class="field-error" data-error-for="dates" hidden></p>
+          </fieldset>
+
+          <fieldset class="form-step">
+            <legend><span class="mono">02</span>About your event</legend>
+            <div class="field">
+              <span class="field-label" id="eventType-label">Event type</span>
+              <div class="chips" id="eventType" role="radiogroup" aria-labelledby="eventType-label"></div>
+              <p class="field-error" data-error-for="eventType" hidden></p>
+            </div>
+            <div class="field">
+              <span class="field-label" id="service-label">Service</span>
+              <div class="chips" id="service" role="radiogroup" aria-labelledby="service-label"></div>
+              <p class="field-error" data-error-for="service" hidden></p>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="location">Location</label>
+                <input class="input" type="text" id="location" name="location" placeholder="e.g. Awka, Anambra" maxlength="120" required>
+                <p class="field-error" data-error-for="location" hidden></p>
+              </div>
+              <div class="field">
+                <label for="startTime">Start time <span class="optional">(optional)</span></label>
+                <input class="input" type="time" id="startTime" name="startTime">
+                <p class="field-error" data-error-for="startTime" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="budget">Budget <span class="optional">(optional)</span></label>
+              <input class="input" type="text" id="budget" name="budget" placeholder="e.g. &#8358;300,000" maxlength="60">
+              <p class="field-error" data-error-for="budget" hidden></p>
+            </div>
+            <div class="field">
+              <label for="details">Anything else? <span class="optional">(optional)</span></label>
+              <textarea class="input" id="details" name="details" rows="4" maxlength="1000" placeholder="Number of guests, hours of coverage, a style you like..."></textarea>
+              <p class="field-error" data-error-for="details" hidden></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-step">
+            <legend><span class="mono">03</span>Your details</legend>
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Full name</label>
+                <input class="input" type="text" id="name" name="name" autocomplete="name" maxlength="80" required>
+                <p class="field-error" data-error-for="name" hidden></p>
+              </div>
+              <div class="field">
+                <label for="phone">Phone / WhatsApp</label>
+                <input class="input" type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+234 801 234 5678" required>
+                <p class="field-error" data-error-for="phone" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="optional">(optional)</span></label>
+              <input class="input" type="email" id="email" name="email" autocomplete="email">
+              <p class="field-error" data-error-for="email" hidden></p>
+            </div>
+            <div class="hp-field" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+          </fieldset>
+
+          <div class="submit-row">
+            <button type="submit" class="btn btn-gold submit-btn" id="submit-btn"><svg class="icon-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M12 7.8 4.83 3.66M15.64 9.9V1.62M15.64 14.1l7.17-4.14M12 16.2l7.17 4.14M8.36 14.1v8.28M8.36 9.9l-7.17 4.14"/></svg><span class="submit-label">Continue to WhatsApp</span></button>
+            <p class="mono">Opens WhatsApp with your details filled in</p>
+          </div>
+        </form>
+
+        <div class="booking-success" id="booking-success" tabindex="-1" hidden>
+          <p class="mono gold">Request ready</p>
+          <h2 class="display">Almost <em>done.</em></h2>
+          <p>Tap the button below to open WhatsApp and send this to Dreas. He will confirm your date and price there.</p>
+          <pre class="message-preview" id="message-preview"></pre>
+          <a class="btn btn-wa whatsapp-link" id="whatsapp-link" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+          <button type="button" class="link-btn" id="edit-booking">Edit my details</button>
         </div>
-        </div>
-    
+      </div>
     </div>
-    <p>&copy; <span id="year"></span> SHOTBYDREAS</p>
-    <script src="/js/index.js"></script>
-    <script src="/js/book.js" defer></script>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
+        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+      </div>
+      <div>
+        <h2 class="label">Pages</h2>
+        <ul>
+          <li><a href="/html/videos.html">Films</a></li>
+          <li><a href="/html/gallery.html">Stills</a></li>
+          <li><a href="/html/about.html">About</a></li>
+          <li><a href="/html/contact.html">Contact</a></li>
+          <li><a href="/html/book.html">Book a date</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Contact</h2>
+        <ul>
+          <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
+          <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Follow</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
+      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+    </div>
+  </div>
 </footer>
+</body>
 </html>

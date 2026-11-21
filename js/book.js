@@ -70,8 +70,8 @@
     ]);
 
     if (options.status === 'fulfilled' && options.value.ok) {
-      fillSelect(els.eventType, options.value.body.eventTypes);
-      fillSelect(els.service, options.value.body.services);
+      fillChoices(els.eventType, 'eventType', options.value.body.eventTypes);
+      fillChoices(els.service, 'service', options.value.body.services);
     } else {
       showFormError('We could not load the booking form. Please refresh the page, or contact us on WhatsApp.');
       els.submit.disabled = true;
@@ -93,8 +93,16 @@
     renderCalendar();
   }
 
-  function fillSelect(select, values = []) {
-    for (const value of values) select.add(new Option(value, value));
+  // Event types and services are chip-style radio groups.
+  function fillChoices(group, name, values = []) {
+    const items = values.map((value) => {
+      const label = document.createElement('label');
+      label.className = 'chip';
+      const input = Object.assign(document.createElement('input'), { type: 'radio', name, value });
+      label.append(input, document.createTextNode(value));
+      return label;
+    });
+    group.replaceChildren(...items);
   }
 
   function setNote(text, warn = false) {
@@ -150,7 +158,7 @@
       remove.className = 'chip-remove';
       remove.dataset.date = iso;
       remove.setAttribute('aria-label', `Remove ${longDate(iso)}`);
-      remove.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+      remove.innerHTML = '<span aria-hidden="true">✕</span>';
       li.append(remove);
       return li;
     });
@@ -208,17 +216,26 @@
     if (!el) return showFormError(message);
     el.textContent = message;
     el.hidden = false;
-    const input = form.elements[name];
-    if (input?.setAttribute) {
-      input.setAttribute('aria-invalid', 'true');
-      input.setAttribute('aria-describedby', (el.id ||= `${name}-error`));
+    const target = fieldTarget(name);
+    if (target) {
+      target.setAttribute('aria-invalid', 'true');
+      target.setAttribute('aria-describedby', (el.id ||= `${name}-error`));
     }
+  }
+
+  // The element that carries a field's error state: the input itself, or the
+  // radio group container for chip groups (their container id matches the name).
+  function fieldTarget(name) {
+    const group = document.getElementById(name);
+    if (group?.getAttribute('role') === 'radiogroup') return group;
+    const input = form.elements[name];
+    return input instanceof Element ? input : null;
   }
 
   function clearFieldError(name) {
     const el = form.querySelector(`[data-error-for="${name}"]`);
     if (el) el.hidden = true;
-    form.elements[name]?.removeAttribute?.('aria-invalid');
+    fieldTarget(name)?.removeAttribute('aria-invalid');
   }
 
   function clearErrors() {
@@ -236,9 +253,11 @@
     const first = form.querySelector('.field-error:not([hidden])');
     if (!first) return;
     const name = first.dataset.errorFor;
-    const target = name === 'dates' ? els.calendar : form.elements[name];
+    const target = name === 'dates' ? els.calendar : fieldTarget(name);
     target?.scrollIntoView({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-    if (name !== 'dates') target?.focus({ preventScroll: true });
+    // For chip groups, focus the first option so keyboard users land inside the group.
+    const focusable = name === 'dates' ? null : target?.matches('input, textarea, select') ? target : target?.querySelector('input');
+    focusable?.focus({ preventScroll: true });
   }
 
   const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -261,7 +280,7 @@
   function setLoading(loading) {
     els.submit.disabled = loading;
     els.submit.classList.toggle('is-loading', loading);
-    els.submit.querySelector('span').textContent = loading ? 'Checking your date...' : 'Continue to WhatsApp';
+    els.submit.querySelector('.submit-label').textContent = loading ? 'Checking your date...' : 'Continue to WhatsApp';
   }
 
   form.addEventListener('submit', async (e) => {

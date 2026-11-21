@@ -1,125 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/contact.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · SHOTBYDREAS</title>
+  <meta name="description" content="Contact SHOTBYDREAS on WhatsApp, phone or Instagram. Based in Awka, Anambra.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact · SHOTBYDREAS">
+  <meta property="og:description" content="Contact SHOTBYDREAS on WhatsApp, phone or Instagram. Based in Awka, Anambra.">
+  <meta property="og:image" content="/media/films/reel.jpg">
+  <link rel="icon" type="image/png" href="/media/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
+  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="/css/site.css">
+  <script>
+    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    (function (d) {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('js-motion');
+      setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
+    })(document.documentElement);
+  </script>
+  <script src="/vendor/gsap/gsap.min.js" defer></script>
+  <script src="/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="/js/site.js" defer></script>
+  <script src="/js/contact.js" defer></script>
 </head>
+<body data-page="contact">
+<a class="skip-link" href="#main">Skip to content</a>
 
-<header>
-    <div class="logo">
-        <img src="/bgs/dreas logo.PNG" width="120px" alt="logo">
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
+      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
+      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/html/videos.html">Films</a></li>
+        <li><a href="/html/gallery.html">Stills</a></li>
+        <li><a href="/html/about.html">About</a></li>
+        <li><a href="/html/contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-meta">
+      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
+      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
     </div>
-    <div class="nav-bar">
-        <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="nav">
-        <nav>
-        <ul>
-            <li><a href="/html/index.html">HOME</a></li>
-            <li><a href="/html/about.html">ABOUT</a></li>
-            <li><a href="/html/gallery.html">GALLERY</a></li>
-            <li><a href="/html/contact.html">CONTACT</a></li>
-        </ul>
-        </nav>
-        <div class="book">
-            <li><a href="/html/book.html"><i class="fa-solid fa-calendar"></i>BOOKINGS</a></li>
-        </div>
-    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+    </button>
+  </div>
 </header>
-<body>
-    
-<section id="contact-address">
-    <div class="address-container">
-        <div class="address-content">
-            <h4>GET IN TOUCH</h4>
-            <h2>Message us for more enquiries or 
-             contact <br> to book us today!</h2>
-            <h5>CONTACT INFO</h5>
-            <ul>
-                <li><i class="fa-solid fa-map"></i> Awka, Anambra, Nigeria</li>
-                <li><i class="fa-solid fa-envelope"></i> contact@example.com</li>
-                <li><i class="fa-solid fa-phone"></i> +234-813 607 8551</li>
-                <li><i class="fa-solid fa-clock"></i> 9:00 to 18:00 Monday - Saturday </li>
-            </ul>
-                       
-    <div class="help-contacts">
-        <div class="contact">
-        <div class="help-img">
-            <img src="/bgs/pfp 1 man.jpg" width="100px" alt="profile-1">
-        </div>
-        <div class="details">
-        <H3>Charles Andrew</H3>
-        <ul>
-            <li>Manager</li>
-            <li>Phone: +234-813 607 8551</li>
-            <li>Email: contactme@example.com</li>
-        </ul>
-        </div>
-        </div>
-        </div>
-        </div>
-        
-    <form action="">
-        <h4>LEAVE A MESSAGE</h4>
-        <input type="text" placeholder="Your Name"> <br>
-        <input type="email" placeholder="Email"> <br>
-        <input type="text" placeholder="Subject"> <br>
-        <textarea name="Message" id="" cols="50" rows="10" placeholder="Your Message"></textarea> <br>
-        <input type="submit" value="Send">
-    </form>
-</div>
-</section>
 
-   
-<section id="banner">
-    <h3>Capture Special Moments</h3>
-    <p>Turn your every moment into a lifetime movie</p>
-    <button class="book-bttn" onclick="window.location.href='/html/book.html' ">Book Us Today</button>
-</section>
-
-<div class="back-top" onclick="window.scrollTo({top:0, behavior: 'smooth'})">
-    <i class="fa-solid fa-circle-arrow-up"></i>
-</div>
-</body>
-
-
-<footer>
-    <img src="/bgs/dreas logo.jpg" width="100px" alt="logo">
-    <div class="footer-items">
-        <div class="items">
-    <h2>Quick Links</h2>
-    <ul>
-        <li><a href="/html/about.html">About Us</a></li>
-        <li><a href="/html/gallery.html">Album</a></li>
-        <li><a href="/html/book.html">Book Us</a></li>
-        <li><a href="/html/contact.html">Contact</a></li>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <ul class="menu-links">
+      <li><a href="/html/index.html"><span class="mono">01</span>Home</a></li>
+      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
+      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
+      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
+      <li><a href="/html/contact.html" aria-current="page"><span class="mono">05</span>Contact</a></li>
+      <li><a href="/html/book.html"><span class="mono">06</span>Book a date</a></li>
     </ul>
-        </div>
+  </nav>
+  <div class="menu-foot">
+    <p class="mono" data-clock aria-hidden="true"></p>
+    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  </div>
+</div>
 
-        <div class="items">
-    <h2>Contact</h2>
-    <ul>
-        <li><span style="font-weight: bold;">Address:</span> Awka, Anambra, Nigeria</li>
-        <li><span style="font-weight: bold;">Phone: </span>+234-813 607 8551</li>
-        <li><span style="font-weight: bold;">Hours: </span>10:00 - 18:00 Mon - Sat</li>
-    </ul>
-        </div>
+<main id="main">
 
-        <div class="items">
-    <h2>Follow Us</h2>
-    <div class="icons">
-            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
-            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
-            <a href=""><i class="fa-brands fa-instagram"></i></a>
-            <a href=""><i class="fa-brands fa-pinterest"></i></a>
-        </div>
-        </div>
-    
+  <section class="page-hero wrap" aria-labelledby="page-title">
+    <p class="mono" style="margin-bottom:1.5rem">Contact · Mon–Sat 10:00–18:00 WAT</p>
+    <div class="page-hero-grid">
+      <h1 class="display" id="page-title"><span class="line"><span class="line-inner">Let&rsquo;s talk about</span></span><span class="line"><span class="line-inner"><em>your day.</em></span></span></h1>
+      <p class="lede">To check a date, use the <a href="/html/book.html">booking page</a>. For anything else, message directly.</p>
     </div>
-    <p>&copy; <span id="year"></span> SHOTBYDREAS</p>
-    <script src="/js/index.js"></script>
+  </section>
+
+  <section class="wrap" style="padding-bottom:var(--section)">
+    <div class="split">
+      <div>
+        <p class="eyebrow"><span class="num">01</span><span class="label">Quick question</span></p>
+        <form id="quick-form" data-wa="2348136078551" novalidate>
+          <div class="field">
+            <label for="q-name">Your name</label>
+            <input class="input" id="q-name" name="name" autocomplete="name" maxlength="80" required>
+            <p class="field-error" data-error-for="name" hidden></p>
+          </div>
+          <div class="field">
+            <label for="q-message">Message</label>
+            <textarea class="input" id="q-message" name="message" rows="4" maxlength="800" required placeholder="What would you like to ask?"></textarea>
+            <p class="field-error" data-error-for="message" hidden></p>
+          </div>
+          <button type="submit" class="btn btn-wa">Send on WhatsApp</button>
+          <p class="mono" data-sent hidden style="margin-top:1rem">WhatsApp should have opened in a new tab. If not, <a href="#" target="_blank" rel="noopener">open it here</a>.</p>
+        </form>
+      </div>
+      <div>
+        <p class="eyebrow"><span class="num">02</span><span class="label">Direct</span></p>
+        <div class="channels">
+          <a class="channel" href="https://wa.me/2348136078551" target="_blank" rel="noopener">
+            <span class="label">WhatsApp</span><span class="value">+234 813 607 8551</span><span class="mono" aria-hidden="true">→</span>
+          </a>
+          <a class="channel" href="tel:+2348136078551">
+            <span class="label">Phone</span><span class="value">Call Dreas</span><span class="mono" aria-hidden="true">→</span>
+          </a>
+          <a class="channel" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">
+            <span class="label">Instagram</span><span class="value">@shotbydreas_</span><span class="mono" aria-hidden="true">→</span>
+          </a>
+          <div class="channel">
+            <span class="label">Studio</span><span class="value">Awka, Anambra</span><span class="mono">NG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-cta">
+      <p class="display" data-reveal>Tell us the date.<br><em>We&rsquo;ll keep the light.</em></p>
+      <div class="actions">
+        <a class="btn btn-gold" href="/html/book.html">Check open dates</a>
+        <a class="btn btn-wa" href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
+        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+      </div>
+      <div>
+        <h2 class="label">Pages</h2>
+        <ul>
+          <li><a href="/html/videos.html">Films</a></li>
+          <li><a href="/html/gallery.html">Stills</a></li>
+          <li><a href="/html/about.html">About</a></li>
+          <li><a href="/html/contact.html">Contact</a></li>
+          <li><a href="/html/book.html">Book a date</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Contact</h2>
+        <ul>
+          <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
+          <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label">Follow</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
+      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+    </div>
+  </div>
 </footer>
+</body>
 </html>
