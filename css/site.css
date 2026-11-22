@@ -53,9 +53,9 @@
   --stone: #8f8a82; /* second tone for one word in a heading, 5.7:1 on black */
   --on-accent: #070707;
   --bezel: #1b1b1c;
-  --error: var(--error);
-  --blade-hi: #1f1f21;
-  --blade-lo: #070707;
+  --error: #ff5b52; /* red, 6:1 on black */
+  --blade-hi: #0b0b0b; /* blades in the page colour, so the iris reads as part of the background */
+  --blade-lo: #050505;
 
   --f-display: 'Hubot Sans Condensed', 'Arial Narrow', Impact, sans-serif;
   --f-sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
@@ -87,9 +87,9 @@
   --stone: #77726a; /* 4.6:1 */
   --on-accent: #f1eee8;
   --bezel: #d7d2c8;
-  --error: #b3261e;
-  --blade-hi: #ebe7df;
-  --blade-lo: #cdc8be;
+  --error: #c0261d;
+  --blade-hi: #f1eee8;
+  --blade-lo: #e7e3db;
 }
 /* The logo files are white; in the light theme they are shown black */
 :root[data-theme='light'] .brand img,
@@ -914,14 +914,18 @@ body.menu-open .to-top {
   border-radius: 50%;
 }
 .hero-aperture .iris {
+  /* The SVG's circle is drawn slightly smaller than its box, so the iris is scaled up a
+     little: the blades then run past the photo's edge and no sliver of photo shows at
+     the rim. The aperture's own round clip trims the overhang. */
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  max-width: none; /* the site-wide svg rule caps width at 100%, which pushed it off-centre */
   overflow: visible;
 }
 .iris-seams {
-  stroke: rgba(var(--ink-rgb), 0.22);
+  stroke: rgba(var(--ink-rgb), 0.12);
   stroke-width: 0.9;
 }
 .iris-rim {
