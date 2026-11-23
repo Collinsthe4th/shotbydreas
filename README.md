@@ -62,7 +62,7 @@ The original layout (same pages, sections and headings), rebuilt as a luxury bla
 Everything marked as a placeholder on the site needs Dreas's real material:
 
 1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
-2. **Booking page photo:** replace `media/book/book.jpg`. It sits behind the booking form, and the form panel shows a blurred copy of it.
+2. **Booking page photo:** replace `media/book/book.jpg` (wide screens, ideally 1440px wide or more) and `media/book/book-720.jpg` (phones). It fills the booking page and the form panel shows a blurred copy of it. A landscape photo of at least 1920px wide will look sharpest on large screens.
 3. **Hero photo:** replace `media/hero/hero.jpg` (landscape or square, about 1800px wide). It shows inside the aperture on the home page.
 4. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
 5. **Copy:** the About bio and the three sample reviews on the home page.

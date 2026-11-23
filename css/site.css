@@ -2113,49 +2113,65 @@ textarea.input {
 
 /* 15. Book -------------------------------------------------------------- */
 .book-page {
+  /* The photo fills the whole booking area from the very top of the screen (behind the
+     nav) down to the footer. It is a fixed layer that stays still while the form scrolls;
+     clip-path keeps it inside this section so it never shows behind the footer. A real
+     fixed element is used instead of background-attachment: fixed, which iPhones ignore. */
   position: relative;
-  isolation: isolate; /* keeps the photo layer (z-index -1) above the page background */
-  padding-block: clamp(3rem, 7vw, 6rem) var(--section);
+  isolation: isolate;
+  clip-path: inset(0);
+  min-height: 100vh;
+  margin-top: calc(var(--header-h) * -1);
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 7vw, 6rem));
+  padding-bottom: clamp(4rem, 9vw, 7rem);
 }
-/* The photo stays still behind the page (fixed), and the form panel carries its own
-   blurred copy of the same photo, lined up with it. This is plain filter: blur on an
-   image, so it works in every browser, unlike backdrop-filter. */
-.book-bg {
-  position: absolute;
+.book-bg,
+.book-blur {
+  position: fixed;
   inset: 0;
   z-index: -1;
-  overflow: hidden;
-  background: url('/media/book/book.jpg') center 30% / cover no-repeat fixed;
+  pointer-events: none;
 }
-.book-bg::after {
+.book-bg img,
+.book-blur img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%; /* keeps the face in view on wide screens */
+}
+/* Soft blend into the footer, at the bottom of the section only */
+.book-page::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.35), rgba(var(--bg-rgb), 0.6) 70%, var(--black) 100%);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 10rem;
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0), var(--black));
 }
 .book-panel {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  /* clips the fixed blurred copy of the photo to the panel's shape */
+  clip-path: inset(0 round var(--radius));
   max-width: 62rem;
   margin-inline: auto;
 }
 .book-panel.glass {
-  background: rgba(var(--bg-rgb), 0.74); /* enough tint that text stays readable over a bright photo */
+  background: transparent;
   border-color: rgba(var(--ink-rgb), 0.55);
 }
-.book-panel::before {
+/* The form panel: the same photo, blurred and tinted so the form stays readable */
+.book-blur img {
+  filter: blur(26px) saturate(1.1);
+  transform: scale(1.08); /* hides the soft transparent edge that blur leaves */
+}
+.book-blur::after {
   content: '';
   position: absolute;
-  inset: -60px;
-  z-index: -1;
-  /* tint layered on top of the photo here: a ::before with z-index -1 paints above the
-     panel's own background, so the tint has to live in this layer */
-  background:
-    linear-gradient(rgba(var(--bg-rgb), 0.7), rgba(var(--bg-rgb), 0.7)),
-    url('/media/book/book.jpg') center 30% / cover no-repeat;
-  background-attachment: fixed;
-  filter: blur(28px) saturate(1.1);
+  inset: 0;
+  background: rgba(var(--bg-rgb), 0.7);
 }
 .book-panel > h1 {
   margin-bottom: 0.75rem;
