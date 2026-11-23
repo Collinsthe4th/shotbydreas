@@ -1,145 +1,142 @@
-// Home page: aperture hero, statement, film index, services, moving stills.
+// Home page: the hero entrance and the reviews carousel.
+//
+// Hero entrance, like pulling focus on a lens: each letter of SHOTBYDREAS rises out of
+// its line blurred and stretched, then snaps sharp, spreading out from the middle of the
+// word while the spacing tightens. DREAS arrives in ivory and then "develops" to its
+// grey letter by letter. Meanwhile the iris opens on the hero photograph.
 
 (() => {
   const ui = window.SBDUI;
-  const { films, stills } = window.SBD;
-  const motionOk = ui.motionOk;
-
-  // ---------- hero: SHOTBY ( iris ) DREAS ----------
   const hero = document.querySelector('.hero');
-  const irisHost = hero?.querySelector('[data-iris]');
-  const iris = irisHost ? window.SBDIris.createIris() : null;
-  if (iris) irisHost.append(iris.svg);
+  if (!ui || !hero) return;
 
-  // ---------- statement: each word is wrapped in .w by the page ----------
-  const statement = document.querySelector('[data-words]');
-
-  // ---------- film index with a floating preview ----------
-  const list = document.getElementById('film-index');
-  const preview = document.querySelector('.float-preview');
-  if (list) {
-    list.innerHTML = films
-      .map(
-        (f) => `
-        <li>
-          <button type="button" class="index-row" data-id="${f.id}" aria-haspopup="dialog">
-            <span class="index-title">${f.title}</span>
-            <span class="index-meta">${f.type}, ${f.location}</span>
-            <span class="index-year">${f.year}</span>
-            <img class="index-thumb" src="${f.cover}" alt="" loading="lazy" width="1600" height="900">
-          </button>
-        </li>`,
-      )
-      .join('');
-    list.addEventListener('click', (e) => {
-      const row = e.target.closest('.index-row');
-      if (row) ui.openFilm(row.dataset.id);
-    });
-  }
-
-  // ---------- services: the sticky image follows the item in view ----------
-  const coverList = document.querySelector('.cover-list');
-  const coverImgs = [...document.querySelectorAll('.cover-media img')];
-  if (coverList && coverImgs.length) {
-    const items = [...coverList.querySelectorAll('.cover-item')];
-    const activate = (i) => {
-      items.forEach((it, n) => it.classList.toggle('is-active', n === i));
-      coverImgs.forEach((im, n) => im.classList.toggle('is-active', n === i));
-    };
-    activate(0);
-    coverList.classList.add('is-tracking');
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && activate(items.indexOf(e.target))),
-      { rootMargin: '-45% 0px -45% 0px' },
-    );
-    items.forEach((it) => io.observe(it));
-  }
-
-  // ---------- moving strips of stills (each strip is doubled for a seamless loop) ----------
-  document.querySelectorAll('[data-marquee]').forEach((m, row) => {
-    const set = stills.filter((_, i) => i % 2 === row);
-    const imgs = (hidden) =>
-      set
-        .map((s) => `<img src="${s.src}" alt="${hidden ? '' : s.caption}" width="${s.w}" height="${s.h}" loading="lazy">`)
-        .join('');
-    m.innerHTML = `<div class="marquee-track"><div style="display:contents">${imgs(false)}</div><div style="display:contents" aria-hidden="true">${imgs(true)}</div></div>`;
+  // Split the brand name into letters. Screen readers keep the h1's aria-label.
+  const title = hero.querySelector('.hero-title');
+  title.querySelectorAll('[data-split]').forEach((part) => {
+    part.innerHTML = [...part.textContent].map((c) => `<span class="ch" aria-hidden="true">${c}</span>`).join('');
   });
+  const letters = title.querySelectorAll('.ch');
+  const develop = title.querySelectorAll('.t2 .ch');
 
-  // ---------- motion ----------
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!motionOk()) {
-      iris?.set(1);
-      return;
-    }
-    gsap.registerPlugin(ScrollTrigger);
+  const aperture = hero.querySelector('.hero-aperture');
+  const iris = window.SBDIris?.createIris();
+  if (iris) aperture.append(iris.svg);
 
-    if (hero && iris) {
-      // 1. On load: the iris opens on the reel and the brand name rises in from both sides.
-      iris.set(0);
-      const state = { t: 0 };
-      gsap
-        .timeline({ delay: 0.25 })
-        .to(state, { t: 1, duration: 1.9, ease: 'power3.inOut', onUpdate: () => iris.set(state.t) })
-        .from('.hero-word > span', { yPercent: 105, duration: 1.2, stagger: 0.12, ease: 'expo.out' }, 0.35)
-        .from('.hero-side, .hero-play', { autoAlpha: 0, y: 12, duration: 0.9, stagger: 0.06, ease: 'power2.out' }, 1);
+  setUpCarousel();
 
-      // 2. On scroll: the aperture widens until the reel fills the screen.
-      const media = hero.querySelector('.hero-media');
-      const irisWrap = hero.querySelector('.hero-iris');
-      const radius = () => irisWrap.offsetWidth / 2;
-      const full = () => Math.hypot(window.innerWidth, window.innerHeight) / 2 + 24;
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: hero, start: 'top top', end: '+=110%', pin: true, scrub: 0.6, invalidateOnRefresh: true },
-        })
-        .fromTo(media, { '--r': () => `${radius()}px` }, { '--r': () => `${full()}px`, ease: 'none', duration: 1 }, 0)
-        .to(irisWrap, { scale: () => full() / radius(), autoAlpha: 0, ease: 'power1.in', duration: 0.55 }, 0)
-        .to('.hero-word.left > span', { xPercent: -45, autoAlpha: 0, ease: 'none', duration: 0.55 }, 0)
-        .to('.hero-word.right > span', { xPercent: 45, autoAlpha: 0, ease: 'none', duration: 0.55 }, 0)
-        .to('.hero-side', { autoAlpha: 0, duration: 0.25 }, 0);
-    }
+  if (!ui.motionOk()) return; // the iris rests open and everything is visible
 
-    // 3. Statement: words come into focus as you read down.
-    if (statement) {
-      gsap.fromTo(
-        statement.querySelectorAll('.w'),
-        { opacity: 0.14 },
-        {
-          opacity: 1,
-          stagger: 0.05,
+  const small = window.matchMedia('(max-width: 760px)').matches;
+  const side = hero.querySelectorAll('.hero-text');
+  const cta = hero.querySelector('.hero-cta');
+  const photo = aperture.querySelector('img');
+  const css = getComputedStyle(document.documentElement);
+  const ivory = css.getPropertyValue('--ink').trim();
+  const stone = css.getPropertyValue('--stone').trim();
+  const state = { t: 0 };
+  const setIris = () => iris?.set(state.t);
+
+  title.classList.add('is-entering'); // clips each line while the letters rise
+  gsap.set(letters, { yPercent: 105, scaleY: 1.6, filter: 'blur(14px)', autoAlpha: 0, transformOrigin: '50% 100%' });
+  gsap.set(develop, { color: ivory });
+  gsap.set(title, { letterSpacing: small ? '0.06em' : '0.12em' });
+  gsap.set(side, { autoAlpha: 0 });
+  gsap.set(cta, { autoAlpha: 0, y: 24 });
+  gsap.set(aperture, { autoAlpha: 0, scale: 0.88 });
+  gsap.set(photo, { scale: 1.25 });
+  setIris();
+
+  ui.introDone.then(() => {
+    gsap
+      .timeline({ defaults: { ease: 'expo.out' } })
+      .to(letters, {
+        yPercent: 0,
+        scaleY: 1,
+        filter: 'blur(0px)',
+        autoAlpha: 1,
+        duration: 1.4,
+        stagger: { each: 0.055, from: 'center' },
+      })
+      .to(title, { letterSpacing: '-0.02em', duration: 1.8, ease: 'power3.out' }, 0)
+      .to(develop, { color: stone, duration: 0.9, stagger: 0.08, ease: 'power1.inOut' }, 1.1)
+      .add(() => title.classList.remove('is-entering'), 1.6)
+      .add(() => gsap.set(develop, { clearProps: 'color' }), 2.4)
+      .to(aperture, { autoAlpha: 1, scale: 1, duration: 1.4 }, 0.35)
+      .to(photo, { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
+      .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
+      .fromTo(side, { y: 30 }, { y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
+      .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.25)
+      .add(() => {
+        gsap.set(letters, { clearProps: 'filter,transform' });
+        // Once open, the iris narrows as the hero scrolls away, like stopping down.
+        gsap.to(state, {
+          t: 0.42,
           ease: 'none',
-          scrollTrigger: { trigger: statement, start: 'top 80%', end: 'bottom 45%', scrub: true },
-        },
-      );
-    }
-
-    // 4. Index: the preview image follows the pointer (fine pointers only).
-    if (list && preview && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      const img = preview.querySelector('img');
-      const xTo = gsap.quickTo(preview, 'x', { duration: 0.6, ease: 'power3' });
-      const yTo = gsap.quickTo(preview, 'y', { duration: 0.6, ease: 'power3' });
-      gsap.set(preview, { xPercent: -50, yPercent: -50 });
-      let shown = false;
-      const hide = () => {
-        if (!shown) return;
-        shown = false;
-        gsap.to(preview, { autoAlpha: 0, scale: 0.92, duration: 0.3, overwrite: 'auto' });
-      };
-      list.addEventListener('pointermove', (e) => {
-        xTo(e.clientX);
-        yTo(e.clientY);
-        const row = e.target.closest('.index-row');
-        if (!row) return hide();
-        const f = films.find((x) => x.id === row.dataset.id);
-        if (!img.src.endsWith(f.cover)) img.src = f.cover;
-        if (!shown) {
-          shown = true;
-          gsap.to(preview, { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
-        }
+          onUpdate: setIris,
+          scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 },
+        });
       });
-      list.addEventListener('pointerleave', hide);
-      // Scrolling moves the page under a still pointer, so hide until the pointer moves again.
-      window.addEventListener('scroll', hide, { passive: true });
-    }
   });
+
+  // Reviews carousel (phones). The cards scroll natively with snap points; this adds
+  // the dots, keeps them in step with swiping, and moves on by itself every few
+  // seconds until the visitor touches it.
+  function setUpCarousel() {
+    const track = document.querySelector('.reviews');
+    const dotsBox = document.querySelector('.carousel-dots');
+    if (!track || !dotsBox) return;
+    const cards = [...track.children];
+    let current = 0;
+    let timer;
+    const stop = () => clearInterval(timer);
+    const isCarousel = () => getComputedStyle(track).display === 'flex';
+    const go = (i) => {
+      const card = cards[i];
+      track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: ui.reduceMotion.matches ? 'auto' : 'smooth' });
+    };
+    const dots = cards.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Review ${i + 1} of ${cards.length}`);
+      b.addEventListener('click', () => {
+        stop();
+        go(i);
+      });
+      dotsBox.append(b);
+      return b;
+    });
+    const centre = (c) => c.offsetLeft + c.clientWidth / 2;
+    const mark = () => {
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      let best = 0;
+      cards.forEach((c, i) => {
+        if (Math.abs(centre(c) - mid) < Math.abs(centre(cards[best]) - mid)) best = i;
+      });
+      current = best;
+      dots.forEach((d, i) => d.setAttribute('aria-current', String(i === best)));
+      cards.forEach((c, i) => c.classList.toggle('is-active', i === best));
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+    mark();
+
+    if (!ui.reduceMotion.matches) {
+      // Only advance while the reviews are on screen.
+      new IntersectionObserver(([e]) => {
+        stop();
+        if (e.isIntersecting && isCarousel() && !track.dataset.touched) {
+          timer = setInterval(() => go((current + 1) % cards.length), 4500);
+        }
+      }).observe(track);
+    }
+    ['pointerdown', 'wheel', 'keydown', 'focusin'].forEach((ev) =>
+      track.addEventListener(
+        ev,
+        () => {
+          track.dataset.touched = 'true';
+          stop();
+        },
+        { passive: true },
+      ),
+    );
+  }
 })();

@@ -4,6 +4,7 @@ import { describe, it, beforeEach } from 'node:test';
 
 import { getBookingWindow, getUnavailableDates } from '../api/_lib/availability.js';
 import { getConfig } from '../api/_lib/config.js';
+import { sendContactViaScript, validateContact } from '../api/_lib/contact.js';
 import { addDays, busyDates, isIsoDate, startOfLocalDay } from '../api/_lib/dates.js';
 import { clearTokenCache, queryBusy, signJwt } from '../api/_lib/google.js';
 import { validateBooking } from '../api/_lib/validation.js';
@@ -232,5 +233,41 @@ describe('apps script feed (free option)', () => {
       getUnavailableDates(scriptConfig, '2026-12-01', '2026-12-02', fakeScript(new Response('<html>Sign in</html>'))),
       /without JSON/,
     );
+  });
+});
+
+describe('contact form (Gmail via Apps Script)', () => {
+  const script = { url: 'https://script.google.com/macros/s/abc/exec', key: 'secret' };
+  const good = { name: 'Ada Obi', email: 'ada@mail.com', subject: 'Wedding', message: 'Are you free on 12 May?' };
+
+  it('accepts a complete message and trims it', () => {
+    const r = validateContact({ ...good, name: '  Ada Obi ' });
+    assert.equal(r.ok, true);
+    assert.equal(r.value.name, 'Ada Obi');
+    assert.equal(r.isBot, false);
+  });
+
+  it('rejects missing name, bad email and short message', () => {
+    const r = validateContact({ name: 'A', email: 'nope', message: 'hi' });
+    assert.equal(r.ok, false);
+    assert.deepEqual(Object.keys(r.fields).sort(), ['email', 'message', 'name']);
+  });
+
+  it('flags the honeypot', () => {
+    assert.equal(validateContact({ ...good, website: 'spam.example' }).isBot, true);
+  });
+
+  it('posts the message with the key and reports script errors', async () => {
+    let sent;
+    const ok = async (url, init) => {
+      sent = { url, init };
+      return Response.json({ ok: true });
+    };
+    assert.equal(await sendContactViaScript(script, good, { fetchImpl: ok }), true);
+    assert.equal(sent.init.method, 'POST');
+    assert.deepEqual(JSON.parse(sent.init.body), { key: 'secret', action: 'contact', ...good });
+
+    const limited = async () => Response.json({ error: 'rate_limited' });
+    await assert.rejects(sendContactViaScript(script, good, { fetchImpl: limited }), (err) => err.reason === 'rate_limited');
   });
 });
