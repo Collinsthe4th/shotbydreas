@@ -19,9 +19,10 @@
   const iris = window.SBDIris?.createIris();
   if (iris) aperture.append(iris.svg);
 
-  // The reel opens in a dialog with sound and controls.
+  // The reel opens in a dialog with sound and controls, from the aperture or the
+  // Play reel button (shown on phones).
   let reel;
-  aperture.addEventListener('click', () => {
+  const openReel = () => {
     if (!reel) {
       reel = document.createElement('dialog');
       reel.className = 'lightbox';
@@ -45,11 +46,15 @@
     reel.player.video.currentTime = 0;
     reel.player.play();
     reel.querySelector('[data-close]').focus();
-  });
+  };
+  aperture.addEventListener('click', openReel);
+  hero.querySelectorAll('[data-reel]').forEach((b) => b.addEventListener('click', openReel));
+
+  setUpCarousel();
 
   if (!ui.motionOk()) return; // the iris rests fully open and everything is visible
 
-  const orbit = hero.querySelector('.hero-orbit');
+  const small = window.matchMedia('(max-width: 760px)').matches;
   const side = hero.querySelectorAll('.hero-text');
   const cta = hero.querySelector('.hero-cta');
   const state = { t: 0 };
@@ -66,8 +71,7 @@
       .to(letters, { yPercent: 0, autoAlpha: 1, rotateX: 0, duration: 1.3, stagger: 0.045 })
       .fromTo(aperture, { scale: 0.86, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.4 }, 0.2)
       .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.45)
-      .fromTo(side[0], { x: -50 }, { x: 0, autoAlpha: 1, duration: 1.2 }, 0.9)
-      .fromTo(side[1] || [], { x: 50 }, { x: 0, autoAlpha: 1, duration: 1.2 }, 0.9)
+      .fromTo(side, small ? { y: 30 } : { x: (i) => (i ? 50 : -50) }, { x: 0, y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 0.9)
       .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.2)
       .add(() => {
         // Once open, the iris narrows as the hero scrolls away, like stopping down.
@@ -78,6 +82,62 @@
           scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 },
         });
       });
-    gsap.to(orbit, { rotation: 360, duration: 60, repeat: -1, ease: 'none' });
   });
+
+  // Reviews carousel (phones). The cards scroll natively with snap points; this adds
+  // the dots, keeps them in step with swiping, and moves on by itself every few
+  // seconds until the visitor touches it.
+  function setUpCarousel() {
+    const track = document.querySelector('.reviews');
+    const dotsBox = document.querySelector('.carousel-dots');
+    if (!track || !dotsBox) return;
+    const cards = [...track.children];
+    const dots = cards.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Review ${i + 1} of ${cards.length}`);
+      b.addEventListener('click', () => {
+        stop();
+        go(i);
+      });
+      dotsBox.append(b);
+      return b;
+    });
+    let current = 0;
+    const isCarousel = () => getComputedStyle(track).display === 'flex';
+    const go = (i) => {
+      const card = cards[i];
+      track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: ui.reduceMotion.matches ? 'auto' : 'smooth' });
+    };
+    const mark = () => {
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      let best = 0;
+      cards.forEach((c, i) => {
+        if (Math.abs(c.offsetLeft + c.clientWidth / 2 - mid) < Math.abs(cards[best].offsetLeft + cards[best].clientWidth / 2 - mid)) best = i;
+      });
+      current = best;
+      dots.forEach((d, i) => d.setAttribute('aria-current', String(i === best)));
+      cards.forEach((c, i) => c.classList.toggle('is-active', i === best));
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+    mark();
+
+    let timer;
+    const stop = () => clearInterval(timer);
+    if (!ui.reduceMotion.matches) {
+      // Only advance while the reviews are on screen.
+      new IntersectionObserver(([e]) => {
+        stop();
+        if (e.isIntersecting && isCarousel() && !track.dataset.touched) {
+          timer = setInterval(() => go((current + 1) % cards.length), 4500);
+        }
+      }).observe(track);
+    }
+    ['pointerdown', 'wheel', 'keydown', 'focusin'].forEach((ev) =>
+      track.addEventListener(ev, () => {
+        track.dataset.touched = 'true';
+        stop();
+      }, { passive: true }),
+    );
+  }
 })();

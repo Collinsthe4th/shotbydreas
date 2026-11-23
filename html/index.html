@@ -12,7 +12,7 @@
   <meta property="og:image" content="/media/films/reel.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/gloock.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/bricolage-grotesque.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/media/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
@@ -85,24 +85,24 @@
 
 <section class="hero" aria-label="Introduction">
   <div class="wrap">
-    <h1 class="hero-title" aria-label="SHOTBYDREAS"><span data-split>SHOTBY</span><span class="accent-text" data-split>DREAS</span></h1>
+    <h1 class="hero-title" aria-label="SHOTBYDREAS"><span class="t1" data-split>SHOTBY</span><span class="t2 accent-text" data-split>DREAS</span></h1>
     <div class="hero-grid">
       <div class="hero-text">
-        <h3>Mobile Photographer</h3>
+        <h2>Mobile Photographer</h2>
         <p>See your world through our lens. Portraits and pre-wedding shoots made wherever the light is good.</p>
       </div>
       <button type="button" class="hero-aperture" aria-label="Play the showreel">
-        <span class="hero-orbit" aria-hidden="true"></span>
         <video data-ambient muted loop playsinline preload="metadata" poster="/media/films/reel.jpg"><source src="/media/films/reel.mp4" type="video/mp4"></video>
         <span class="play-hint" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>Play reel</span>
       </button>
       <div class="hero-text right">
-        <h3>Event Content Creator</h3>
+        <h2>Event Content Creator</h2>
         <p>A videography team for weddings, celebrations and openings across Anambra.</p>
       </div>
     </div>
     <div class="hero-cta">
       <a class="btn btn-accent" href="/html/book.html" data-magnetic>Book Us Today</a>
+      <button type="button" class="btn" data-reel>Play reel</button>
     </div>
   </div>
 </section>
@@ -198,9 +198,10 @@
       <h2 id="album-title" data-reveal>Album</h2>
       <span class="rule" data-line></span>
     </div>
-    <div class="album" data-stagger>
-      <button type="button" class="album-item" data-still="0" aria-label="Open photograph: Reception entrance, Awka"><img src="/media/stills/f01.jpg" alt="Reception entrance, Awka" loading="lazy"></button>
+    <div class="album-wrap">
+      <div class="album" data-stagger>
       <button type="button" class="album-item" data-still="1" aria-label="Open photograph: Golden hour portrait"><img src="/media/stills/f02.jpg" alt="Golden hour portrait" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="0" aria-label="Open photograph: Reception entrance, Awka"><img src="/media/stills/f01.jpg" alt="Reception entrance, Awka" loading="lazy"></button>
       <button type="button" class="album-item" data-still="3" aria-label="Open photograph: Morning preparations"><img src="/media/stills/f05.jpg" alt="Morning preparations" loading="lazy"></button>
       <button type="button" class="album-item" data-still="4" aria-label="Open photograph: First dance"><img src="/media/stills/f04.jpg" alt="First dance" loading="lazy"></button>
       <button type="button" class="album-item" data-still="5" aria-label="Open photograph: Studio portrait"><img src="/media/stills/f07.jpg" alt="Studio portrait" loading="lazy"></button>
@@ -209,8 +210,17 @@
       <button type="button" class="album-item" data-still="2" aria-label="Open photograph: River at blue hour, Onitsha"><img src="/media/stills/f03.jpg" alt="River at blue hour, Onitsha" loading="lazy"></button>
       <button type="button" class="album-item" data-still="6" aria-label="Open photograph: Pre-wedding, city lights"><img src="/media/stills/f06.jpg" alt="Pre-wedding, city lights" loading="lazy"></button>
       <button type="button" class="album-item" data-still="8" aria-label="Open photograph: Confetti exit"><img src="/media/stills/f10.jpg" alt="Confetti exit" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="11" aria-label="Open photograph: The vows"><img src="/media/stills/f12.jpg" alt="The vows" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="10" aria-label="Open photograph: Thanksgiving service"><img src="/media/stills/f09.jpg" alt="Thanksgiving service" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="1" aria-label="Open photograph: Golden hour portrait"><img src="/media/stills/f02.jpg" alt="Golden hour portrait" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="3" aria-label="Open photograph: Morning preparations"><img src="/media/stills/f05.jpg" alt="Morning preparations" loading="lazy"></button>
+      <button type="button" class="album-item" data-still="9" aria-label="Open photograph: Stage light portrait"><img src="/media/stills/f11.jpg" alt="Stage light portrait" loading="lazy"></button>
+      </div>
+      <div class="album-more">
+        <a class="btn btn-accent" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener" data-magnetic>See More</a>
+        <p>More of our work on Instagram</p>
+      </div>
     </div>
-    <div class="center-row"><a class="btn" href="/html/gallery.html" data-magnetic>See More</a></div>
   </div>
 </section>
 
@@ -242,25 +252,28 @@
       <span class="rule" data-line></span>
       <p data-reveal>These are sample reviews. Real ones from Dreas&rsquo;s clients will go here.</p>
     </div>
-    <div class="reviews" data-stagger>
+    <div class="reviews-wrap">
+      <div class="reviews" data-stagger aria-label="Client reviews" tabindex="0">
       <figure class="review">
-        <div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div>
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
         <blockquote><p>The film from our traditional marriage made my mother cry all over again. Every part of the day is there.</p></blockquote>
         <figcaption class="reviewer"><span class="avatar" aria-hidden="true">A</span>
-          <span><strong>Client One</strong><span class="small sample">Sample review</span></span></figcaption>
+          <span><strong>Client One</strong><span class="small dim">Sample review</span></span><div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div></figcaption>
       </figure>
       <figure class="review">
-        <div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div>
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
         <blockquote><p>They were calm and kind at my father's funeral and the tribute video meant a lot to the whole family.</p></blockquote>
         <figcaption class="reviewer"><span class="avatar" aria-hidden="true">B</span>
-          <span><strong>Client Two</strong><span class="small sample">Sample review</span></span></figcaption>
+          <span><strong>Client Two</strong><span class="small dim">Sample review</span></span><div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div></figcaption>
       </figure>
       <figure class="review">
-        <div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div>
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
         <blockquote><p>We had the recap of our store opening the next morning. It looked great on our page and people kept sharing it.</p></blockquote>
         <figcaption class="reviewer"><span class="avatar" aria-hidden="true">C</span>
-          <span><strong>Client Three</strong><span class="small sample">Sample review</span></span></figcaption>
+          <span><strong>Client Three</strong><span class="small dim">Sample review</span></span><div class="stars" role="img" aria-label="5 out of 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg></div></figcaption>
       </figure>
+      </div>
+      <div class="carousel-dots" aria-label="Choose a review"></div>
     </div>
   </div>
 </section>

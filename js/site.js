@@ -411,6 +411,14 @@
               { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', scrollTrigger: once(el, 'top 92%') },
             );
           });
+          // Gallery film cards: the picture settles from a slight zoom as it scrolls through.
+          gsap.utils.toArray('.event-card .frame img').forEach((img) => {
+            gsap.fromTo(img, { scale: 1.18 }, {
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: { trigger: img.closest('.event-card'), start: 'top bottom', end: 'center center', scrub: true },
+            });
+          });
           gsap.utils.toArray('.oval').forEach((el) => {
             gsap.fromTo(el, { y: 30, rotation: -3 }, {
               y: -30,
