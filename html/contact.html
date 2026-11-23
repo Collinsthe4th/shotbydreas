@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact · SHOTBYDREAS</title>
   <meta name="description" content="Contact SHOTBYDREAS on WhatsApp, phone or Instagram. Based in Awka, Anambra.">
-  <meta name="theme-color" content="#0b0a09">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1eee8">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0e0d">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Contact · SHOTBYDREAS">
   <meta property="og:description" content="Contact SHOTBYDREAS on WhatsApp, phone or Instagram. Based in Awka, Anambra.">
   <meta property="og:image" content="/media/films/reel.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/archivo.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
-    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    /* Theme before first paint: saved choice, otherwise the device setting.
+       Also hide animated elements until GSAP has set their start state (3s fallback). */
     (function (d) {
+      var t;
+      try { t = localStorage.getItem('sbd-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.dataset.theme = t;
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       d.classList.add('js-motion');
       setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
@@ -34,8 +39,7 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
-      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
-      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+      <img src="/media/brand/sbd-logo-black.png" alt="" width="46" height="46">
     </a>
     <nav class="site-nav" aria-label="Main">
       <ul>
@@ -45,47 +49,45 @@
         <li><a href="/html/contact.html" aria-current="page">Contact</a></li>
       </ul>
     </nav>
-    <div class="header-meta">
-      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
-      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
+    <div class="header-actions">
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+      <a class="btn btn-sm header-book" href="/html/book.html">Book a date</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+      </button>
     </div>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
-      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
-    </button>
   </div>
 </header>
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu">
     <ul class="menu-links">
-      <li><a href="/html/index.html"><span class="mono">01</span>Home</a></li>
-      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
-      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
-      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
-      <li><a href="/html/contact.html" aria-current="page"><span class="mono">05</span>Contact</a></li>
-      <li><a href="/html/book.html"><span class="mono">06</span>Book a date</a></li>
+      <li><a href="/html/index.html">Home</a></li>
+      <li><a href="/html/videos.html">Films</a></li>
+      <li><a href="/html/gallery.html">Stills</a></li>
+      <li><a href="/html/about.html">About</a></li>
+      <li><a href="/html/contact.html" aria-current="page">Contact</a></li>
+      <li><a href="/html/book.html">Book a date</a></li>
     </ul>
   </nav>
-  <div class="menu-foot">
-    <p class="mono" data-clock aria-hidden="true"></p>
-    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  <div class="menu-foot small dim">
+    <p>+234 813 607 8551</p>
+    <p>Awka, Anambra · Mon–Sat, 10:00–18:00</p>
   </div>
 </div>
 
 <main id="main">
 
-  <section class="page-hero wrap" aria-labelledby="page-title">
-    <p class="mono" style="margin-bottom:1.5rem">Contact · Mon–Sat 10:00–18:00 WAT</p>
-    <div class="page-hero-grid">
-      <h1 class="display" id="page-title"><span class="line"><span class="line-inner">Let&rsquo;s talk about</span></span><span class="line"><span class="line-inner"><em>your day.</em></span></span></h1>
-      <p class="lede">To check a date, use the <a href="/html/book.html">booking page</a>. For anything else, message directly.</p>
+  <section class="page-head wrap">
+    <div class="page-head-grid">
+      <h1 class="page-title brand-type"><span class="line"><span class="line-inner">Contact</span></span></h1>
+      <p class="lede dim" data-reveal>To check a date, use the booking page. For anything else, send a message.</p>
     </div>
   </section>
-
   <section class="wrap" style="padding-bottom:var(--section)">
     <div class="split">
-      <div>
-        <p class="eyebrow"><span class="num">01</span><span class="label">Quick question</span></p>
+      <div data-reveal>
+        <h2 class="h3" style="margin-bottom:1.5rem">Quick question</h2>
         <form id="quick-form" data-wa="2348136078551" novalidate>
           <div class="field">
             <label for="q-name">Your name</label>
@@ -97,26 +99,15 @@
             <textarea class="input" id="q-message" name="message" rows="4" maxlength="800" required placeholder="What would you like to ask?"></textarea>
             <p class="field-error" data-error-for="message" hidden></p>
           </div>
-          <button type="submit" class="btn btn-wa">Send on WhatsApp</button>
-          <p class="mono" data-sent hidden style="margin-top:1rem">WhatsApp should have opened in a new tab. If not, <a href="#" target="_blank" rel="noopener">open it here</a>.</p>
+          <button type="submit" class="btn">Send on WhatsApp</button>
+          <p class="small dim" data-sent hidden style="margin-top:1rem">WhatsApp should have opened in a new tab. If not, <a href="#" target="_blank" rel="noopener">open it here</a>.</p>
         </form>
       </div>
-      <div>
-        <p class="eyebrow"><span class="num">02</span><span class="label">Direct</span></p>
-        <div class="channels">
-          <a class="channel" href="https://wa.me/2348136078551" target="_blank" rel="noopener">
-            <span class="label">WhatsApp</span><span class="value">+234 813 607 8551</span><span class="mono" aria-hidden="true">→</span>
-          </a>
-          <a class="channel" href="tel:+2348136078551">
-            <span class="label">Phone</span><span class="value">Call Dreas</span><span class="mono" aria-hidden="true">→</span>
-          </a>
-          <a class="channel" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">
-            <span class="label">Instagram</span><span class="value">@shotbydreas_</span><span class="mono" aria-hidden="true">→</span>
-          </a>
-          <div class="channel">
-            <span class="label">Studio</span><span class="value">Awka, Anambra</span><span class="mono">NG</span>
-          </div>
-        </div>
+      <div class="channels" data-reveal>
+        <a href="https://wa.me/2348136078551" target="_blank" rel="noopener"><span class="label">WhatsApp</span><span class="value">+234 813 607 8551</span></a>
+        <a href="tel:+2348136078551"><span class="label">Phone</span><span class="value">Call Dreas</span></a>
+        <a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener"><span class="label">Instagram</span><span class="value">@shotbydreas_</span></a>
+        <div><span class="label">Studio</span><span class="value">Awka, Anambra</span></div>
       </div>
     </div>
   </section>
@@ -125,17 +116,10 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-cta">
-      <p class="display" data-reveal>Tell us the date.<br><em>We&rsquo;ll keep the light.</em></p>
-      <div class="actions">
-        <a class="btn btn-gold" href="/html/book.html">Check open dates</a>
-        <a class="btn btn-wa" href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-    </div>
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
-        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+        <img class="logo" src="/media/brand/sbd-logo-black.png" alt="SHOTBYDREAS" width="72" height="71" loading="lazy">
+        <p>Films and photographs of weddings, celebrations and events. Based in Awka, Anambra.</p>
       </div>
       <div>
         <h2 class="label">Pages</h2>
@@ -152,7 +136,7 @@
         <ul>
           <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
           <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+          <li class="dim">Mon–Sat, 10:00–18:00</li>
         </ul>
       </div>
       <div>
@@ -163,8 +147,8 @@
       </div>
     </div>
     <div class="footer-base">
-      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
-      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+      <p>&copy; <span data-year>2026</span> SHOTBYDREAS</p>
+      <p class="sample">Films, photos and some text are placeholders until Dreas&rsquo;s work is added</p>
     </div>
   </div>
 </footer>

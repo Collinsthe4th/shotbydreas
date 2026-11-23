@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Book a date · SHOTBYDREAS</title>
   <meta name="description" content="Check open dates and book SHOTBYDREAS for your wedding, celebration or event. Your details go straight to Dreas on WhatsApp.">
-  <meta name="theme-color" content="#0b0a09">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f1eee8">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0e0d">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Book a date · SHOTBYDREAS">
   <meta property="og:description" content="Check open dates and book SHOTBYDREAS for your wedding, celebration or event. Your details go straight to Dreas on WhatsApp.">
   <meta property="og:image" content="/media/films/reel.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/archivo.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
-    /* Hide animated elements until GSAP has set their start state (removed after 3s if scripts fail). */
+    /* Theme before first paint: saved choice, otherwise the device setting.
+       Also hide animated elements until GSAP has set their start state (3s fallback). */
     (function (d) {
+      var t;
+      try { t = localStorage.getItem('sbd-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.dataset.theme = t;
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       d.classList.add('js-motion');
       setTimeout(function () { if (!d.classList.contains('motion-ready')) d.classList.remove('js-motion'); }, 3000);
@@ -34,8 +39,7 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="/html/index.html" aria-label="SHOTBYDREAS, home">
-      <img src="/media/brand/sbd-logo-white.png" alt="" width="42" height="42">
-      <span class="brand-word" aria-hidden="true">SHOTBY<b>DREAS</b></span>
+      <img src="/media/brand/sbd-logo-black.png" alt="" width="46" height="46">
     </a>
     <nav class="site-nav" aria-label="Main">
       <ul>
@@ -45,45 +49,45 @@
         <li><a href="/html/contact.html">Contact</a></li>
       </ul>
     </nav>
-    <div class="header-meta">
-      <span class="clock mono" data-clock aria-hidden="true">Awka WAT</span>
-      <a class="btn btn-gold btn-sm" href="/html/book.html">Book a date</a>
+    <div class="header-actions">
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+      <a class="btn btn-sm header-book" href="/html/book.html">Book a date</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+      </button>
     </div>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
-      <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
-    </button>
   </div>
 </header>
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu">
     <ul class="menu-links">
-      <li><a href="/html/index.html"><span class="mono">01</span>Home</a></li>
-      <li><a href="/html/videos.html"><span class="mono">02</span>Films</a></li>
-      <li><a href="/html/gallery.html"><span class="mono">03</span>Stills</a></li>
-      <li><a href="/html/about.html"><span class="mono">04</span>About</a></li>
-      <li><a href="/html/contact.html"><span class="mono">05</span>Contact</a></li>
-      <li><a href="/html/book.html" aria-current="page"><span class="mono">06</span>Book a date</a></li>
+      <li><a href="/html/index.html">Home</a></li>
+      <li><a href="/html/videos.html">Films</a></li>
+      <li><a href="/html/gallery.html">Stills</a></li>
+      <li><a href="/html/about.html">About</a></li>
+      <li><a href="/html/contact.html">Contact</a></li>
+      <li><a href="/html/book.html" aria-current="page">Book a date</a></li>
     </ul>
   </nav>
-  <div class="menu-foot">
-    <p class="mono" data-clock aria-hidden="true"></p>
-    <p class="mono">+234 813 607 8551 · Awka, Anambra</p>
+  <div class="menu-foot small dim">
+    <p>+234 813 607 8551</p>
+    <p>Awka, Anambra · Mon–Sat, 10:00–18:00</p>
   </div>
 </div>
 
 <main id="main">
 
-  <section class="page-hero wrap" style="padding-bottom:var(--section)">
+  <section class="page-head wrap" style="padding-bottom:var(--section)">
     <div class="book-layout">
       <aside class="book-aside">
-        <p class="mono" style="margin-bottom:1.5rem"><span class="dot" aria-hidden="true"></span>Booking 2026 · Open</p>
-        <h1 class="display"><span class="line"><span class="line-inner">Book a</span></span><span class="line"><span class="line-inner"><em>date.</em></span></span></h1>
+        <p class="small dim" style="margin-bottom:1.25rem"><span class="dot" aria-hidden="true"></span>Booking for 2026</p>
+        <h1 class="page-title brand-type"><span class="line"><span class="line-inner">Book a</span></span><span class="line"><span class="line-inner"><em class="it">date</em></span></span></h1>
         <p class="lede">Pick your date, tell us about the event, and send it straight to Dreas on WhatsApp.</p>
         <ol class="book-steps">
-          <li><span class="mono">01</span>Choose one day or several. Booked days are crossed out.</li>
-          <li><span class="mono">02</span>Tell us the event, the service and where it is.</li>
-          <li><span class="mono">03</span>Send it on WhatsApp. Dreas confirms the date and price there.</li>
+          <li>Choose one day or several. Booked days are crossed out.</li>
+          <li>Tell us the event, the service and where it is.</li>
+          <li>Send it on WhatsApp. Dreas confirms the date and price there.</li>
         </ol>
         <p class="book-note">Nothing is paid on this page.</p>
       </aside>
@@ -93,7 +97,7 @@
           <p class="form-error" id="form-error" role="alert" hidden></p>
 
           <fieldset class="form-step">
-            <legend><span class="mono">01</span>Choose your date(s)</legend>
+            <legend>Choose your date</legend>
             <div class="chips day-mode" role="radiogroup" aria-label="How many days">
               <label class="chip"><input type="radio" name="dayMode" value="single" checked> One day</label>
               <label class="chip"><input type="radio" name="dayMode" value="multiple"> Multiple days</label>
@@ -101,9 +105,9 @@
             <p class="availability-note" id="availability-note" aria-live="polite">Loading open dates...</p>
             <div class="calendar" id="calendar" aria-busy="true">
               <div class="calendar-head">
-                <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">←</button>
+                <button type="button" class="icon-btn" id="cal-prev" aria-label="Previous month"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
                 <p class="cal-month" id="cal-month" aria-live="polite"></p>
-                <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">→</button>
+                <button type="button" class="icon-btn" id="cal-next" aria-label="Next month"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               </div>
               <div class="cal-weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
               <div class="cal-grid" id="cal-grid"></div>
@@ -118,7 +122,7 @@
           </fieldset>
 
           <fieldset class="form-step">
-            <legend><span class="mono">02</span>About your event</legend>
+            <legend>About your event</legend>
             <div class="field">
               <span class="field-label" id="eventType-label">Event type</span>
               <div class="chips" id="eventType" role="radiogroup" aria-labelledby="eventType-label"></div>
@@ -154,7 +158,7 @@
           </fieldset>
 
           <fieldset class="form-step">
-            <legend><span class="mono">03</span>Your details</legend>
+            <legend>Your details</legend>
             <div class="form-grid">
               <div class="field">
                 <label for="name">Full name</label>
@@ -179,17 +183,17 @@
           </fieldset>
 
           <div class="submit-row">
-            <button type="submit" class="btn btn-gold submit-btn" id="submit-btn"><svg class="icon-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M12 7.8 4.83 3.66M15.64 9.9V1.62M15.64 14.1l7.17-4.14M12 16.2l7.17 4.14M8.36 14.1v8.28M8.36 9.9l-7.17 4.14"/></svg><span class="submit-label">Continue to WhatsApp</span></button>
-            <p class="mono">Opens WhatsApp with your details filled in</p>
+            <button type="submit" class="btn submit-btn" id="submit-btn"><span class="submit-label">Continue to WhatsApp</span></button>
+            <p class="small dim">Opens WhatsApp with your details filled in</p>
           </div>
         </form>
 
         <div class="booking-success" id="booking-success" tabindex="-1" hidden>
-          <p class="mono gold">Request ready</p>
-          <h2 class="display">Almost <em>done.</em></h2>
+          <p class="small sample">Request ready</p>
+          <h2 class="h2">Almost <em class="it">done</em></h2>
           <p>Tap the button below to open WhatsApp and send this to Dreas. He will confirm your date and price there.</p>
           <pre class="message-preview" id="message-preview"></pre>
-          <a class="btn btn-wa whatsapp-link" id="whatsapp-link" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+          <a class="btn whatsapp-link" id="whatsapp-link" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
           <button type="button" class="link-btn" id="edit-booking">Edit my details</button>
         </div>
       </div>
@@ -202,8 +206,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/media/brand/sbd-logo-white.png" alt="SHOTBYDREAS" width="88" height="87" loading="lazy">
-        <p>Event films and photography from Awka, Anambra. Weddings, celebrations, openings and mobile shoots across Nigeria.</p>
+        <img class="logo" src="/media/brand/sbd-logo-black.png" alt="SHOTBYDREAS" width="72" height="71" loading="lazy">
+        <p>Films and photographs of weddings, celebrations and events. Based in Awka, Anambra.</p>
       </div>
       <div>
         <h2 class="label">Pages</h2>
@@ -220,7 +224,7 @@
         <ul>
           <li><a href="tel:+2348136078551">+234 813 607 8551</a></li>
           <li><a href="https://wa.me/2348136078551" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><span class="mono">Mon–Sat · 10:00–18:00</span></li>
+          <li class="dim">Mon–Sat, 10:00–18:00</li>
         </ul>
       </div>
       <div>
@@ -231,8 +235,8 @@
       </div>
     </div>
     <div class="footer-base">
-      <p class="mono">&copy; <span data-year>2026</span> SHOTBYDREAS · Awka, Anambra</p>
-      <p class="mono placeholder-note">Films, stills and some copy are placeholders until Dreas&rsquo;s work is added</p>
+      <p>&copy; <span data-year>2026</span> SHOTBYDREAS</p>
+      <p class="sample">Films, photos and some text are placeholders until Dreas&rsquo;s work is added</p>
     </div>
   </div>
 </footer>
