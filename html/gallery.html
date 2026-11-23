@@ -58,7 +58,7 @@
     <div class="header-end">
       <a class="bookings-link" href="/html/book.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Bookings</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
-        <span class="menu-label">Menu</span><span class="bars" aria-hidden="true"></span>
+        <span class="menu-label">Open menu</span><span class="bars" aria-hidden="true"></span>
       </button>
     </div>
   </div>
@@ -67,17 +67,13 @@
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menu">
     <ul class="menu-links">
-      <li><a href="/html/index.html">Home</a></li>
-      <li><a href="/html/about.html">About</a></li>
-      <li><a href="/html/gallery.html" aria-current="page">Gallery</a></li>
-      <li><a href="/html/contact.html">Contact</a></li>
-      <li><a href="/html/book.html">Bookings</a></li>
+      <li style="--i:0"><a href="/html/index.html">Home</a></li>
+      <li style="--i:1"><a href="/html/about.html">About</a></li>
+      <li style="--i:2"><a href="/html/gallery.html" aria-current="page">Gallery</a></li>
+      <li style="--i:3"><a href="/html/contact.html">Contact</a></li>
+      <li style="--i:4"><a href="/html/book.html">Bookings</a></li>
     </ul>
   </nav>
-  <div class="menu-foot">
-    <a href="tel:+2348136078551">+234 813 607 8551</a>
-    <a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a>
-  </div>
 </div>
 
 <main id="main">
@@ -102,7 +98,6 @@
         <div class="stills fade-end" data-stagger></div>
         <div class="fade-more">
           <a class="btn btn-accent" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener" data-magnetic>See More</a>
-          <p>More photoshoots on Instagram</p>
         </div>
       </div>
     </div>
@@ -112,7 +107,6 @@
         <div class="events-grid fade-end" data-stagger></div>
         <div class="fade-more">
           <a class="btn btn-accent" href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener" data-magnetic>See More</a>
-          <p>More event films on Instagram</p>
         </div>
       </div>
     </div>
@@ -130,6 +124,7 @@
   </div>
 </section>
 
+<button type="button" class="to-top" aria-label="Back to top"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid" data-stagger>
