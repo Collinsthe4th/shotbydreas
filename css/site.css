@@ -865,8 +865,7 @@ body.menu-open .to-top {
   stroke-width: 0.9;
 }
 .iris-rim {
-  stroke: rgba(var(--ink-rgb), 0.55);
-  stroke-width: 1;
+  stroke: none;
 }
 .hero-text {
   padding-top: 1rem;
@@ -2126,13 +2125,13 @@ textarea.input {
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  background: url('/media/book/book.jpg') center / cover no-repeat fixed;
+  background: url('/media/book/book.jpg') center 30% / cover no-repeat fixed;
 }
 .book-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.25), rgba(var(--bg-rgb), 0.55) 70%, var(--black) 100%);
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.35), rgba(var(--bg-rgb), 0.6) 70%, var(--black) 100%);
 }
 .book-panel {
   position: relative;
@@ -2142,7 +2141,7 @@ textarea.input {
   margin-inline: auto;
 }
 .book-panel.glass {
-  background: rgba(var(--bg-rgb), 0.5);
+  background: rgba(var(--bg-rgb), 0.74); /* enough tint that text stays readable over a bright photo */
   border-color: rgba(var(--ink-rgb), 0.55);
 }
 .book-panel::before {
@@ -2150,8 +2149,13 @@ textarea.input {
   position: absolute;
   inset: -60px;
   z-index: -1;
-  background: url('/media/book/book.jpg') center / cover no-repeat fixed;
-  filter: blur(24px) saturate(1.2);
+  /* tint layered on top of the photo here: a ::before with z-index -1 paints above the
+     panel's own background, so the tint has to live in this layer */
+  background:
+    linear-gradient(rgba(var(--bg-rgb), 0.7), rgba(var(--bg-rgb), 0.7)),
+    url('/media/book/book.jpg') center 30% / cover no-repeat;
+  background-attachment: fixed;
+  filter: blur(28px) saturate(1.1);
 }
 .book-panel > h1 {
   margin-bottom: 0.75rem;
@@ -2673,17 +2677,12 @@ textarea.input {
   overflow: hidden;
   background: var(--panel);
   break-inside: avoid;
-  outline: 1px solid transparent;
-  outline-offset: -1px;
-  transition: outline-color 0.4s var(--ease), box-shadow 0.5s var(--ease);
+
 }
 .still img {
   width: 100%;
   filter: brightness(0.9);
   transition: transform 1.2s var(--ease), filter 0.6s var(--ease);
-}
-.still:hover {
-  outline-color: var(--accent-soft);
 }
 .still:hover img {
   transform: scale(1.05);
