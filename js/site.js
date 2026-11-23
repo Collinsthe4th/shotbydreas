@@ -45,6 +45,33 @@
       .add(() => introResolve(), '-=0.45'); // let the page start while the curtain lifts
   }
 
+  // ---------- light / dark theme (remembered on this device) ----------
+  const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const applyTheme = (theme) => {
+    root.dataset.theme = theme;
+    themeButtons.forEach((b) => {
+      b.setAttribute('aria-pressed', String(theme === 'light'));
+      b.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    });
+    themeMeta?.setAttribute('content', theme === 'light' ? '#f1eee8' : '#050505');
+  };
+  applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+  themeButtons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      // A short cross-fade so the switch does not flash
+      root.classList.add('theme-switching');
+      applyTheme(next);
+      setTimeout(() => root.classList.remove('theme-switching'), 450);
+      try {
+        localStorage.setItem('sbd-theme', next);
+      } catch {
+        /* storage blocked: the choice lasts for this page only */
+      }
+    }),
+  );
+
   // ---------- header: hairline rule appears after scrolling ----------
   const header = document.querySelector('.site-header');
   if (header) {
@@ -432,7 +459,6 @@
           gsap.utils.toArray('[data-words]').forEach((h) => {
             gsap.from(h.querySelectorAll('.wi'), {
               yPercent: 110,
-              rotate: small ? 4 : 2,
               duration: small ? 1 : 1.2,
               stagger: 0.07,
               ease: 'expo.out',
@@ -447,9 +473,8 @@
           // On phones the side slides become a shorter rise with a slight drift, so nothing
           // travels further than the screen is wide.
           gsap.utils.toArray('[data-slide]').forEach((el) => {
-            const dir = el.dataset.slide === 'right' ? 1 : -1;
-            const from = small ? { x: 24 * dir, y: 36 } : { x: 80 * dir };
-            gsap.from(el, { ...from, autoAlpha: 0, duration: small ? 1.1 : 1.3, ease: 'expo.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 85%') });
+            // Straight up, never in from the side
+            gsap.from(el, { y: 60, autoAlpha: 0, duration: small ? 1.1 : 1.3, ease: 'expo.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 85%') });
           });
 
           gsap.utils.toArray('[data-line]').forEach((el) => {
@@ -509,123 +534,79 @@
           });
         }
 
-        // Phones: bigger, more theatrical entrances, plus effects tied to the scroll
-        // position itself (the touch stand-in for hover effects on desktop).
+        // Phones: clear, generous entrances that all move straight up (no tilts and nothing
+        // from the sides), plus a few effects tied to the scroll position itself.
         function phoneMotion() {
           const enter = (el, start = 'top 95%') => ({ trigger: el, start, once: true });
           const scrub = (trigger, start = 'top bottom', end = 'bottom top') => ({ trigger, start, end, scrub: 0.5 });
 
-          // Headings: each word swings up out of its line.
+          // Headings: each word rises out of its line.
           gsap.utils.toArray('[data-words]').forEach((h) => {
-            gsap.from(h.querySelectorAll('.wi'), {
-              yPercent: 135,
-              rotate: 12,
-              scaleY: 1.35,
-              duration: 1.25,
-              stagger: 0.09,
-              ease: 'expo.out',
-              scrollTrigger: enter(h),
-            });
-          });
-          // Section headings grow into place as they travel up the screen.
-          gsap.utils.toArray('.sec-head').forEach((el) => {
-            gsap.fromTo(el, { scale: 0.82 }, { scale: 1, ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 45%') });
+            gsap.from(h.querySelectorAll('.wi'), { yPercent: 120, duration: 1.1, stagger: 0.07, ease: 'expo.out', scrollTrigger: enter(h) });
           });
 
-          // Paragraphs and single blocks: rise, sharpen and grow.
-          gsap.utils.toArray('[data-reveal]').forEach((el) => {
-            gsap.from(el, { y: 70, scale: 0.92, filter: 'blur(10px)', autoAlpha: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: enter(el) });
-          });
-
-          // Side blocks swing in from their side.
-          gsap.utils.toArray('[data-slide]').forEach((el) => {
-            const dir = el.dataset.slide === 'right' ? 1 : -1;
-            gsap.from(el, { x: 110 * dir, y: 40, rotation: 7 * dir, autoAlpha: 0, duration: 1.35, ease: 'expo.out', scrollTrigger: enter(el, 'top 92%') });
+          // Paragraphs and blocks: rise and fade in.
+          gsap.utils.toArray('[data-reveal], [data-slide]').forEach((el) => {
+            gsap.from(el, { y: 48, autoAlpha: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: enter(el, 'top 94%') });
           });
 
           gsap.utils.toArray('[data-line]').forEach((el) => {
-            gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: enter(el, 'top 98%') });
+            gsap.from(el, { scaleX: 0, duration: 1.3, ease: 'expo.inOut', scrollTrigger: enter(el, 'top 98%') });
           });
 
           gsap.utils.toArray('[data-stagger]').forEach((el) => {
             const items = [...el.children];
-            // Photo and film grids: each one tilts up out of the bottom of its frame.
+            // Photo and film grids: each opens upwards out of its frame.
             if (el.matches('.album, .stills, .events-grid')) {
               gsap.set(items, { autoAlpha: 1 });
               items.forEach((item, i) => {
                 gsap.fromTo(
                   item,
-                  { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 140, rotation: i % 2 ? 6 : -6, scale: 0.82 },
+                  { clipPath: 'inset(100% 0% 0% 0% round 14px)', y: 60 },
                   {
                     clipPath: 'inset(0% 0% 0% 0% round 14px)',
                     y: 0,
-                    rotation: 0,
-                    scale: 1,
-                    duration: 1.3,
-                    delay: (i % 2) * 0.12,
+                    duration: 1.15,
+                    delay: (i % 2) * 0.1,
                     ease: 'expo.out',
-                    scrollTrigger: enter(item, 'top 102%'),
+                    scrollTrigger: enter(item, 'top 100%'),
                   },
                 );
               });
               return;
             }
-            // Cards and lists: in from alternate sides, one after another.
-            gsap.from(items, {
-              x: (i) => (i % 2 ? 80 : -80),
-              y: 60,
-              rotation: (i) => (i % 2 ? 4 : -4),
-              autoAlpha: 0,
-              duration: 1.15,
-              stagger: 0.12,
-              ease: 'expo.out',
-              scrollTrigger: enter(el, 'top 92%'),
-            });
+            // Cards and lists: rise one after another.
+            gsap.from(items, { y: 50, autoAlpha: 0, duration: 1, stagger: 0.1, ease: 'power3.out', scrollTrigger: enter(el, 'top 94%') });
           });
 
-          // Films and single photos: open like a shutter while settling from a tilt.
-          gsap.utils.toArray('.service-media .frame, .phone, .portrait-card, .skew-strip .frame').forEach((el, i) => {
+          // Films and single photos open upwards like a shutter.
+          gsap.utils.toArray('.service-media .frame, .phone, .skew-strip .frame').forEach((el) => {
             gsap.fromTo(
               el,
-              { clipPath: 'inset(100% 0% 0% 0% round 14px)', scale: 1.12, rotation: i % 2 ? 4 : -4 },
-              { clipPath: 'inset(0% 0% 0% 0% round 14px)', scale: 1, rotation: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: enter(el, 'top 92%') },
+              { clipPath: 'inset(100% 0% 0% 0% round 14px)' },
+              { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 1.25, ease: 'expo.out', scrollTrigger: enter(el, 'top 94%') },
             );
           });
 
-          // Scroll-linked: pictures zoom out as they pass through the screen.
-          gsap.utils.toArray('.service-media video, .album-item img, .still img, .portrait-card img, .event-card .frame img').forEach((media) => {
-            gsap.fromTo(media, { scale: 1.3 }, { scale: 1, ease: 'none', scrollTrigger: scrub(media.parentElement, 'top bottom', 'bottom 35%') });
-          });
-          // Service films drift against the text beside them.
-          gsap.utils.toArray('.service-media').forEach((el) => {
-            gsap.fromTo(el, { yPercent: 12 }, { yPercent: -12, ease: 'none', scrollTrigger: scrub(el) });
+          // Scroll-linked: pictures zoom out gently as they pass through the screen.
+          gsap.utils.toArray('.service-media video, .album-item img, .still img, .event-card .frame img').forEach((media) => {
+            gsap.fromTo(media, { scale: 1.18 }, { scale: 1, ease: 'none', scrollTrigger: scrub(media.parentElement, 'top bottom', 'bottom 35%') });
           });
           gsap.utils.toArray('.oval').forEach((el) => {
-            gsap.fromTo(el, { y: 60, rotation: -8 }, { y: -60, rotation: 8, ease: 'none', scrollTrigger: scrub(el) });
+            gsap.fromTo(el, { y: 40 }, { y: -40, ease: 'none', scrollTrigger: scrub(el) });
           });
-          // The banner starts as an inset card and opens out to the full width.
+          // The banner opens from an inset card to the full width.
           gsap.utils.toArray('.banner').forEach((el) => {
             gsap.fromTo(
               el,
-              { clipPath: 'inset(0% 7% 0% 7% round 22px)' },
-              { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 30%') },
+              { clipPath: 'inset(0% 5% 0% 5% round 20px)' },
+              { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: scrub(el, 'top bottom', 'top 35%') },
             );
           });
-          // The marquee leans with the speed of the scroll.
-          const track = document.querySelector('.marquee-track');
-          if (track) {
-            const skew = gsap.quickTo(track, 'skewX', { duration: 0.4, ease: 'power3.out' });
-            ScrollTrigger.create({
-              trigger: track,
-              start: 'top bottom',
-              end: 'bottom top',
-              onUpdate: (self) => skew(gsap.utils.clamp(-14, 14, self.getVelocity() / -120)),
-            });
-          }
-          // Hero: the name lifts and fades as you scroll away from it.
+          // The hero name lifts and fades as you scroll away from it.
           const heroTitle = document.querySelector('.hero-title');
           if (heroTitle) {
-            gsap.to(heroTitle, { yPercent: -35, autoAlpha: 0.25, ease: 'none', scrollTrigger: scrub('.hero', 'top top', 'bottom top') });
+            gsap.to(heroTitle, { yPercent: -25, autoAlpha: 0.3, ease: 'none', scrollTrigger: scrub('.hero', 'top top', 'bottom top') });
           }
         }
 

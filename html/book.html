@@ -19,6 +19,9 @@
     /* Before first paint: hide animated elements until GSAP sets their start state, and
        play the intro curtain on the first page of a visit. Both have a fallback timer. */
     (function (d) {
+      var t;
+      try { t = localStorage.getItem('sbd-theme'); } catch (e) {}
+      d.dataset.theme = t === 'light' ? 'light' : 'dark';
       d.classList.add('js-motion');
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
         setTimeout(function () { d.classList.remove('js-motion'); }, 3000);
@@ -59,6 +62,7 @@
     </nav>
     <div class="header-end">
       <a class="bookings-link" href="/html/book.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Bookings</a>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">
         <span class="menu-label">Open menu</span><span class="bars" aria-hidden="true"></span>
       </button>
@@ -208,7 +212,7 @@
 <button type="button" class="to-top" aria-label="Back to top"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-grid" data-stagger>
+    <div class="footer-grid">
       <div>
         <h2>Quick Links</h2>
         <ul>
