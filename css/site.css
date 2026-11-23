@@ -1,7 +1,7 @@
 /* ==========================================================================
    SHOTBYDREAS — original layout, luxury black edition
    Deep black, ivory text and a stone grey second tone. Flat colour only: no gradients,
-   glows or glass. Bricolage Grotesque (heavy, condensed) for headings, Hanken Grotesk
+   glows or glass. Instrument Sans Condensed (bold) for headings, Hanken Grotesk
    for everything else.
 
    1 Fonts  2 Tokens  3 Base  4 Type & helpers  5 Buttons  6 Loader
@@ -12,9 +12,9 @@
 
 /* 1. Fonts (self-hosted, SIL Open Font License — see media/fonts) */
 @font-face {
-  font-family: 'Bricolage Grotesque';
-  src: url('/media/fonts/bricolage-grotesque.woff') format('woff');
-  font-weight: 600 800;
+  font-family: 'Instrument Sans Condensed';
+  src: url('/media/fonts/instrument-sans-condensed.woff') format('woff');
+  font-weight: 600 700;
   font-display: swap;
 }
 @font-face {
@@ -41,14 +41,15 @@
   --stone: #8f8a82; /* second tone for one word in a heading, 5.7:1 on black */
   --on-accent: #070707;
 
-  --f-display: 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif;
+  --f-display: 'Instrument Sans Condensed', 'Arial Narrow', Impact, sans-serif;
   --f-sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
 
   --gutter: clamp(1.15rem, 4.5vw, 4rem);
   --section: clamp(4.5rem, 9vw, 8rem);
   --max: 1440px;
   --header-h: 5.25rem;
-  --radius: 4px;
+  --radius: 14px; /* photos, video frames and cards */
+  --radius-sm: 8px; /* buttons, inputs, chips */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -175,7 +176,7 @@ ol {
 }
 .serif {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
@@ -228,7 +229,7 @@ ol {
   padding: 0.85rem 1.75rem;
   overflow: hidden;
   border: 1px solid var(--ink);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--ink);
   font-family: var(--f-sans);
@@ -312,7 +313,7 @@ ol {
   height: 2.9rem;
   flex-shrink: 0;
   border: 1px solid var(--line-accent);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--ink);
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
@@ -361,14 +362,16 @@ ol {
   top: 0;
   z-index: 50;
   height: var(--header-h);
-  background: rgba(5, 5, 5, 0.72);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  /* see-through bar that blurs whatever scrolls underneath it */
+  background: rgba(10, 10, 10, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  transition: border-color 0.5s var(--ease), background-color 0.5s var(--ease);
 }
 .site-header.is-scrolled {
-  border-color: var(--line-accent);
+  background: rgba(10, 10, 10, 0.5);
+  border-color: var(--line);
   box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.9);
 }
 .site-header .wrap {
@@ -578,7 +581,7 @@ body.menu-open {
 .sec-head h1 {
   font-family: var(--f-display);
   font-size: clamp(2rem, 1.2rem + 3.2vw, 4.2rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.01em;
   text-transform: uppercase;
@@ -605,16 +608,23 @@ body.menu-open {
   position: relative;
   z-index: 2;
   font-family: var(--f-display);
-  font-size: calc((min(100vw, var(--max)) - 2 * var(--gutter)) / 6.15);
-  font-weight: 800;
+  font-size: calc((min(100vw, var(--max)) - 2 * var(--gutter)) / 5.2);
+  font-weight: 700;
   line-height: 0.86;
   letter-spacing: -0.02em;
   text-align: center;
   white-space: nowrap;
   pointer-events: none;
 }
+.hero-title > span {
+  display: inline-block;
+}
 .hero-title .ch {
   display: inline-block;
+}
+/* While the letters rise, each line hides whatever is below its baseline */
+.hero-title.is-entering > span {
+  clip-path: inset(-0.5em -0.3em 0 -0.3em);
 }
 .hero-grid {
   display: grid;
@@ -630,28 +640,10 @@ body.menu-open {
   padding: 0;
   border: 0;
   border-radius: 50%;
+  overflow: hidden;
   background: var(--panel);
-  cursor: pointer;
 }
-.hero-aperture .play-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 12%;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 2px;
-  background: var(--ink);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--on-accent);
-  transform: translateX(-50%);
-}
-.hero-aperture video {
+.hero-aperture img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -705,13 +697,10 @@ body.menu-open {
   gap: 0.75rem;
   margin-top: clamp(2.5rem, 5vw, 4rem);
 }
-.hero-cta [data-reel] {
-  display: none;
-}
 
 @media (max-width: 760px) {
   .hero {
-    --hs: calc((100vw - 2 * var(--gutter)) / 3.55); /* one line of "SHOTBY" fills the width */
+    --hs: calc((100vw - 2 * var(--gutter)) / 2.85); /* one line of "SHOTBY" fills the width */
     padding-top: 1.25rem;
     padding-bottom: 3.5rem;
   }
@@ -741,9 +730,6 @@ body.menu-open {
     justify-self: center;
     width: min(80vw, 24rem);
   }
-  .hero-aperture .play-hint {
-    display: none;
-  }
   .hero-text p {
     font-size: 0.86rem;
     line-height: 1.55;
@@ -753,10 +739,6 @@ body.menu-open {
   }
   .hero-cta .btn {
     flex: 1;
-    padding-inline: 0.75rem;
-  }
-  .hero-cta [data-reel] {
-    display: inline-flex;
   }
 }
 
@@ -780,7 +762,6 @@ body.menu-open {
 .service-media .frame {
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
-  border: 1px solid var(--line-accent);
 }
 .service-media .frame video {
   transition: transform 1.4s var(--ease);
@@ -790,7 +771,7 @@ body.menu-open {
 }
 .service-num {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.1rem;
   color: var(--accent-soft);
 }
@@ -798,7 +779,7 @@ body.menu-open {
   margin: 0.4rem 0 1rem;
   font-family: var(--f-display);
   font-size: clamp(1.8rem, 1.2rem + 2.2vw, 3.2rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -839,7 +820,7 @@ body.menu-open {
   margin-bottom: 1rem;
   font-family: var(--f-display);
   font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.8rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.1;
   text-transform: uppercase;
 }
@@ -853,7 +834,6 @@ body.menu-open {
   aspect-ratio: 3 / 4.4;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid var(--line-accent);
   background: var(--panel);
 }
 .oval::after {
@@ -900,6 +880,43 @@ body.menu-open {
   }
 }
 
+/* Fade-out ending: the last rows of a grid melt into the background and a
+   See More button (to Instagram) sits over the fade. Used by the album and both
+   gallery tabs. */
+.fade-wrap {
+  position: relative;
+}
+.fade-end {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 30rem), transparent calc(100% - 2rem));
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 30rem), transparent calc(100% - 2rem));
+}
+.fade-more {
+  position: absolute;
+  left: 50%;
+  bottom: 4rem;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  transform: translateX(-50%);
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .fade-end {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28rem), transparent calc(100% - 7rem));
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28rem), transparent calc(100% - 7rem));
+  }
+  .fade-more:not(.album-more) {
+    bottom: 3rem;
+  }
+}
+.fade-more p {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+
 /* Album: the last rows fade into the background, with See more over the fade */
 .album-wrap {
   position: relative;
@@ -915,7 +932,7 @@ body.menu-open {
   display: block;
   padding: 0;
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--panel);
   aspect-ratio: 3 / 4;
@@ -932,21 +949,7 @@ body.menu-open {
   filter: none;
 }
 .album-more {
-  position: absolute;
-  left: 50%;
   bottom: 7%;
-  z-index: 2;
-  display: grid;
-  justify-items: center;
-  gap: 0.9rem;
-  transform: translateX(-50%);
-  text-align: center;
-}
-.album-more p {
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  color: var(--ink-dim);
-  white-space: nowrap;
 }
 .center-row {
   display: flex;
@@ -1001,7 +1004,7 @@ body.menu-open {
   margin-bottom: 0.5rem;
   font-family: var(--f-display);
   font-size: 1.45rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   text-transform: uppercase;
 }
@@ -1011,7 +1014,7 @@ body.menu-open {
 }
 .portrait-card {
   position: relative;
-  border-radius: 2px;
+  border-radius: var(--radius);
   overflow: hidden;
   aspect-ratio: 4 / 5;
 }
@@ -1024,9 +1027,8 @@ body.menu-open {
   .why {
     grid-template-columns: 1fr;
   }
-  .portrait-card {
-    max-width: 26rem;
-    margin-inline: auto;
+  .why .portrait-card {
+    display: none;
   }
 }
 @media (max-width: 520px) {
@@ -1053,7 +1055,7 @@ body.menu-open {
   gap: 1.75rem;
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: var(--radius);
   background: var(--panel);
 }
 .review blockquote p {
@@ -1063,7 +1065,7 @@ body.menu-open {
 }
 .quote-mark {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 3.5rem;
   line-height: 0.6;
   color: var(--stone);
@@ -1084,7 +1086,7 @@ body.menu-open {
   border-radius: 50%;
   background: var(--ink);
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--on-accent);
 }
 .reviewer strong {
@@ -1273,7 +1275,7 @@ body.menu-open {
 .banner h2 {
   font-family: var(--f-display);
   font-size: clamp(2.2rem, 1.2rem + 4vw, 5rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
 }
 .banner p {
@@ -1317,7 +1319,7 @@ body.menu-open {
   margin-bottom: 1.1rem;
   font-family: var(--f-display);
   font-size: 1.35rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .footer-grid li + li {
   margin-top: 0.45rem;
@@ -1397,7 +1399,6 @@ body.menu-open {
   width: clamp(7rem, 22vw, 21rem);
   aspect-ratio: 4 / 3;
   border-radius: 12px;
-  border: 1px solid var(--line-accent);
   transform: skewX(-12deg);
 }
 .skew-strip .frame img {
@@ -1416,7 +1417,7 @@ body.menu-open {
 }
 .about-text .lead {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
   line-height: 1.35;
   color: var(--ink);
@@ -1435,7 +1436,7 @@ body.menu-open {
 .marquee-track span {
   font-family: var(--f-display);
   font-size: clamp(1.6rem, 1rem + 2.6vw, 3.4rem);
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.01em;
 }
@@ -1460,8 +1461,7 @@ body.menu-open {
   aspect-ratio: 9 / 18.5;
   padding: 0.65rem;
   border-radius: 2.6rem;
-  background: #0d0c0a;
-  border: 1px solid var(--line-accent);
+  background: #1b1b1c;
 }
 .phone .frame {
   height: 100%;
@@ -1485,7 +1485,7 @@ body.menu-open {
   margin: 0.75rem 0 1.25rem;
   font-family: var(--f-display);
   font-size: clamp(2.2rem, 1.2rem + 4vw, 5rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -1519,13 +1519,13 @@ body.menu-open {
   gap: 0.35rem;
   padding: 0.35rem;
   border: 1px solid var(--line-accent);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 .toggle button {
   min-height: 2.6rem;
   padding: 0.5rem 1.4rem;
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: none;
   color: var(--ink-dim);
   font-size: 0.72rem;
@@ -1559,7 +1559,6 @@ body.menu-open {
 .event-card .frame {
   aspect-ratio: 4 / 5;
   border-radius: var(--radius);
-  border: 1px solid var(--line);
   transition: border-color 0.5s var(--ease), box-shadow 0.6s var(--ease);
 }
 .event-card .frame img {
@@ -1578,7 +1577,7 @@ body.menu-open {
   width: 4.2rem;
   height: 4.2rem;
   border: 1px solid rgba(236, 232, 225, 0.7);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: rgba(5, 5, 5, 0.6);
   color: var(--accent-soft);
   transition: transform 0.6s var(--ease), background-color 0.4s var(--ease), color 0.4s var(--ease);
@@ -1599,7 +1598,7 @@ body.menu-open {
   margin-top: 1rem;
   font-family: var(--f-display);
   font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .event-card p {
   font-size: 0.85rem;
@@ -1637,7 +1636,7 @@ body.menu-open {
   }
   .still {
     margin: 0;
-    border-radius: 2px;
+    border-radius: var(--radius);
   }
   .still img {
     height: 100%;
@@ -1678,7 +1677,7 @@ body.menu-open {
   }
   .event-card .frame {
     aspect-ratio: 4 / 5;
-    border-radius: 2px;
+    border-radius: var(--radius);
   }
   .event-card .frame::after {
     content: '';
@@ -1726,7 +1725,7 @@ body.menu-open {
   margin: 1rem 0 2rem;
   font-family: var(--f-display);
   font-size: clamp(2.2rem, 1.3rem + 3.2vw, 4.2rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.08;
 }
 .info-list {
@@ -1767,12 +1766,12 @@ body.menu-open {
   display: block;
   font-family: var(--f-display);
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .glass {
   padding: clamp(1.5rem, 4vw, 3rem);
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: var(--panel);
 }
 .form-grid {
@@ -1888,7 +1887,7 @@ textarea.input {
   margin-bottom: 0.75rem;
   font-family: var(--f-display);
   font-size: clamp(2rem, 1.2rem + 3.4vw, 4rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
   text-transform: uppercase;
 }
@@ -1912,7 +1911,7 @@ textarea.input {
   border-bottom: 1px solid var(--line-accent);
   font-family: var(--f-display);
   font-size: clamp(1.3rem, 1rem + 1vw, 1.8rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 .form-step legend em {
   font-size: 0.95rem;
@@ -1930,7 +1929,7 @@ textarea.input {
   min-height: 2.6rem;
   padding: 0.45rem 1.1rem;
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   font-size: 0.86rem;
   cursor: pointer;
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
@@ -1988,7 +1987,7 @@ textarea.input {
 }
 .cal-month {
   font-family: var(--f-display);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.35rem;
 }
 .cal-weekdays,
@@ -2076,7 +2075,7 @@ textarea.input {
   gap: 0.35rem;
   padding: 0.3rem 0.35rem 0.3rem 1rem;
   border: 1px solid var(--accent-soft);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
 }
 .chip-remove {
@@ -2109,7 +2108,7 @@ textarea.input {
   margin: 0.5rem 0 0.75rem;
   font-family: var(--f-display);
   font-size: clamp(1.8rem, 1.3rem + 2vw, 2.8rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 .btn[aria-busy='true'] {
   cursor: progress;
@@ -2121,7 +2120,7 @@ textarea.input {
   margin: 0.75rem 0 1rem;
   font-family: var(--f-display);
   font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 .message-preview {
   max-width: 40rem;
@@ -2288,7 +2287,7 @@ textarea.input {
 .screening-title {
   font-family: var(--f-display);
   font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.8rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.05;
 }
 .facts {
@@ -2382,7 +2381,7 @@ textarea.input {
   margin-bottom: clamp(0.75rem, 1.6vw, 1.25rem);
   padding: 0;
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--panel);
   break-inside: avoid;
@@ -2414,6 +2413,7 @@ textarea.input {
 .js-motion [data-stagger] > *,
 .js-motion .hero-title .ch,
 .js-motion .hero-text,
+.js-motion .hero-aperture,
 .js-motion .hero-cta {
   visibility: hidden;
 }

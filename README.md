@@ -27,7 +27,8 @@ js/book.js            Booking calendar and form
 media/brand/          Logo (black and white versions, transparent background), favicon
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
-media/fonts/          Bricolage Grotesque and Hanken Grotesk (self-hosted, SIL Open Font License)
+media/fonts/          Instrument Sans (condensed cut) and Hanken Grotesk (self-hosted, SIL Open Font License)
+media/hero/           The hero photograph shown inside the aperture
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (calendar feed and contact emails)
 api/                  Vercel serverless functions
@@ -48,10 +49,10 @@ The API uses only Node.js built-ins, so there is nothing to install. The header,
 The original layout (same pages, sections and headings), rebuilt as a luxury black site.
 
 - **Colour:** deep black with ivory text and a stone grey second tone, so it sits with the black and white logo. Flat colour only: no gradients, glows or frosted glass. Dark only.
-- **Type:** Bricolage Grotesque in a heavy, slightly condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
+- **Type:** Instrument Sans in a bold condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
 - **Buttons:** flat rectangles. Solid ivory for the main action and an outline for the rest. On hover the fill slides across.
-- **Phones:** the hero splits the name over two lines around the aperture with Book and Play reel side by side, the reviews become a swipeable carousel that fades at the edges, the album fades out under a See More button that opens Instagram, and the gallery uses a staggered photo layout and full-width film cards.
-- **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto the showreel. Click it to watch the reel with sound.
+- **Phones:** the hero splits the name over two lines around the aperture, the Why choose us photo is hidden, the reviews become a swipeable carousel that fades at the edges, the album and both gallery tabs fade out under a See More button that opens Instagram, and the gallery uses a staggered photo layout and full-width film cards.
+- **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto a photograph. On load the letters rise out of their line blurred and stretched, snap into focus from the middle outwards while the spacing tightens, and DREAS fades from ivory to grey letter by letter.
 - **Motion (GSAP):** a short logo intro on the first page of a visit, the brand letters rising and the iris opening, the iris narrowing as you scroll away, sections sliding in from the sides (a shorter rise on phones, where films and photos also open like a shutter and buttons press in under your finger), gold rules drawing in, cards arriving in turn, slow parallax on photos, magnetic buttons, looping photos inside the ovals, the "Check out our latest covered event!" marquee and a light sweep across the banner. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
 - Arrows only appear on the calendar and the photo viewer, with a thick stroke. There are no camera or equipment details anywhere on the site.
 
@@ -60,7 +61,7 @@ The original layout (same pages, sections and headings), rebuilt as a luxury bla
 Everything marked as a placeholder on the site needs Dreas's real material:
 
 1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
-2. **Showreel:** replace `media/films/reel.mp4` and `reel.jpg`. It plays inside the hero aperture and in the full-screen player.
+2. **Hero photo:** replace `media/hero/hero.jpg` (landscape or square, about 1800px wide). It shows inside the aperture on the home page.
 3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
 4. **Copy:** the About bio and the three sample reviews on the home page.
 5. Remove the "placeholders" note in the footer of each page once real work is in.
