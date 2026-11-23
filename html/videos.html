@@ -12,15 +12,18 @@
   <meta property="og:image" content="/media/hero/hero.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/instrument-sans-condensed.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/hubot-sans-condensed.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/media/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
     /* Before first paint: hide animated elements until GSAP sets their start state, and
        play the intro curtain on the first page of a visit. Both have a fallback timer. */
     (function (d) {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       d.classList.add('js-motion');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setTimeout(function () { d.classList.remove('js-motion'); }, 3000);
+        return;
+      }
       var seen;
       try { seen = sessionStorage.getItem('sbd-intro'); } catch (e) {}
       if (!seen) d.classList.add('is-intro');
@@ -51,7 +54,7 @@
       <ul>
         <li><a href="/html/index.html">Home</a></li>
         <li><a href="/html/about.html">About</a></li>
-        <li><a href="/html/gallery.html">Gallery</a></li>
+        <li><a href="/html/gallery.html" aria-current="page">Gallery</a></li>
         <li><a href="/html/contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -69,7 +72,7 @@
     <ul class="menu-links">
       <li style="--i:0"><a href="/html/index.html">Home</a></li>
       <li style="--i:1"><a href="/html/about.html">About</a></li>
-      <li style="--i:2"><a href="/html/gallery.html">Gallery</a></li>
+      <li style="--i:2"><a href="/html/gallery.html" aria-current="page">Gallery</a></li>
       <li style="--i:3"><a href="/html/contact.html">Contact</a></li>
       <li style="--i:4"><a href="/html/book.html">Bookings</a></li>
     </ul>

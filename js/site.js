@@ -416,7 +416,14 @@
       },
       (ctx) => {
         const { motion, small, touch } = ctx.conditions;
-        if (!motion) return;
+        if (!motion) {
+          // Reduced motion (an accessibility setting on the device, sometimes switched on by
+          // battery savers): no movement at all, but sections still fade in softly.
+          gsap.utils.toArray('[data-reveal], [data-slide], [data-stagger] > *').forEach((el) => {
+            gsap.from(el, { autoAlpha: 0, duration: 0.8, ease: 'power1.out', scrollTrigger: once(el, 'top 95%') });
+          });
+          return;
+        }
 
         gsap.utils.toArray('[data-words]').forEach((h) => {
           gsap.from(h.querySelectorAll('.wi'), {
@@ -506,6 +513,15 @@
               { clipPath: 'inset(100% 0% 0% 0%)' },
               { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', scrollTrigger: once(el, 'top 92%') },
             );
+          });
+          // Photos and films settle from a slight zoom while they scroll through the screen,
+          // the touch-screen stand-in for the hover zoom on desktop.
+          gsap.utils.toArray('.service-media video, .album-item img, .still img, .portrait-card img').forEach((media) => {
+            gsap.fromTo(media, { scale: 1.16 }, {
+              scale: 1,
+              ease: 'none',
+              scrollTrigger: { trigger: media.parentElement, start: 'top bottom', end: 'bottom 40%', scrub: true },
+            });
           });
           // Gallery film cards: the picture settles from a slight zoom as it scrolls through.
           gsap.utils.toArray('.event-card .frame img').forEach((img) => {

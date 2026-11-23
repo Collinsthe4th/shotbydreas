@@ -27,7 +27,7 @@ js/book.js            Booking calendar and form
 media/brand/          Logo (black and white versions, transparent background), favicon
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
-media/fonts/          Instrument Sans (condensed cut) and Hanken Grotesk (self-hosted, SIL Open Font License)
+media/fonts/          Hubot Sans (condensed cut) and Hanken Grotesk (self-hosted, SIL Open Font License)
 media/hero/           The hero photograph shown inside the aperture
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (calendar feed and contact emails)
@@ -49,12 +49,12 @@ The API uses only Node.js built-ins, so there is nothing to install. The header,
 The original layout (same pages, sections and headings), rebuilt as a luxury black site.
 
 - **Colour:** deep black with ivory text and a stone grey second tone, so it sits with the black and white logo. Flat colour only: no gradients, glows or frosted glass. Dark only.
-- **Type:** Instrument Sans in a bold condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
-- **Navigation:** on wide screens a floating glass bar that blurs the page underneath. On phones an ivory menu button opens a full-screen menu that grows out of it as a circle. A back-to-top button appears bottom right once you scroll.
-- **Buttons:** flat with slightly rounded corners. Solid ivory for the main action and an outline for the rest. On hover the fill slides across.
+- **Type:** Hubot Sans in an extra bold condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
+- **Navigation:** on wide screens a floating glass bar that blurs the page underneath (the blur sits on the sticky bar itself so it also works in Firefox). The current page is bold white and the other links are dimmed. On phones an ivory menu button opens a full-screen menu that grows out of it as a circle. A back-to-top button appears bottom right once you scroll.
+- **Buttons:** see-through with an ivory border and slightly rounded corners. They fill ivory when pressed or selected. Solid ivory for the main action and an outline for the rest. On hover the fill slides across.
 - **Phones:** the hero splits the name over two lines around the aperture, the Why choose us photo is hidden, the reviews become a swipeable carousel that fades at the edges, the album and both gallery tabs fade out under a See More button that opens Instagram, and the gallery uses a staggered photo layout and full-width film cards.
 - **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto a photograph. On load the letters rise out of their line blurred and stretched, snap into focus from the middle outwards while the spacing tightens, and DREAS fades from ivory to grey letter by letter.
-- **Motion (GSAP):** headings rise word by word out of their line, a short logo intro on the first page of a visit, the brand letters rising and the iris opening, the iris narrowing as you scroll away, sections sliding in from the sides (a shorter rise on phones, where films and photos also open like a shutter and buttons press in under your finger), gold rules drawing in, cards arriving in turn, slow parallax on photos, magnetic buttons, looping photos inside the ovals, the "Check out our latest covered event!" marquee and a light sweep across the banner. All of it switches off for visitors who prefer reduced motion, and the site still works if GSAP fails to load.
+- **Motion (GSAP):** headings rise word by word out of their line, a short logo intro on the first page of a visit, the brand letters rising and the iris opening, the iris narrowing as you scroll away, sections sliding in from the sides (a shorter rise on phones, where films and photos also open like a shutter and buttons press in under your finger), gold rules drawing in, cards arriving in turn, slow parallax on photos, magnetic buttons, looping photos inside the ovals, the "Check out our latest covered event!" marquee and a light sweep across the banner. For visitors who have reduced motion switched on, the movement is replaced by soft fades, and the site still works if GSAP fails to load.
 - Arrows only appear on the calendar and the photo viewer, with a thick stroke. There are no camera or equipment details anywhere on the site.
 
 ## Replacing the placeholder content
