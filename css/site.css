@@ -562,29 +562,44 @@ body {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
-.menu-toggle .bars {
+/* A bold three-line hamburger that folds into a cross */
+.menu-toggle .bars,
+.menu-toggle .bars::before,
+.menu-toggle .bars::after {
   position: absolute;
-  inset: 0;
-  transition: transform 0.5s var(--ease);
+  left: 50%;
+  width: 1.15rem;
+  height: 3px;
+  margin-left: -0.575rem;
+  border-radius: 3px;
+  background: currentColor;
+  transition: transform 0.45s var(--ease), background-color 0.2s var(--ease), top 0.45s var(--ease);
 }
-/* A plus sign that turns a quarter and becomes a cross when the menu opens */
+.menu-toggle .bars {
+  top: calc(50% - 1.5px);
+}
 .menu-toggle .bars::before,
 .menu-toggle .bars::after {
   content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.95rem;
-  height: 2px;
-  margin: -1px 0 0 -0.475rem;
-  border-radius: 2px;
-  background: currentColor;
+  left: 0;
+  margin-left: 0;
+}
+.menu-toggle .bars::before {
+  top: -7px;
 }
 .menu-toggle .bars::after {
-  transform: rotate(90deg);
+  top: 7px;
 }
 .menu-toggle[aria-expanded='true'] .bars {
-  transform: rotate(135deg);
+  background-color: transparent;
+}
+.menu-toggle[aria-expanded='true'] .bars::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.menu-toggle[aria-expanded='true'] .bars::after {
+  top: 0;
+  transform: rotate(-45deg);
 }
 .menu {
   position: fixed;
@@ -2013,7 +2028,7 @@ a.contact-line:focus-visible .k {
   padding: clamp(1.5rem, 4vw, 3rem);
   border: 1px solid var(--ink);
   border-radius: var(--radius);
-  background: var(--panel);
+  background: var(--nav-bg); /* solid black, or white in the light theme */
 }
 .form-grid {
   display: grid;
@@ -2042,9 +2057,9 @@ a.contact-line:focus-visible .k {
   width: 100%;
   min-height: 3.1rem;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(var(--ink-rgb), 0.28);
   border-radius: 12px;
-  background: rgba(var(--bg-rgb), 0.55);
+  background: transparent;
   color: var(--ink);
   font-size: 1rem;
   transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
@@ -2100,29 +2115,43 @@ textarea.input {
 /* 15. Book -------------------------------------------------------------- */
 .book-page {
   position: relative;
+  isolation: isolate; /* keeps the photo layer (z-index -1) above the page background */
   padding-block: clamp(3rem, 7vw, 6rem) var(--section);
 }
+/* The photo stays still behind the page (fixed), and the form panel carries its own
+   blurred copy of the same photo, lined up with it. This is plain filter: blur on an
+   image, so it works in every browser, unlike backdrop-filter. */
 .book-bg {
   position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
-}
-.book-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.45;
+  background: url('/media/book/book.jpg') center / cover no-repeat fixed;
 }
 .book-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.4), var(--black) 85%);
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.25), rgba(var(--bg-rgb), 0.55) 70%, var(--black) 100%);
 }
 .book-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   max-width: 62rem;
   margin-inline: auto;
+}
+.book-panel.glass {
+  background: rgba(var(--bg-rgb), 0.5);
+  border-color: rgba(var(--ink-rgb), 0.55);
+}
+.book-panel::before {
+  content: '';
+  position: absolute;
+  inset: -60px;
+  z-index: -1;
+  background: url('/media/book/book.jpg') center / cover no-repeat fixed;
+  filter: blur(24px) saturate(1.2);
 }
 .book-panel > h1 {
   margin-bottom: 0.75rem;

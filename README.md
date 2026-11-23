@@ -50,7 +50,7 @@ The original layout (same pages, sections and headings), rebuilt as a luxury bla
 
 - **Colour:** deep black with ivory text and a stone grey second tone, so it sits with the black and white logo. Flat colour only, no gradients or glows. A light / dark switch in the nav swaps to warm off-white with near-black text, and the choice is remembered on that device.
 - **Type:** Hubot Sans in an extra bold condensed cut for headings (like a film title) and Hanken Grotesk for text and labels.
-- **Navigation:** on wide screens a floating bar with a plain solid background (black in the dark theme, white in the light one), on phones a slim full-width bar. The current page is bold white and the other links are dimmed. On phones a plus-shaped menu button (it turns into a cross) opens a full-screen menu that grows out of it as a circle. A back-to-top button appears bottom right once you scroll.
+- **Navigation:** on wide screens a floating bar with a plain solid background (black in the dark theme, white in the light one), on phones a slim full-width bar. The current page is bold white and the other links are dimmed. On phones a bold hamburger menu button (it folds into a cross) opens a full-screen menu that grows out of it as a circle. A back-to-top button appears bottom right once you scroll.
 - **Buttons:** see-through with an ivory border and slightly rounded corners. They fill ivory when pressed or selected. Solid ivory for the main action and an outline for the rest. On hover the fill slides across.
 - **Phones:** the hero splits the name over two lines around the aperture, the Why choose us photo is hidden, the reviews become a swipeable carousel that fades at the edges, the album and both gallery tabs fade out under a See More button that opens Instagram, and the gallery uses a staggered photo layout and full-width film cards.
 - **Hero:** SHOTBYDREAS across the top, with the camera iris in the middle opening onto a photograph. On load the letters rise out of their line blurred and stretched, snap into focus from the middle outwards while the spacing tightens, and DREAS fades from ivory to grey letter by letter.
@@ -62,10 +62,11 @@ The original layout (same pages, sections and headings), rebuilt as a luxury bla
 Everything marked as a placeholder on the site needs Dreas's real material:
 
 1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
-2. **Hero photo:** replace `media/hero/hero.jpg` (landscape or square, about 1800px wide). It shows inside the aperture on the home page.
-3. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
-4. **Copy:** the About bio and the three sample reviews on the home page.
-5. Remove the "placeholders" note in the footer of each page once real work is in.
+2. **Booking page photo:** replace `media/book/book.jpg`. It sits behind the booking form, and the form panel shows a blurred copy of it.
+3. **Hero photo:** replace `media/hero/hero.jpg` (landscape or square, about 1800px wide). It shows inside the aperture on the home page.
+4. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
+5. **Copy:** the About bio and the three sample reviews on the home page.
+6. Remove the "placeholders" note in the footer of each page once real work is in.
 
 ## API
 
