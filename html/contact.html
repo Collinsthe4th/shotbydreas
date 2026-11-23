@@ -12,8 +12,8 @@
   <meta property="og:image" content="/media/films/reel.jpg">
   <link rel="icon" type="image/png" href="/media/brand/favicon.png">
   <link rel="apple-touch-icon" href="/media/brand/apple-touch-icon.png">
-  <link rel="preload" href="/media/fonts/bodoni-moda.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="/media/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/gloock.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/media/fonts/hanken-grotesk.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="/css/site.css">
   <script>
     /* Before first paint: hide animated elements until GSAP sets their start state, and
@@ -74,8 +74,8 @@
     </ul>
   </nav>
   <div class="menu-foot">
-    <p>+234 813 607 8551</p>
-    <p>Awka, Anambra · Mon to Sat, 10:00 to 18:00</p>
+    <a href="tel:+2348136078551">+234 813 607 8551</a>
+    <a href="https://www.instagram.com/shotbydreas_" target="_blank" rel="noopener">Instagram</a>
   </div>
 </div>
 
@@ -85,7 +85,7 @@
   <div class="wrap contact-grid">
     <div data-slide="left">
       <p class="eyebrow">Get in touch</p>
-      <h1 id="contact-title">Message us for more enquiries or <span class="gold-text" data-shine>contact us</span> to book us today!</h1>
+      <h1 id="contact-title">Message us for more enquiries or <span class="accent-text" data-shine>contact us</span> to book us today!</h1>
       <h2 class="eyebrow" style="margin-top:2.5rem">Contact info</h2>
       <ul class="info-list">
         <li><span>Location</span><span>Awka, Anambra, Nigeria</span></li>
@@ -103,34 +103,45 @@
     </div>
     <div class="glass" data-slide="right">
       <h2 class="eyebrow" style="margin-bottom:1.5rem">Leave a message</h2>
-      <form id="quick-form" data-wa="2348136078551" novalidate>
+      <form id="contact-form" data-wa="2348136078551" novalidate>
         <div class="form-grid">
           <div class="field">
-            <label for="q-name">Name</label>
-            <input class="input" id="q-name" name="name" autocomplete="name" maxlength="80" required>
+            <label for="c-name">Name</label>
+            <input class="input" id="c-name" name="name" autocomplete="name" maxlength="80" required>
             <p class="field-error" data-error-for="name" hidden></p>
           </div>
           <div class="field">
-            <label for="q-email">Email <span class="optional">(optional)</span></label>
-            <input class="input" type="email" id="q-email" name="email" autocomplete="email" maxlength="120">
+            <label for="c-email">Email</label>
+            <input class="input" type="email" id="c-email" name="email" autocomplete="email" maxlength="120" required>
             <p class="field-error" data-error-for="email" hidden></p>
           </div>
         </div>
         <div class="field">
-          <label for="q-subject">Subject <span class="optional">(optional)</span></label>
-          <input class="input" id="q-subject" name="subject" maxlength="120">
+          <label for="c-subject">Subject <span class="optional">(optional)</span></label>
+          <input class="input" id="c-subject" name="subject" maxlength="120">
+          <p class="field-error" data-error-for="subject" hidden></p>
         </div>
         <div class="field">
-          <label for="q-message">Message</label>
-          <textarea class="input" id="q-message" name="message" rows="5" maxlength="1000" required></textarea>
+          <label for="c-message">Message</label>
+          <textarea class="input" id="c-message" name="message" rows="5" maxlength="2000" required></textarea>
           <p class="field-error" data-error-for="message" hidden></p>
         </div>
-        <div class="submit-row">
-          <button type="submit" class="btn btn-gold" data-magnetic>Send on WhatsApp</button>
-          <p class="small dim">Opens WhatsApp with your message filled in</p>
+        <div class="hp-field" aria-hidden="true">
+          <label for="c-website">Website</label>
+          <input type="text" id="c-website" name="website" tabindex="-1" autocomplete="off">
         </div>
-        <p class="small" data-sent hidden role="status">WhatsApp should have opened. If it did not, <a href="#" target="_blank" rel="noopener">tap here to send your message</a>.</p>
+        <p class="form-error" id="contact-status" role="alert" hidden></p>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-accent" data-magnetic><span class="submit-label">Send message</span></button>
+          <p class="small dim">Dreas usually replies within a day</p>
+        </div>
       </form>
+      <div class="contact-success" id="contact-success" tabindex="-1" hidden>
+        <p class="eyebrow">Message sent</p>
+        <h3>Thank you</h3>
+        <p class="dim">Your message is in Dreas&rsquo;s inbox. He will reply to the email you gave.</p>
+        <button type="button" class="link-btn" id="contact-again">Send another message</button>
+      </div>
     </div>
   </div>
 </section>
@@ -140,9 +151,9 @@
 <section class="banner" aria-labelledby="banner-title">
   <div class="frame" aria-hidden="true"><img src="/media/stills/f10.jpg" alt="" loading="lazy" data-parallax="12"></div>
   <div class="wrap" data-reveal>
-    <h2 id="banner-title">Capture <em class="gold-text" data-shine>Special</em> Moments</h2>
+    <h2 id="banner-title">Capture <em class="accent-text" data-shine>Special</em> Moments</h2>
     <p>Turn your every moment into a lifetime movie</p>
-    <a class="btn btn-gold" href="/html/book.html" data-magnetic>Book Us Today</a>
+    <a class="btn btn-accent" href="/html/book.html" data-magnetic>Book Us Today</a>
   </div>
 </section>
 

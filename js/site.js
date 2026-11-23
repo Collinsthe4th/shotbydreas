@@ -45,7 +45,7 @@
       .add(() => introResolve(), '-=0.45'); // let the page start while the curtain lifts
   }
 
-  // ---------- header: gold rule appears after scrolling ----------
+  // ---------- header: hairline rule appears after scrolling ----------
   const header = document.querySelector('.site-header');
   if (header) {
     const update = () => header.classList.toggle('is-scrolled', window.scrollY > 30);
@@ -218,7 +218,7 @@
         </div>
         <div class="mini-strip">${f.stills.map((s) => `<div class="frame"><img src="${s}" alt="" loading="lazy"></div>`).join('')}</div>
         <div class="actions">
-          <a class="btn btn-gold" href="/html/book.html">Book Us Today</a>
+          <a class="btn btn-accent" href="/html/book.html">Book Us Today</a>
           <button type="button" class="text-btn" data-step="-1">Previous film</button>
           <button type="button" class="text-btn" data-step="1">Next film</button>
         </div>
@@ -313,6 +313,8 @@
 
   // ---------- magnetic buttons (pointer devices only) ----------
   function magnetic(el) {
+    if (el.dataset.magnetized) return;
+    el.dataset.magnetized = 'true';
     const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' });
     const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' });
     el.addEventListener('pointermove', (e) => {
@@ -339,57 +341,107 @@
     gsap.registerPlugin(ScrollTrigger);
     const once = (el, start = 'top 88%') => ({ trigger: el, start, once: true });
 
-    gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.utils.toArray('[data-reveal]').forEach((el) => {
-        gsap.from(el, { y: 50, autoAlpha: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: once(el) });
-      });
+    const mm = gsap.matchMedia();
+    mm.add(
+      {
+        motion: '(prefers-reduced-motion: no-preference)',
+        small: '(max-width: 760px)',
+        touch: '(hover: none), (pointer: coarse)',
+      },
+      (ctx) => {
+        const { motion, small, touch } = ctx.conditions;
+        if (!motion) return;
 
-      gsap.utils.toArray('[data-slide]').forEach((el) => {
-        const dir = el.dataset.slide === 'right' ? 1 : -1;
-        gsap.from(el, { x: 80 * dir, autoAlpha: 0, duration: 1.3, ease: 'expo.out', scrollTrigger: once(el, 'top 85%') });
-      });
-
-      gsap.utils.toArray('[data-line]').forEach((el) => {
-        gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: once(el, 'top 92%') });
-      });
-
-      gsap.utils.toArray('[data-stagger]').forEach((el) => {
-        gsap.from(el.children, {
-          y: 50,
-          autoAlpha: 0,
-          duration: 1,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: once(el),
+        gsap.utils.toArray('[data-reveal]').forEach((el) => {
+          gsap.from(el, { y: small ? 32 : 50, autoAlpha: 0, duration: small ? 1 : 1.2, ease: 'power3.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 88%') });
         });
-      });
 
-      gsap.utils.toArray('[data-parallax]').forEach((el) => {
-        const amount = Number(el.dataset.parallax) || 10;
-        gsap.fromTo(
-          el,
-          { yPercent: -amount },
-          {
-            yPercent: amount,
-            ease: 'none',
-            scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-          },
-        );
-      });
+        // On phones the side slides become a shorter rise with a slight drift, so nothing
+        // travels further than the screen is wide.
+        gsap.utils.toArray('[data-slide]').forEach((el) => {
+          const dir = el.dataset.slide === 'right' ? 1 : -1;
+          const from = small ? { x: 24 * dir, y: 36 } : { x: 80 * dir };
+          gsap.from(el, { ...from, autoAlpha: 0, duration: small ? 1.1 : 1.3, ease: 'expo.out', scrollTrigger: once(el, small ? 'top 92%' : 'top 85%') });
+        });
 
-      // Gold headline text catches the light once as it arrives.
-      gsap.utils.toArray('[data-shine]').forEach((el) => {
-        gsap.fromTo(
-          el,
-          { backgroundPosition: '100% 0' },
-          { backgroundPosition: '0% 0', duration: 2.2, ease: 'power2.out', scrollTrigger: once(el) },
-        );
-      });
+        gsap.utils.toArray('[data-line]').forEach((el) => {
+          gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.inOut', scrollTrigger: once(el, 'top 95%') });
+        });
 
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        gsap.utils.toArray('[data-stagger]').forEach((el) => {
+          gsap.from(el.children, {
+            y: small ? 30 : 50,
+            autoAlpha: 0,
+            duration: small ? 0.8 : 1,
+            stagger: small ? 0.07 : 0.1,
+            ease: 'power3.out',
+            scrollTrigger: once(el, small ? 'top 92%' : 'top 88%'),
+          });
+        });
+
+        gsap.utils.toArray('[data-parallax]').forEach((el) => {
+          const amount = (Number(el.dataset.parallax) || 10) * (small ? 0.6 : 1);
+          gsap.fromTo(
+            el,
+            { yPercent: -amount },
+            {
+              yPercent: amount,
+              ease: 'none',
+              scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+            },
+          );
+        });
+
+        // Accent headline text catches the light once as it arrives.
+        gsap.utils.toArray('[data-shine]').forEach((el) => {
+          gsap.fromTo(
+            el,
+            { backgroundPosition: '100% 0' },
+            { backgroundPosition: '0% 0', duration: 2.2, ease: 'power2.out', scrollTrigger: once(el) },
+          );
+        });
+
+        // Phones: films and photos open from the bottom like a shutter as they scroll in,
+        // and the oval frames drift with the scroll.
+        if (small) {
+          gsap.utils.toArray('.service-media .frame, .phone .frame, .portrait-card, .skew-strip .frame').forEach((el) => {
+            gsap.fromTo(
+              el,
+              { clipPath: 'inset(100% 0% 0% 0%)' },
+              { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.out', scrollTrigger: once(el, 'top 92%') },
+            );
+          });
+          gsap.utils.toArray('.oval').forEach((el) => {
+            gsap.fromTo(el, { y: 30, rotation: -3 }, {
+              y: -30,
+              rotation: 3,
+              ease: 'none',
+              scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+            });
+          });
+        }
+
+        // Touch: buttons and photos press in slightly under the finger.
+        if (touch) {
+          const press = (e) => {
+            const el = e.target.closest('.btn, .album-item, .still, .event-card, .chip, .icon-btn, .hero-aperture');
+            if (!el) return;
+            gsap.to(el, { scale: 0.96, duration: 0.15, ease: 'power2.out', overwrite: 'auto' });
+            const release = () => {
+              gsap.to(el, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+              window.removeEventListener('pointerup', release);
+              window.removeEventListener('pointercancel', release);
+            };
+            window.addEventListener('pointerup', release);
+            window.addEventListener('pointercancel', release);
+          };
+          document.addEventListener('pointerdown', press, { passive: true });
+          return () => document.removeEventListener('pointerdown', press);
+        }
+
         document.querySelectorAll('[data-magnetic]').forEach(magnetic);
-      }
-    });
+      },
+    );
 
     root.classList.add('motion-ready');
     root.classList.remove('js-motion');
