@@ -65,7 +65,6 @@
       .add(() => title.classList.remove('is-entering'), 1.6)
       .add(() => gsap.set(develop, { clearProps: 'color' }), 2.4)
       .to(aperture, { autoAlpha: 1, scale: 1, duration: 1.4 }, 0.35)
-      .to(photos[0], { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
       .to(state, { c: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
       .fromTo(side, { y: 30 }, { y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
       .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.25)
@@ -86,17 +85,23 @@
   // shut, open again. It only runs while the hero is on screen.
   function startCycle() {
     if (photos.length < 2) return;
+    // Each photo is on screen for about 3 seconds and slowly zooms out the whole time.
+    // Then the iris snaps shut, the next photo goes in behind it, and it opens again.
+    const SHOW = 3;
+    const CLOSE = 0.45;
+    const OPEN = 0.6;
     let index = 0;
+    const zoom = (img) => gsap.fromTo(img, { scale: 1.22 }, { scale: 1, duration: SHOW + OPEN, ease: 'power1.out', overwrite: true });
+    zoom(photos[0]);
     const tl = gsap.timeline({ repeat: -1, paused: true });
-    tl.to(state, { c: 0, duration: 0.75, ease: 'power3.in', onUpdate: setIris }, '+=3.2')
+    tl.to(state, { c: 0, duration: CLOSE, ease: 'power3.in', onUpdate: setIris }, SHOW - CLOSE)
       .add(() => {
         photos[index].classList.remove('is-current');
         index = (index + 1) % photos.length;
         photos[index].classList.add('is-current');
-        gsap.set(photos[index], { scale: 1.18 });
+        zoom(photos[index]);
       })
-      .to(state, { c: 1, duration: 1.1, ease: 'power3.out', onUpdate: setIris })
-      .to(photos, { scale: 1, duration: 2.6, ease: 'power2.out' }, '<');
+      .to(state, { c: 1, duration: OPEN, ease: 'power3.out', onUpdate: setIris });
     new IntersectionObserver(([e]) => (e.isIntersecting ? tl.play() : tl.pause())).observe(aperture);
   }
 

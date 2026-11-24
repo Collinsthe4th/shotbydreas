@@ -28,7 +28,7 @@ media/brand/          Logo (black and white versions, transparent background), f
 media/films/          Video files (.mp4) and their poster frames (.jpg)
 media/stills/         Photos
 media/fonts/          Hubot Sans (condensed cut) and Hanken Grotesk (self-hosted, SIL Open Font License)
-media/hero/           The photographs the hero aperture opens and closes on (hero-1/2/3.jpg)
+media/hero/           The photographs the hero aperture opens and closes on (hero-1.jpg to hero-4.jpg)
 vendor/gsap/          GSAP 3.15.1 + ScrollTrigger (self-hosted, GSAP Standard License)
 google-apps-script/   Code.gs that Dreas deploys in his Google account (calendar feed and contact emails)
 api/                  Vercel serverless functions
@@ -63,7 +63,7 @@ Everything marked as a placeholder on the site needs Dreas's real material:
 
 1. **Films:** put each video in `media/films/` (MP4, H.264, ideally under 10 MB, 1080p is enough on the web) with a poster frame `.jpg`, then edit the entries in `js/data.js` (title, type, location, logline, role, deliverables).
 2. **Booking page photo:** replace `media/book/book.jpg` (wide screens, ideally 1440px wide or more) and `media/book/book-720.jpg` (phones). It fills the booking page and the form panel shows a blurred copy of it. A landscape photo of at least 1920px wide will look sharpest on large screens.
-3. **Hero photos:** `media/hero/hero-1.jpg`, `hero-2.jpg` and `hero-3.jpg` (about 1100px on the long edge). The aperture closes and opens to move between them. Add or remove `<img>` lines in the hero of `html/index.html` to change how many there are.
+3. **Hero photos:** `media/hero/hero-1.jpg` to `hero-4.jpg` (about 1100px on the long edge). The aperture closes and opens to move between them. Add or remove `<img>` lines in the hero of `html/index.html` to change how many there are.
 4. **Stills:** put photos in `media/stills/` (JPEG, about 1800px on the long edge) and update the `stills` list in `js/data.js`. Any mix of portrait and landscape works.
 5. **Copy:** the About bio and the three sample reviews on the home page.
 6. Remove the "placeholders" note in the footer of each page once real work is in.
