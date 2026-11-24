@@ -3,7 +3,8 @@
 // Hero entrance, like pulling focus on a lens: each letter of SHOTBYDREAS rises out of
 // its line blurred and stretched, then snaps sharp, spreading out from the middle of the
 // word while the spacing tightens. DREAS arrives in ivory and then "develops" to its
-// grey letter by letter. Meanwhile the iris opens on the hero photograph.
+// grey letter by letter. Meanwhile the iris opens on the first photograph, and from then
+// on it closes and opens again every few seconds to reveal the next photograph.
 
 (() => {
   const ui = window.SBDUI;
@@ -29,12 +30,14 @@
   const small = window.matchMedia('(max-width: 760px)').matches;
   const side = hero.querySelectorAll('.hero-text');
   const cta = hero.querySelector('.hero-cta');
-  const photo = aperture.querySelector('img');
+  const photos = [...aperture.querySelectorAll('img')];
   const css = getComputedStyle(document.documentElement);
   const ivory = css.getPropertyValue('--ink').trim();
   const stone = css.getPropertyValue('--stone').trim();
-  const state = { t: 0 };
-  const setIris = () => iris?.set(state.t);
+  // c: how far the iris is open in its open/close cycle. s: how far scrolling away has
+  // stopped it down. The drawn opening is the two multiplied.
+  const state = { c: 0, s: 1 };
+  const setIris = () => iris?.set(state.c * state.s);
 
   title.classList.add('is-entering'); // clips each line while the letters rise
   gsap.set(letters, { yPercent: 105, scaleY: 1.6, filter: 'blur(14px)', autoAlpha: 0, transformOrigin: '50% 100%' });
@@ -43,7 +46,7 @@
   gsap.set(side, { autoAlpha: 0 });
   gsap.set(cta, { autoAlpha: 0, y: 24 });
   gsap.set(aperture, { autoAlpha: 0, scale: 0.88 });
-  gsap.set(photo, { scale: 1.25 });
+  gsap.set(photos, { scale: 1.25 });
   setIris();
 
   ui.introDone.then(() => {
@@ -62,21 +65,40 @@
       .add(() => title.classList.remove('is-entering'), 1.6)
       .add(() => gsap.set(develop, { clearProps: 'color' }), 2.4)
       .to(aperture, { autoAlpha: 1, scale: 1, duration: 1.4 }, 0.35)
-      .to(photo, { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
-      .to(state, { t: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
+      .to(photos[0], { scale: 1, duration: 2.4, ease: 'power3.out' }, 0.35)
+      .to(state, { c: 1, duration: 1.8, ease: 'power2.inOut', onUpdate: setIris }, 0.6)
       .fromTo(side, { y: 30 }, { y: 0, autoAlpha: 1, duration: 1.2, stagger: 0.12 }, 1)
       .to(cta, { autoAlpha: 1, y: 0, duration: 1 }, 1.25)
       .add(() => {
         gsap.set(letters, { clearProps: 'filter,transform' });
         // Once open, the iris narrows as the hero scrolls away, like stopping down.
         gsap.to(state, {
-          t: 0.42,
+          s: 0.42,
           ease: 'none',
           onUpdate: setIris,
           scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6 },
         });
+        startCycle();
       });
   });
+
+  // The aperture slideshow: hold, close the iris, swap to the next photograph while it is
+  // shut, open again. It only runs while the hero is on screen.
+  function startCycle() {
+    if (photos.length < 2) return;
+    let index = 0;
+    const tl = gsap.timeline({ repeat: -1, paused: true });
+    tl.to(state, { c: 0, duration: 0.75, ease: 'power3.in', onUpdate: setIris }, '+=3.2')
+      .add(() => {
+        photos[index].classList.remove('is-current');
+        index = (index + 1) % photos.length;
+        photos[index].classList.add('is-current');
+        gsap.set(photos[index], { scale: 1.18 });
+      })
+      .to(state, { c: 1, duration: 1.1, ease: 'power3.out', onUpdate: setIris })
+      .to(photos, { scale: 1, duration: 2.6, ease: 'power2.out' }, '<');
+    new IntersectionObserver(([e]) => (e.isIntersecting ? tl.play() : tl.pause())).observe(aperture);
+  }
 
   // Reviews carousel (phones). The cards scroll natively with snap points; this adds
   // the dots, keeps them in step with swiping, and moves on by itself every few
